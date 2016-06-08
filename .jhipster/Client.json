@@ -1,0 +1,54 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "conatactPerson",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "address",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "state",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "zipcode",
+            "fieldType": "Long"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "pf",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "esic",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "workHours",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20160608082150",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "pagination": "no"
+}
