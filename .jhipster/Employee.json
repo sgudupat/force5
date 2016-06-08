@@ -1,0 +1,64 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "basic",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "allowances",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "startDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "endDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "mobile",
+            "fieldType": "Long"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "mobile2",
+            "fieldType": "Long"
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "address",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 10,
+            "fieldName": "state",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 11,
+            "fieldName": "zipcode",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20160608062739",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "pagination": "no"
+}
