@@ -1,0 +1,62 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myAssignmentsLabel">Create or edit a Assignments</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="assignments.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_regularDays">RegularDays</label>
+            <input type="number" class="form-control" name="regularDays" id="field_regularDays"
+                    ng-model="assignments.regularDays"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_overtime">Overtime</label>
+            <input type="number" class="form-control" name="overtime" id="field_overtime"
+                    ng-model="assignments.overtime"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_startDate">StartDate</label>
+            <input type="datetime-local" class="form-control" name="startDate" id="field_startDate"
+                    ng-model="assignments.startDate"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_endDate">EndDate</label>
+            <input type="datetime-local" class="form-control" name="endDate" id="field_endDate"
+                    ng-model="assignments.endDate"
+                     />
+        </div>
+
+        <div class="form-group">
+            <label for="field_employee">employee</label>
+            <select class="form-control" id="field_employee" name="employee" ng-model="assignments.employeeId" ng-options="employee.id as employee.id for employee in employees">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_client">client</label>
+            <select class="form-control" id="field_client" name="client" ng-model="assignments.clientId" ng-options="client.id as client.id for client in clients">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

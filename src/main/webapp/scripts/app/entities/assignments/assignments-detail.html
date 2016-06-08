@@ -1,0 +1,70 @@
+
+<div>
+    <h2><span>Assignments</span> {{assignments.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>RegularDays</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{assignments.regularDays}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Overtime</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{assignments.overtime}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>StartDate</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{assignments.startDate | date:'medium'}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>EndDate</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{assignments.endDate | date:'medium'}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>employee</span>
+                </td>
+                <td>
+                    <a class="form-control-static" ui-sref="employee.detail({id:assignments.employeeId})">{{assignments.employeeId}}</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>client</span>
+                </td>
+                <td>
+                    <a class="form-control-static" ui-sref="client.detail({id:assignments.clientId})">{{assignments.clientId}}</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>
