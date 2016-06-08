@@ -1,0 +1,14 @@
+version: '2'
+services:
+    facilitymgmt-mysql:
+        container_name: facilitymgmt-mysql
+        image: mysql:5.7.11
+        # volumes:
+        #     - ~/volumes/jhipster/facilitymgmt/mysql/:/var/lib/mysql/
+        environment:
+            - MYSQL_USER=root
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_DATABASE=facilitymgmt
+        ports:
+            - 3306:3306
+        command: mysqld --lower_case_table_names=1 --skip-ssl

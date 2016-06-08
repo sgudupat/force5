@@ -1,0 +1,15 @@
+version: '2'
+services:
+    facilitymgmt-app:
+        image: facilitymgmt
+        external_links:
+            - facilitymgmt-mysql:mysql
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/facilitymgmt?useUnicode=true&characterEncoding=utf8&useSSL=false
+        ports:
+            - 8080:8080
+    facilitymgmt-mysql:
+        extends:
+            file: mysql.yml
+            service: facilitymgmt-mysql
