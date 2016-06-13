@@ -11,26 +11,14 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
-management:
-    context-path: /management
-    health:
-        mail:
-          enabled: false # When using the MailService, configure an SMTP server and set this to true
-
 spring:
-    application:
-        name: facilitymgmt
-    profiles:
-        # The commented value for `active` can be replaced with valid spring profiles to load.
-        # This will be overwritten by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
-        active: #spring.profiles.active#
     jpa:
         open-in-view: false
         hibernate:
             ddl-auto: none
             naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
     messages:
-        basename: i18n/messages
+        basename: classpath:/i18n/messages
     mvc:
         favicon:
             enabled: false
@@ -58,17 +46,16 @@ jhipster:
         #allow-credentials: true
         #max-age: 1800
     mail:
-        from: facilitymgmt@localhost
+        from: proj2@localhost
+    security:
+        rememberme:
+            # security key (this key should be unique for your application, and kept secret)
+            key: ba8e26ef4bad6ae5b19493518ce26118c1c89180
     swagger:
-        title: facilitymgmt API
-        description: facilitymgmt API documentation
+        title: proj2 API
+        description: proj2 API documentation
         version: 0.0.1
         termsOfServiceUrl:
-        contactName:
-        contactUrl:
-        contactEmail:
+        contact:
         license:
         licenseUrl:
-    ribbon:
-        # comma seperated list of profiles to show a ribbon on the GUI
-        displayOnActiveProfiles: dev
