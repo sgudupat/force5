@@ -24,19 +24,19 @@ describe('Controller Tests', function() {
                 '$scope': $scope,
             };
             createController = function() {
-                $injector.get('$controller')('RegisterController as vm', locals);
+                $injector.get('$controller')('RegisterController', locals);
             };
         }));
 
         it('should ensure the two passwords entered match', function() {
             // given
             createController();
-            $scope.vm.registerAccount.password = 'password';
-            $scope.vm.confirmPassword = 'non-matching';
+            $scope.registerAccount.password = 'password';
+            $scope.confirmPassword = 'non-matching';
             // when
-            $scope.vm.register();
+            $scope.register();
             // then
-            expect($scope.vm.doNotMatch).toEqual('ERROR');
+            expect($scope.doNotMatch).toEqual('ERROR');
         });
 
         it('should update success to OK after creating an account', function() {
@@ -44,20 +44,20 @@ describe('Controller Tests', function() {
             
             MockAuth.createAccount.and.returnValue($q.resolve());
             createController();
-            $scope.vm.registerAccount.password = $scope.vm.confirmPassword = 'password';
+            $scope.registerAccount.password = $scope.confirmPassword = 'password';
             // when
-            $scope.$apply($scope.vm.register); // $q promises require an $apply
+            $scope.$apply($scope.register); // $q promises require an $apply
             // then
             expect(MockAuth.createAccount).toHaveBeenCalledWith({
                 password: 'password',
                 langKey: 'en'
             });
-            expect($scope.vm.success).toEqual('OK');
-            expect($scope.vm.registerAccount.langKey).toEqual('en');
+            expect($scope.success).toEqual('OK');
+            expect($scope.registerAccount.langKey).toEqual('en');
             
-            expect($scope.vm.errorUserExists).toBeNull();
-            expect($scope.vm.errorEmailExists).toBeNull();
-            expect($scope.vm.error).toBeNull();
+            expect($scope.errorUserExists).toBeNull();
+            expect($scope.errorEmailExists).toBeNull();
+            expect($scope.error).toBeNull();
         });
 
         it('should notify of user existence upon 400/login already in use', function() {
@@ -67,13 +67,13 @@ describe('Controller Tests', function() {
                 data: 'login already in use'
             }));
             createController();
-            $scope.vm.registerAccount.password = $scope.vm.confirmPassword = 'password';
+            $scope.registerAccount.password = $scope.confirmPassword = 'password';
             // when
-            $scope.$apply($scope.vm.register); // $q promises require an $apply
+            $scope.$apply($scope.register); // $q promises require an $apply
             // then
-            expect($scope.vm.errorUserExists).toEqual('ERROR');
-            expect($scope.vm.errorEmailExists).toBeNull();
-            expect($scope.vm.error).toBeNull();
+            expect($scope.errorUserExists).toEqual('ERROR');
+            expect($scope.errorEmailExists).toBeNull();
+            expect($scope.error).toBeNull();
         });
 
         it('should notify of email existence upon 400/e-mail address already in use', function() {
@@ -83,13 +83,13 @@ describe('Controller Tests', function() {
                 data: 'e-mail address already in use'
             }));
             createController();
-            $scope.vm.registerAccount.password = $scope.vm.confirmPassword = 'password';
+            $scope.registerAccount.password = $scope.confirmPassword = 'password';
             // when
-            $scope.$apply($scope.vm.register); // $q promises require an $apply
+            $scope.$apply($scope.register); // $q promises require an $apply
             // then
-            expect($scope.vm.errorEmailExists).toEqual('ERROR');
-            expect($scope.vm.errorUserExists).toBeNull();
-            expect($scope.vm.error).toBeNull();
+            expect($scope.errorEmailExists).toEqual('ERROR');
+            expect($scope.errorUserExists).toBeNull();
+            expect($scope.error).toBeNull();
         });
 
         it('should notify of generic error', function() {
@@ -98,13 +98,13 @@ describe('Controller Tests', function() {
                 status: 503
             }));
             createController();
-            $scope.vm.registerAccount.password = $scope.vm.confirmPassword = 'password';
+            $scope.registerAccount.password = $scope.confirmPassword = 'password';
             // when
-            $scope.$apply($scope.vm.register); // $q promises require an $apply
+            $scope.$apply($scope.register); // $q promises require an $apply
             // then
-            expect($scope.vm.errorUserExists).toBeNull();
-            expect($scope.vm.errorEmailExists).toBeNull();
-            expect($scope.vm.error).toEqual('ERROR');
+            expect($scope.errorUserExists).toBeNull();
+            expect($scope.errorEmailExists).toBeNull();
+            expect($scope.error).toEqual('ERROR');
         });
 
     });

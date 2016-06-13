@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('facilitymgmtApp')
+angular.module('proj2App')
 	.controller('EmployeeDeleteController', function($scope, $uibModalInstance, entity, Employee) {
 
         $scope.employee = entity;

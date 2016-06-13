@@ -26,7 +26,7 @@ describe('Controller Tests', function() {
                 'Auth': MockAuth
             };
             createController = function() {
-                return $injector.get('$controller')('ResetFinishController as vm', locals);
+                return $injector.get('$controller')('ResetFinishController', locals);
             };
         }));
 
@@ -36,10 +36,10 @@ describe('Controller Tests', function() {
             createController();
 
             // then
-            expect($scope.vm.keyMissing).toBeFalsy();
+            expect($scope.keyMissing).toBeFalsy();
 
-            expect($scope.vm.doNotMatch).toBeNull();
-            expect($scope.vm.resetAccount).toEqual({});
+            expect($scope.doNotMatch).toBeNull();
+            expect($scope.resetAccount).toEqual({});
         });
 
         it('registers a timeout handler set set focus', function() {
@@ -54,7 +54,7 @@ describe('Controller Tests', function() {
 
             // then
             expect(MockTimeout).toHaveBeenCalledWith(jasmine.any(Function));
-            expect(MockAngular.element).toHaveBeenCalledWith('#password');
+            expect(MockAngular.element).toHaveBeenCalledWith('[ng-model="resetAccount.password"]');
             expect(MockElement.focus).toHaveBeenCalled();
         });
 

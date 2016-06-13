@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('facilitymgmtApp')
+angular.module('proj2App')
     .config(function ($stateProvider) {
         $stateProvider
             .state('client', {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('facilitymgmtApp')
+angular.module('proj2App')
     .controller('EmployeeController', function ($scope, $state, Employee) {
 
         $scope.employees = [];

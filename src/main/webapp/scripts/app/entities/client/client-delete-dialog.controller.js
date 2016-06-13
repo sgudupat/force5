@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('facilitymgmtApp')
+angular.module('proj2App')
 	.controller('ClientDeleteController', function($scope, $uibModalInstance, entity, Client) {
 
         $scope.client = entity;

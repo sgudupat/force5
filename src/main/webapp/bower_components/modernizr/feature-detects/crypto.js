@@ -1,4 +1,4 @@
-/*!
+﻿/*!
 {
   "name": "Web Cryptography",
   "property": "cryptography",
@@ -7,7 +7,7 @@
   "authors": ["roblarsen"],
   "notes": [{
     "name": "W3C Editor's Draft",
-    "href": "https://www.w3.org/TR/WebCryptoAPI/"
+    "href": "http://www.w3.org/TR/WebCryptoAPI/"
   }],
   "polyfills": [
     "polycrypt"

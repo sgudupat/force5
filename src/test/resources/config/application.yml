@@ -11,15 +11,14 @@
 # ===================================================================
 
 spring:
-    application:
-        name: facilitymgmt
     datasource:
-        url: jdbc:h2:mem:facilitymgmt;DB_CLOSE_DELAY=-1
+        driver-class-name: org.h2.jdbcx.JdbcDataSource
+        url: jdbc:h2:mem:proj2;DB_CLOSE_DELAY=-1
         name:
         username:
         password:
     jpa:
-        database-platform: com.facility.app.domain.util.FixedH2Dialect
+        database-platform: com.force.five.app.domain.util.FixedH2Dialect
         database: H2
         open-in-view: false
         show_sql: true
@@ -60,19 +59,16 @@ jhipster:
         maxPoolSize: 50
         queueCapacity: 10000
     security:
-        rememberMe:
+        rememberme:
             # security key (this key should be unique for your application, and kept secret)
-            key: 813e0137a8b257453b972fe333a87455e9418b91
+            key: ba8e26ef4bad6ae5b19493518ce26118c1c89180
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
     swagger:
-        title: facilitymgmt API
-        description: facilitymgmt API documentation
+        title: proj2 API
+        description: proj2 API documentation
         version: 0.0.1
         termsOfServiceUrl:
-        contactName:
-        contactUrl:
-        contactEmail:
+        contact:
         license:
         licenseUrl:
-        enabled: false

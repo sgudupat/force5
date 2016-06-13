@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('facilitymgmtApp')
+angular.module('proj2App')
     .controller('AssignmentsDetailController', function ($scope, $rootScope, $stateParams, entity, Assignments, Employee, Client) {
         $scope.assignments = entity;
         $scope.load = function (id) {
@@ -8,7 +8,7 @@ angular.module('facilitymgmtApp')
                 $scope.assignments = result;
             });
         };
-        var unsubscribe = $rootScope.$on('facilitymgmtApp:assignmentsUpdate', function(event, result) {
+        var unsubscribe = $rootScope.$on('proj2App:assignmentsUpdate', function(event, result) {
             $scope.assignments = result;
         });
         $scope.$on('$destroy', unsubscribe);

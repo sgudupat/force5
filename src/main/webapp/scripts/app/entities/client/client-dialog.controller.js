@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('facilitymgmtApp').controller('ClientDialogController',
+angular.module('proj2App').controller('ClientDialogController',
     ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Client',
         function($scope, $stateParams, $uibModalInstance, entity, Client) {
 
@@ -12,7 +12,7 @@ angular.module('facilitymgmtApp').controller('ClientDialogController',
         };
 
         var onSaveSuccess = function (result) {
-            $scope.$emit('facilitymgmtApp:clientUpdate', result);
+            $scope.$emit('proj2App:clientUpdate', result);
             $uibModalInstance.close(result);
             $scope.isSaving = false;
         };

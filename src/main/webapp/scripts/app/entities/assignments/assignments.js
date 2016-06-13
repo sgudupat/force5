@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('facilitymgmtApp')
+angular.module('proj2App')
     .config(function ($stateProvider) {
         $stateProvider
             .state('assignments', {
@@ -47,6 +47,35 @@ angular.module('facilitymgmtApp')
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/entities/assignments/assignments-dialog.html',
+                        controller: 'AssignmentsDialogController',
+                        size: 'lg',
+                        resolve: {
+                            entity: function () {
+                                return {
+                                    regularDays: null,
+                                    overtime: null,
+                                    startDate: null,
+                                    endDate: null,
+                                    id: null
+                                };
+                            }
+                        }
+                    }).result.then(function(result) {
+                        $state.go('assignments', null, { reload: true });
+                    }, function() {
+                        $state.go('assignments');
+                    })
+                }]
+            })
+            .state('assignments.report', {
+                parent: 'assignments',
+                url: '/report',
+                data: {
+                    authorities: ['ROLE_USER'],
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'scripts/app/entities/assignments/reports-dialog.html',
                         controller: 'AssignmentsDialogController',
                         size: 'lg',
                         resolve: {

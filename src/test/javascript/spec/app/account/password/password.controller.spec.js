@@ -21,30 +21,30 @@ describe('Controller Tests', function() {
                 'Auth': MockAuth
             };
             createController = function() {
-                $injector.get('$controller')('PasswordController as vm', locals);
+                $injector.get('$controller')('PasswordController', locals);
             }
         }));
 
         it('should show error if passwords do not match', function() {
             //GIVEN
             createController();
-            $scope.vm.password = 'password1';
-            $scope.vm.confirmPassword = 'password2';
+            $scope.password = 'password1';
+            $scope.confirmPassword = 'password2';
             //WHEN
-            $scope.vm.changePassword();
+            $scope.changePassword();
             //THEN
-            expect($scope.vm.doNotMatch).toBe('ERROR');
-            expect($scope.vm.error).toBeNull();
-            expect($scope.vm.success).toBeNull();
+            expect($scope.doNotMatch).toBe('ERROR');
+            expect($scope.error).toBeNull();
+            expect($scope.success).toBeNull();
         });
         it('should call Auth.changePassword when passwords match', function() {
             //GIVEN
             MockAuth.changePassword.and.returnValue($q.resolve());
             createController();
-            $scope.vm.password = $scope.vm.confirmPassword = 'myPassword';
+            $scope.password = $scope.confirmPassword = 'myPassword';
 
             //WHEN
-            $scope.$apply($scope.vm.changePassword);
+            $scope.$apply($scope.changePassword);
 
             //THEN
             expect(MockAuth.changePassword).toHaveBeenCalledWith('myPassword');
@@ -54,30 +54,30 @@ describe('Controller Tests', function() {
             //GIVEN
             MockAuth.changePassword.and.returnValue($q.resolve());
             createController();
-            $scope.vm.password = $scope.vm.confirmPassword = 'myPassword';
+            $scope.password = $scope.confirmPassword = 'myPassword';
 
             //WHEN
-            $scope.$apply($scope.vm.changePassword);
+            $scope.$apply($scope.changePassword);
 
             //THEN
-            expect($scope.vm.doNotMatch).toBeNull();
-            expect($scope.vm.error).toBeNull();
-            expect($scope.vm.success).toBe('OK');
+            expect($scope.doNotMatch).toBeNull();
+            expect($scope.error).toBeNull();
+            expect($scope.success).toBe('OK');
         });
 
         it('should notify of error if change password fails', function() {
             //GIVEN
             MockAuth.changePassword.and.returnValue($q.reject());
             createController();
-            $scope.vm.password = $scope.vm.confirmPassword = 'myPassword';
+            $scope.password = $scope.confirmPassword = 'myPassword';
 
             //WHEN
-            $scope.$apply($scope.vm.changePassword);
+            $scope.$apply($scope.changePassword);
 
             //THEN
-            expect($scope.vm.doNotMatch).toBeNull();
-            expect($scope.vm.success).toBeNull();
-            expect($scope.vm.error).toBe('ERROR');
+            expect($scope.doNotMatch).toBeNull();
+            expect($scope.success).toBeNull();
+            expect($scope.error).toBe('ERROR');
         });
     });
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('facilitymgmtApp')
+angular.module('proj2App')
     .factory('Employee', function ($resource, DateUtils) {
         return $resource('api/employees/:id', {}, {
             'query': { method: 'GET', isArray: true},

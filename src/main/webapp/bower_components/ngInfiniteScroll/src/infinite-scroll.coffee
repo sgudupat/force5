@@ -22,7 +22,6 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$interval', 'THROTTLE
     immediateCheck = true
     useDocumentBottom = false
     unregisterEventListener = null
-    checkInterval = false
 
     height = (elem) ->
       elem = elem[0] or elem
@@ -72,7 +71,6 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$interval', 'THROTTLE
           else
             scope.$apply(scope.infiniteScroll)
       else
-        if checkInterval then $interval.cancel checkInterval
         checkWhenEnabled = false
 
     # The optional THROTTLE_MILLISECONDS configuration value specifies
@@ -200,8 +198,8 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$interval', 'THROTTLE
     if attrs.infiniteScrollImmediateCheck?
       immediateCheck = scope.$eval(attrs.infiniteScrollImmediateCheck)
 
-    checkInterval = $interval (->
+    $interval (->
       if immediateCheck
         handler()
-    ), 0
+    ), 0, 1
 ]
