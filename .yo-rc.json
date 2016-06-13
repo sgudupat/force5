@@ -1,10 +1,8 @@
 {
   "generator-jhipster": {
-    "jhipsterVersion": "3.3.0",
-    "baseName": "facilitymgmt",
-    "packageName": "com.facility.app",
-    "packageFolder": "com/facility/app",
-    "serverPort": "8080",
+    "baseName": "proj2",
+    "packageName": "com.force.five.app",
+    "packageFolder": "com/force/five/app",
     "authenticationType": "session",
     "hibernateCache": "no",
     "clusteredHttpSession": "no",
@@ -13,15 +11,14 @@
     "devDatabaseType": "mysql",
     "prodDatabaseType": "mysql",
     "searchEngine": "no",
-    "buildTool": "maven",
-    "enableSocialSignIn": false,
-    "rememberMeKey": "813e0137a8b257453b972fe333a87455e9418b91",
     "useSass": false,
-    "applicationType": "monolith",
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "enableTranslation": false,
+    "enableSocialSignIn": false,
+    "rememberMeKey": "ba8e26ef4bad6ae5b19493518ce26118c1c89180",
     "testFrameworks": [
       "gatling"
-    ],
-    "jhiPrefix": "jhi",
-    "enableTranslation": false
+    ]
   }
 }
