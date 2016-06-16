@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.force.five.app</groupId>
-    <artifactId>proj2</artifactId>
+    <artifactId>force5</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>proj2</name>
+    <name>force5</name>
 
     <repositories>
         <repository>
