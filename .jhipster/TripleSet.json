@@ -1,0 +1,29 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "control",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "parent",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "child",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "config",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160614133416",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "pagination": "no"
+}

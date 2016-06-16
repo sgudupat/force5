@@ -1,0 +1,54 @@
+
+<div>
+    <h2><span>TripleSet</span> {{tripleSet.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>Control</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{tripleSet.control}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Parent</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{tripleSet.parent}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Child</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{tripleSet.child}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Config</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{tripleSet.config}}</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>
