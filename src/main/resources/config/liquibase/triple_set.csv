@@ -1,0 +1,9 @@
+control;parent;child
+EMPLOYEE_TYPE;HouseKeeping Supervisor;1
+EMPLOYEE_TYPE;House Keeper;2
+EMPLOYEE_TYPE;Office Boy;3
+EMPLOYEE_TYPE;Security Officer;4
+EMPLOYEE_TYPE;Asst.Security Officer;5
+EMPLOYEE_TYPE;HeadGuard;6
+EMPLOYEE_TYPE;Supervisor;7
+EMPLOYEE_TYPE;Guard;8
