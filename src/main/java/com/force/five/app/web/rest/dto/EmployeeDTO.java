@@ -16,6 +16,9 @@ public class EmployeeDTO implements Serializable {
     private String name;
 
 
+    private String category;
+
+
     private BigDecimal basic;
 
 
@@ -59,6 +62,13 @@ public class EmployeeDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
     public BigDecimal getBasic() {
         return basic;
@@ -157,6 +167,7 @@ public class EmployeeDTO implements Serializable {
         return "EmployeeDTO{" +
             "id=" + id +
             ", name='" + name + "'" +
+            ", category='" + category + "'" +
             ", basic='" + basic + "'" +
             ", allowances='" + allowances + "'" +
             ", startDate='" + startDate + "'" +

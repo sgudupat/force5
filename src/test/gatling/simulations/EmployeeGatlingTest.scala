@@ -67,7 +67,7 @@ class EmployeeGatlingTest extends Simulation {
             .exec(http("Create new employee")
             .post("/api/employees")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "basic":null, "allowances":null, "startDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z", "mobile":null, "mobile2":null, "address":"SAMPLE_TEXT", "city":"SAMPLE_TEXT", "state":"SAMPLE_TEXT", "zipcode":null}""")).asJSON
+            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "category":"SAMPLE_TEXT", "basic":null, "allowances":null, "startDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z", "mobile":null, "mobile2":null, "address":"SAMPLE_TEXT", "city":"SAMPLE_TEXT", "state":"SAMPLE_TEXT", "zipcode":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_employee_url")))
             .pause(10)

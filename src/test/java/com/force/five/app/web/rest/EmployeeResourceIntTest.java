@@ -53,6 +53,8 @@ public class EmployeeResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAA";
     private static final String UPDATED_NAME = "BBBBB";
+    private static final String DEFAULT_CATEGORY = "AAAAA";
+    private static final String UPDATED_CATEGORY = "BBBBB";
 
     private static final BigDecimal DEFAULT_BASIC = new BigDecimal(1);
     private static final BigDecimal UPDATED_BASIC = new BigDecimal(2);
@@ -117,6 +119,7 @@ public class EmployeeResourceIntTest {
     public void initTest() {
         employee = new Employee();
         employee.setName(DEFAULT_NAME);
+        employee.setCategory(DEFAULT_CATEGORY);
         employee.setBasic(DEFAULT_BASIC);
         employee.setAllowances(DEFAULT_ALLOWANCES);
         employee.setStartDate(DEFAULT_START_DATE);
@@ -147,6 +150,7 @@ public class EmployeeResourceIntTest {
         assertThat(employees).hasSize(databaseSizeBeforeCreate + 1);
         Employee testEmployee = employees.get(employees.size() - 1);
         assertThat(testEmployee.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testEmployee.getCategory()).isEqualTo(DEFAULT_CATEGORY);
         assertThat(testEmployee.getBasic()).isEqualTo(DEFAULT_BASIC);
         assertThat(testEmployee.getAllowances()).isEqualTo(DEFAULT_ALLOWANCES);
         assertThat(testEmployee.getStartDate()).isEqualTo(DEFAULT_START_DATE);
@@ -171,6 +175,7 @@ public class EmployeeResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(employee.getId().intValue())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+                .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY.toString())))
                 .andExpect(jsonPath("$.[*].basic").value(hasItem(DEFAULT_BASIC.intValue())))
                 .andExpect(jsonPath("$.[*].allowances").value(hasItem(DEFAULT_ALLOWANCES.intValue())))
                 .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE_STR)))
@@ -195,6 +200,7 @@ public class EmployeeResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(employee.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.category").value(DEFAULT_CATEGORY.toString()))
             .andExpect(jsonPath("$.basic").value(DEFAULT_BASIC.intValue()))
             .andExpect(jsonPath("$.allowances").value(DEFAULT_ALLOWANCES.intValue()))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE_STR))
@@ -225,6 +231,7 @@ public class EmployeeResourceIntTest {
 
         // Update the employee
         employee.setName(UPDATED_NAME);
+        employee.setCategory(UPDATED_CATEGORY);
         employee.setBasic(UPDATED_BASIC);
         employee.setAllowances(UPDATED_ALLOWANCES);
         employee.setStartDate(UPDATED_START_DATE);
@@ -247,6 +254,7 @@ public class EmployeeResourceIntTest {
         assertThat(employees).hasSize(databaseSizeBeforeUpdate);
         Employee testEmployee = employees.get(employees.size() - 1);
         assertThat(testEmployee.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testEmployee.getCategory()).isEqualTo(UPDATED_CATEGORY);
         assertThat(testEmployee.getBasic()).isEqualTo(UPDATED_BASIC);
         assertThat(testEmployee.getAllowances()).isEqualTo(UPDATED_ALLOWANCES);
         assertThat(testEmployee.getStartDate()).isEqualTo(UPDATED_START_DATE);

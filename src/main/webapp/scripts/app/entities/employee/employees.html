@@ -20,6 +20,7 @@
                 <tr>
                     <th><span>ID</span></th>
                     <th><span>Name</span></th>
+                    <th><span>Category</span></th>
                     <th><span>Basic</span></th>
                     <th><span>Allowances</span></th>
                     <th><span>StartDate</span></th>
@@ -37,6 +38,7 @@
                 <tr ng-repeat="employee in employees track by employee.id">
                     <td><a ui-sref="employee.detail({id:employee.id})">{{employee.id}}</a></td>
                     <td>{{employee.name}}</td>
+                    <td>{{employee.category}}</td>
                     <td>{{employee.basic}}</td>
                     <td>{{employee.allowances}}</td>
                     <td>{{employee.startDate | date:'medium'}}</td>

@@ -21,6 +21,9 @@ public class Employee implements Serializable {
     @Column(name = "name")
     private String name;
     
+    @Column(name = "category")
+    private String category;
+    
     @Column(name = "basic", precision=10, scale=2)
     private BigDecimal basic;
     
@@ -65,6 +68,14 @@ public class Employee implements Serializable {
     
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+    
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public BigDecimal getBasic() {
@@ -172,6 +183,7 @@ public class Employee implements Serializable {
         return "Employee{" +
             "id=" + id +
             ", name='" + name + "'" +
+            ", category='" + category + "'" +
             ", basic='" + basic + "'" +
             ", allowances='" + allowances + "'" +
             ", startDate='" + startDate + "'" +

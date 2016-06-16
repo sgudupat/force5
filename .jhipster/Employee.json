@@ -8,51 +8,56 @@
         },
         {
             "fieldId": 2,
+            "fieldName": "category",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 3,
             "fieldName": "basic",
             "fieldType": "BigDecimal"
         },
         {
-            "fieldId": 3,
+            "fieldId": 4,
             "fieldName": "allowances",
             "fieldType": "BigDecimal"
         },
         {
-            "fieldId": 4,
+            "fieldId": 5,
             "fieldName": "startDate",
             "fieldType": "ZonedDateTime"
         },
         {
-            "fieldId": 5,
+            "fieldId": 6,
             "fieldName": "endDate",
             "fieldType": "ZonedDateTime"
         },
         {
-            "fieldId": 6,
+            "fieldId": 7,
             "fieldName": "mobile",
             "fieldType": "Long"
         },
         {
-            "fieldId": 7,
+            "fieldId": 8,
             "fieldName": "mobile2",
             "fieldType": "Long"
         },
         {
-            "fieldId": 8,
+            "fieldId": 9,
             "fieldName": "address",
             "fieldType": "String"
         },
         {
-            "fieldId": 9,
+            "fieldId": 10,
             "fieldName": "city",
             "fieldType": "String"
         },
         {
-            "fieldId": 10,
+            "fieldId": 11,
             "fieldName": "state",
             "fieldType": "String"
         },
         {
-            "fieldId": 11,
+            "fieldId": 12,
             "fieldName": "zipcode",
             "fieldType": "Long"
         }
