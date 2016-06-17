@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('proj2App').controller('EmployeeDialogController',
-    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Employee',
-        function($scope, $stateParams, $uibModalInstance, entity, Employee) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Employee', 'TripleSet', 
+        function($scope, $stateParams, $uibModalInstance, entity, Employee, TripleSet) {
 
         $scope.employee = entity;
+        $scope.categories = TripleSet.query();
         $scope.load = function(id) {
             Employee.get({id : id}, function(result) {
                 $scope.employee = result;
