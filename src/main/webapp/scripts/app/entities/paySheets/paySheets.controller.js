@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('proj2App')
-    .controller('AssignmentsController', function ($scope, $state, Assignments) {
+    .controller('PaySheetsController', function ($scope, $state, PaySheets) {
 
-        $scope.assignmentss = [];
+        $scope.paySheetss = [];
         $scope.loadAll = function() {
-            Assignments.query(function(result) {
-               $scope.assignmentss = result;
+            PaySheets.query(function(result) {
+               $scope.paySheetss = result;
             });
         };
         $scope.loadAll();
@@ -18,7 +18,9 @@ angular.module('proj2App')
         };
 
         $scope.clear = function () {
-            $scope.assignments = {
+            $scope.paySheets = {
+                regularDays: null,
+                overtime: null,
                 startDate: null,
                 endDate: null,
                 id: null

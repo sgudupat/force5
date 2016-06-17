@@ -14,37 +14,34 @@
     <property name="floatType" value="float" dbms="mysql, oracle"/>
 
     <!--
-        Added the entity Assignments.
+        Added the entity PaySheets.
     -->
-    <changeSet id="20160608085130" author="jhipster">
-        <createTable tableName="assignments">
+    <changeSet id="20160617113431" author="jhipster">
+        <createTable tableName="pay_sheets">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="regular_days" type="integer"/>
+            
+            <column name="overtime" type="integer"/>
+            
             <column name="start_date" type="timestamp"/>
             
             <column name="end_date" type="timestamp"/>
             
             <column name="employee_id" type="bigint"/>
-            <column name="client_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="assignments" columnName="start_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="pay_sheets" columnName="start_date" columnDataType="datetime"/>
 
-        <dropDefaultValue tableName="assignments" columnName="end_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="pay_sheets" columnName="end_date" columnDataType="datetime"/>
 
         
         <addForeignKeyConstraint baseColumnNames="employee_id"
-                                 baseTableName="assignments"
-                                 constraintName="fk_assignments_employee_id"
+                                 baseTableName="pay_sheets"
+                                 constraintName="fk_paysheets_employee_id"
                                  referencedColumnNames="id"
                                  referencedTableName="employee"/>
-
-        <addForeignKeyConstraint baseColumnNames="client_id"
-                                 baseTableName="assignments"
-                                 constraintName="fk_assignments_client_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="client"/>
 
     </changeSet>
 </databaseChangeLog>

@@ -1,38 +1,32 @@
-package com.force.five.app.domain;
+package com.force.five.app.web.rest.dto;
 
 import java.time.ZonedDateTime;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
-/**
- * A Assignments.
- */
-@Entity
-@Table(name = "assignments")
-public class Assignments implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+/**
+ * A DTO for the PaySheets entity.
+ */
+public class PaySheetsDTO implements Serializable {
+
     private Long id;
 
-    @Column(name = "start_date")
+    private Integer regularDays;
+
+
+    private Integer overtime;
+
+
     private ZonedDateTime startDate;
-    
-    @Column(name = "end_date")
+
+
     private ZonedDateTime endDate;
-    
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
 
+    private Long employeeId;
     public Long getId() {
         return id;
     }
@@ -40,39 +34,42 @@ public class Assignments implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    public Integer getRegularDays() {
+        return regularDays;
+    }
 
+    public void setRegularDays(Integer regularDays) {
+        this.regularDays = regularDays;
+    }
+    public Integer getOvertime() {
+        return overtime;
+    }
+
+    public void setOvertime(Integer overtime) {
+        this.overtime = overtime;
+    }
     public ZonedDateTime getStartDate() {
         return startDate;
     }
-    
+
     public void setStartDate(ZonedDateTime startDate) {
         this.startDate = startDate;
     }
-
     public ZonedDateTime getEndDate() {
         return endDate;
     }
-    
+
     public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -81,11 +78,12 @@ public class Assignments implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Assignments assignments = (Assignments) o;
-        if(assignments.id == null || id == null) {
-            return false;
-        }
-        return Objects.equals(id, assignments.id);
+
+        PaySheetsDTO paySheetsDTO = (PaySheetsDTO) o;
+
+        if ( ! Objects.equals(id, paySheetsDTO.id)) return false;
+
+        return true;
     }
 
     @Override
@@ -95,8 +93,10 @@ public class Assignments implements Serializable {
 
     @Override
     public String toString() {
-        return "Assignments{" +
+        return "PaySheetsDTO{" +
             "id=" + id +
+            ", regularDays='" + regularDays + "'" +
+            ", overtime='" + overtime + "'" +
             ", startDate='" + startDate + "'" +
             ", endDate='" + endDate + "'" +
             '}';

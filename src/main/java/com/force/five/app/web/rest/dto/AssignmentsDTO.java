@@ -14,12 +14,6 @@ public class AssignmentsDTO implements Serializable {
 
     private Long id;
 
-    private Integer regularDays;
-
-
-    private Integer overtime;
-
-
     private ZonedDateTime startDate;
 
 
@@ -34,20 +28,6 @@ public class AssignmentsDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-    public Integer getRegularDays() {
-        return regularDays;
-    }
-
-    public void setRegularDays(Integer regularDays) {
-        this.regularDays = regularDays;
-    }
-    public Integer getOvertime() {
-        return overtime;
-    }
-
-    public void setOvertime(Integer overtime) {
-        this.overtime = overtime;
     }
     public ZonedDateTime getStartDate() {
         return startDate;
@@ -103,8 +83,6 @@ public class AssignmentsDTO implements Serializable {
     public String toString() {
         return "AssignmentsDTO{" +
             "id=" + id +
-            ", regularDays='" + regularDays + "'" +
-            ", overtime='" + overtime + "'" +
             ", startDate='" + startDate + "'" +
             ", endDate='" + endDate + "'" +
             '}';

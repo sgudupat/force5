@@ -9,16 +9,22 @@ import java.util.Set;
 import java.util.Objects;
 
 /**
- * A Assignments.
+ * A PaySheets.
  */
 @Entity
-@Table(name = "assignments")
-public class Assignments implements Serializable {
+@Table(name = "pay_sheets")
+public class PaySheets implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "regular_days")
+    private Integer regularDays;
+    
+    @Column(name = "overtime")
+    private Integer overtime;
+    
     @Column(name = "start_date")
     private ZonedDateTime startDate;
     
@@ -29,16 +35,28 @@ public class Assignments implements Serializable {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getRegularDays() {
+        return regularDays;
+    }
+    
+    public void setRegularDays(Integer regularDays) {
+        this.regularDays = regularDays;
+    }
+
+    public Integer getOvertime() {
+        return overtime;
+    }
+    
+    public void setOvertime(Integer overtime) {
+        this.overtime = overtime;
     }
 
     public ZonedDateTime getStartDate() {
@@ -65,14 +83,6 @@ public class Assignments implements Serializable {
         this.employee = employee;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -81,11 +91,11 @@ public class Assignments implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Assignments assignments = (Assignments) o;
-        if(assignments.id == null || id == null) {
+        PaySheets paySheets = (PaySheets) o;
+        if(paySheets.id == null || id == null) {
             return false;
         }
-        return Objects.equals(id, assignments.id);
+        return Objects.equals(id, paySheets.id);
     }
 
     @Override
@@ -95,8 +105,10 @@ public class Assignments implements Serializable {
 
     @Override
     public String toString() {
-        return "Assignments{" +
+        return "PaySheets{" +
             "id=" + id +
+            ", regularDays='" + regularDays + "'" +
+            ", overtime='" + overtime + "'" +
             ", startDate='" + startDate + "'" +
             ", endDate='" + endDate + "'" +
             '}';

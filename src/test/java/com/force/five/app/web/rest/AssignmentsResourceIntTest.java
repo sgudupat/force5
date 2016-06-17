@@ -51,12 +51,6 @@ public class AssignmentsResourceIntTest {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.of("Z"));
 
 
-    private static final Integer DEFAULT_REGULAR_DAYS = 1;
-    private static final Integer UPDATED_REGULAR_DAYS = 2;
-
-    private static final Integer DEFAULT_OVERTIME = 1;
-    private static final Integer UPDATED_OVERTIME = 2;
-
     private static final ZonedDateTime DEFAULT_START_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
     private static final ZonedDateTime UPDATED_START_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
     private static final String DEFAULT_START_DATE_STR = dateTimeFormatter.format(DEFAULT_START_DATE);
@@ -98,8 +92,6 @@ public class AssignmentsResourceIntTest {
     @Before
     public void initTest() {
         assignments = new Assignments();
-        assignments.setRegularDays(DEFAULT_REGULAR_DAYS);
-        assignments.setOvertime(DEFAULT_OVERTIME);
         assignments.setStartDate(DEFAULT_START_DATE);
         assignments.setEndDate(DEFAULT_END_DATE);
     }
@@ -121,8 +113,6 @@ public class AssignmentsResourceIntTest {
         List<Assignments> assignmentss = assignmentsRepository.findAll();
         assertThat(assignmentss).hasSize(databaseSizeBeforeCreate + 1);
         Assignments testAssignments = assignmentss.get(assignmentss.size() - 1);
-        assertThat(testAssignments.getRegularDays()).isEqualTo(DEFAULT_REGULAR_DAYS);
-        assertThat(testAssignments.getOvertime()).isEqualTo(DEFAULT_OVERTIME);
         assertThat(testAssignments.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testAssignments.getEndDate()).isEqualTo(DEFAULT_END_DATE);
     }
@@ -138,8 +128,6 @@ public class AssignmentsResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(assignments.getId().intValue())))
-                .andExpect(jsonPath("$.[*].regularDays").value(hasItem(DEFAULT_REGULAR_DAYS)))
-                .andExpect(jsonPath("$.[*].overtime").value(hasItem(DEFAULT_OVERTIME)))
                 .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE_STR)))
                 .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE_STR)));
     }
@@ -155,8 +143,6 @@ public class AssignmentsResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(assignments.getId().intValue()))
-            .andExpect(jsonPath("$.regularDays").value(DEFAULT_REGULAR_DAYS))
-            .andExpect(jsonPath("$.overtime").value(DEFAULT_OVERTIME))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE_STR))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE_STR));
     }
@@ -178,8 +164,6 @@ public class AssignmentsResourceIntTest {
 		int databaseSizeBeforeUpdate = assignmentsRepository.findAll().size();
 
         // Update the assignments
-        assignments.setRegularDays(UPDATED_REGULAR_DAYS);
-        assignments.setOvertime(UPDATED_OVERTIME);
         assignments.setStartDate(UPDATED_START_DATE);
         assignments.setEndDate(UPDATED_END_DATE);
         AssignmentsDTO assignmentsDTO = assignmentsMapper.assignmentsToAssignmentsDTO(assignments);
@@ -193,8 +177,6 @@ public class AssignmentsResourceIntTest {
         List<Assignments> assignmentss = assignmentsRepository.findAll();
         assertThat(assignmentss).hasSize(databaseSizeBeforeUpdate);
         Assignments testAssignments = assignmentss.get(assignmentss.size() - 1);
-        assertThat(testAssignments.getRegularDays()).isEqualTo(UPDATED_REGULAR_DAYS);
-        assertThat(testAssignments.getOvertime()).isEqualTo(UPDATED_OVERTIME);
         assertThat(testAssignments.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testAssignments.getEndDate()).isEqualTo(UPDATED_END_DATE);
     }

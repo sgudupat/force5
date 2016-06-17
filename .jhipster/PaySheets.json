@@ -6,29 +6,31 @@
             "otherEntityName": "employee",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
-        },
-        {
-            "relationshipId": 2,
-            "relationshipName": "client",
-            "otherEntityName": "client",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
         }
     ],
     "fields": [
-       
         {
             "fieldId": 1,
+            "fieldName": "regularDays",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "overtime",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 3,
             "fieldName": "startDate",
             "fieldType": "ZonedDateTime"
         },
         {
-            "fieldId": 2,
+            "fieldId": 4,
             "fieldName": "endDate",
             "fieldType": "ZonedDateTime"
         }
     ],
-    "changelogDate": "20160608085130",
+    "changelogDate": "20160617113431",
     "dto": "mapstruct",
     "service": "serviceImpl",
     "pagination": "no"

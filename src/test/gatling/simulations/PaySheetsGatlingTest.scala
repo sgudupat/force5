@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.duration._
 
 /**
- * Performance test for the Assignments entity.
+ * Performance test for the PaySheets entity.
  */
-class AssignmentsGatlingTest extends Simulation {
+class PaySheetsGatlingTest extends Simulation {
 
     val context: LoggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
     // Log all HTTP requests
@@ -37,7 +37,7 @@ class AssignmentsGatlingTest extends Simulation {
         "X-CSRF-TOKEN" -> "${csrf_token}"
     )
 
-    val scn = scenario("Test the Assignments entity")
+    val scn = scenario("Test the PaySheets entity")
         .exec(http("First unauthenticated request")
         .get("/api/account")
         .headers(headers_http)
@@ -59,26 +59,26 @@ class AssignmentsGatlingTest extends Simulation {
         .check(headerRegex("Set-Cookie", "CSRF-TOKEN=(.*); [P,p]ath=/").saveAs("csrf_token")))
         .pause(10)
         .repeat(2) {
-            exec(http("Get all assignmentss")
-            .get("/api/assignmentss")
+            exec(http("Get all paySheetss")
+            .get("/api/paySheetss")
             .headers(headers_http_authenticated)
             .check(status.is(200)))
             .pause(10 seconds, 20 seconds)
-            .exec(http("Create new assignments")
-            .post("/api/assignmentss")
+            .exec(http("Create new paySheets")
+            .post("/api/paySheetss")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "startDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{"id":null, "regularDays":"0", "overtime":"0", "startDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z"}""")).asJSON
             .check(status.is(201))
-            .check(headerRegex("Location", "(.*)").saveAs("new_assignments_url")))
+            .check(headerRegex("Location", "(.*)").saveAs("new_paySheets_url")))
             .pause(10)
             .repeat(5) {
-                exec(http("Get created assignments")
-                .get("${new_assignments_url}")
+                exec(http("Get created paySheets")
+                .get("${new_paySheets_url}")
                 .headers(headers_http_authenticated))
                 .pause(10)
             }
-            .exec(http("Delete created assignments")
-            .delete("${new_assignments_url}")
+            .exec(http("Delete created paySheets")
+            .delete("${new_paySheets_url}")
             .headers(headers_http_authenticated))
             .pause(10)
         }

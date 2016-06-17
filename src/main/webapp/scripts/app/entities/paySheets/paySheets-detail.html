@@ -1,6 +1,6 @@
 
 <div>
-    <h2><span>Assignments</span> {{assignments.id}}</h2>
+    <h2><span>PaySheets</span> {{paySheets.id}}</h2>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -12,10 +12,26 @@
             <tbody>
             <tr>
                 <td>
+                    <span>RegularDays</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{paySheets.regularDays}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Overtime</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{paySheets.overtime}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <span>StartDate</span>
                 </td>
                 <td>
-                    <span class="form-control-static">{{assignments.startDate | date:'medium'}}</span>
+                    <span class="form-control-static">{{paySheets.startDate | date:'medium'}}</span>
                 </td>
             </tr>
             <tr>
@@ -23,7 +39,7 @@
                     <span>EndDate</span>
                 </td>
                 <td>
-                    <span class="form-control-static">{{assignments.endDate | date:'medium'}}</span>
+                    <span class="form-control-static">{{paySheets.endDate | date:'medium'}}</span>
                 </td>
             </tr>
             <tr>
@@ -31,15 +47,7 @@
                     <span>employee</span>
                 </td>
                 <td>
-                    <a class="form-control-static" ui-sref="employee.detail({id:assignments.employeeId})">{{assignments.employeeId}}</a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span>client</span>
-                </td>
-                <td>
-                    <a class="form-control-static" ui-sref="client.detail({id:assignments.clientId})">{{assignments.clientId}}</a>
+                    <a class="form-control-static" ui-sref="employee.detail({id:paySheets.employeeId})">{{paySheets.employeeId}}</a>
                 </td>
             </tr>
             </tbody>
