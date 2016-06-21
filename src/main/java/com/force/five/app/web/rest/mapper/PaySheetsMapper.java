@@ -12,7 +12,9 @@ import org.mapstruct.*;
 public interface PaySheetsMapper {
 
     @Mapping(source = "employee.id", target = "employeeId")
+    @Mapping(source = "employee.name", target = "employeeName")
     PaySheetsDTO paySheetsToPaySheetsDTO(PaySheets paySheets);
+
 
     @Mapping(source = "employeeId", target = "employee")
     PaySheets paySheetsDTOToPaySheets(PaySheetsDTO paySheetsDTO);

@@ -16,17 +16,17 @@ public class PaySheetsDTO implements Serializable {
 
     private Integer regularDays;
 
-
     private Integer overtime;
-
 
     private ZonedDateTime startDate;
 
-
     private ZonedDateTime endDate;
+    
+     private Long employeeId;
 
+    private String employeeName;
+    
 
-    private Long employeeId;
     public Long getId() {
         return id;
     }
@@ -70,6 +70,8 @@ public class PaySheetsDTO implements Serializable {
     public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
+    
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -86,7 +88,16 @@ public class PaySheetsDTO implements Serializable {
         return true;
     }
 
-    @Override
+    
+    public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	@Override
     public int hashCode() {
         return Objects.hashCode(id);
     }
@@ -99,6 +110,7 @@ public class PaySheetsDTO implements Serializable {
             ", overtime='" + overtime + "'" +
             ", startDate='" + startDate + "'" +
             ", endDate='" + endDate + "'" +
+            ", employeeName='" + employeeName + "'" +
             '}';
     }
 }
