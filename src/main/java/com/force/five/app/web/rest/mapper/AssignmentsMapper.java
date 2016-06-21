@@ -13,6 +13,8 @@ public interface AssignmentsMapper {
 
     @Mapping(source = "employee.id", target = "employeeId")
     @Mapping(source = "client.id", target = "clientId")
+    @Mapping(source = "employee.name", target = "employeeName")
+    @Mapping(source = "client.name", target = "clientName")
     AssignmentsDTO assignmentsToAssignmentsDTO(Assignments assignments);
 
     @Mapping(source = "employeeId", target = "employee")

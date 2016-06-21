@@ -16,12 +16,16 @@ public class AssignmentsDTO implements Serializable {
 
     private ZonedDateTime startDate;
 
-
     private ZonedDateTime endDate;
 
-
     private Long employeeId;
+
     private Long clientId;
+    
+    private String employeeName;
+    
+    private String clientName;
+
     public Long getId() {
         return id;
     }
@@ -58,6 +62,7 @@ public class AssignmentsDTO implements Serializable {
     public void setClientId(Long clientId) {
         this.clientId = clientId;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -74,17 +79,33 @@ public class AssignmentsDTO implements Serializable {
         return true;
     }
 
-    @Override
+    public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	public String getClientName() {
+		return clientName;
+	}
+
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
+	}
+
+	@Override
     public int hashCode() {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "AssignmentsDTO{" +
-            "id=" + id +
-            ", startDate='" + startDate + "'" +
-            ", endDate='" + endDate + "'" +
-            '}';
-    }
+	@Override
+	public String toString() {
+		return "AssignmentsDTO [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", employeeId="
+				+ employeeId + ", clientId=" + clientId + ", employeeName=" + employeeName + ", clientName="
+				+ clientName + "]";
+	}
+
+    
 }

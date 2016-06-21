@@ -32,10 +32,10 @@
                     <td>{{assignments.startDate | date:'medium'}}</td>
                     <td>{{assignments.endDate | date:'medium'}}</td>
                     <td>
-                        <a ui-sref="employee.detail({id:assignments.employeeId})">{{assignments.employeeId}}</a>
+                        <a ui-sref="employee.detail({id:assignments.employeeId})">{{assignments.employeeName}}</a>
                     </td>
                     <td>
-                        <a ui-sref="client.detail({id:assignments.clientId})">{{assignments.clientId}}</a>
+                        <a ui-sref="client.detail({id:assignments.clientId})">{{assignments.clientName}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
