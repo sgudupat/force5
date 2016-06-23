@@ -84,6 +84,25 @@
                         </li>
                     </ul>
                 </li>
+                <li ng-class="{active: vm.$state.includes('reports')}" ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
+                    <a class="dropdown-toggle" uib-dropdown-toggle href="" id="reports-menu">
+                        <span>
+                            <span class="glyphicon glyphicon-tower"></span>
+                            <span class="hidden-sm">
+                                Reports
+                            </span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                        <li ui-sref-active="active">
+                            <a ui-sref="salarySheets" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-user"></span>&nbsp;
+                                <span>Salary Sheets</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="admin-menu">
                         <span>
@@ -92,7 +111,7 @@
                             <b class="caret"></b>
                         </span>
                     </a>
-                    <ul class="dropdown-menu" uib-dropdown-menu>
+                   <ul class="dropdown-menu" uib-dropdown-menu>
                         <li ui-sref-active="active">
                             <a ui-sref="user-management" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-user"></span>&nbsp;
@@ -135,6 +154,7 @@
                                 <span>API</span>
                             </a>
                         </li>
+                        
                         <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
                     </ul>
                 </li>
