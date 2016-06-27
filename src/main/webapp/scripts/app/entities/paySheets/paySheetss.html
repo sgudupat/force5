@@ -6,7 +6,7 @@
             <div class="col-xs-4 no-padding-left">
                 <button class="btn btn-primary" ui-sref="paySheets.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span 
+                    <span
                        >Create new PaySheets
                     </span>
                 </button>
@@ -19,29 +19,27 @@
             <thead>
                 <tr>
                     <th><span>ID</span></th>
+                    <th><span>Employee</span></th>
                     <th><span>RegularDays</span></th>
                     <th><span>Overtime</span></th>
                     <th><span>StartDate</span></th>
                     <th><span>EndDate</span></th>
-                    <th><span>employee</span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="paySheets in paySheetss track by paySheets.id">
                     <td><a ui-sref="paySheets.detail({id:paySheets.id})">{{paySheets.id}}</a></td>
+                    <td><a ui-sref="employee.detail({id:paySheets.employeeId})">{{paySheets.employeeName}}</a></td>
                     <td>{{paySheets.regularDays}}</td>
                     <td>{{paySheets.overtime}}</td>
                     <td>{{paySheets.startDate | date:'medium'}}</td>
                     <td>{{paySheets.endDate | date:'medium'}}</td>
-                    <td>
-                        <a ui-sref="employee.detail({id:paySheets.employeeId})">{{paySheets.employeeName}}</a>
-                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
                                     ui-sref="paySheets.detail({id:paySheets.id})"
-                                    class="btn btn-info btn-sm"> 
+                                    class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-xs hidden-sm"></span>
                             </button>
@@ -53,7 +51,7 @@
                             </button>
                             <button type="submit"
                                     ui-sref="paySheets.delete({id:paySheets.id})"
-                                    class="btn btn-danger btn-sm">                                    
+                                    class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm"></span>
                             </button>
