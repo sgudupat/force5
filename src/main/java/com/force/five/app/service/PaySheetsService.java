@@ -1,5 +1,6 @@
 package com.force.five.app.service;
 
+import com.force.five.app.domain.EmployeeSalarySheet;
 import com.force.five.app.domain.PaySheets;
 import com.force.five.app.web.rest.dto.PaySheetsDTO;
 
@@ -33,4 +34,7 @@ public interface PaySheetsService {
      *  delete the "id" paySheets.
      */
     public void delete(Long id);
+
+
+    List<EmployeeSalarySheet> getPaysheetRecords(String clientName, String month, String year);
 }
