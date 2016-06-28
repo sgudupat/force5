@@ -54,8 +54,6 @@ angular.module('proj2App')
                                 return {
                                     regularDays: null,
                                     overtime: null,
-                                    startDate: null,
-                                    endDate: null,
                                     id: null
                                 };
                             }

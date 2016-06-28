@@ -20,10 +20,10 @@ spring:
             enabled: false # we use Grunt + BrowserSync for livereload
     datasource:
         driver-class-name: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
-        url: jdbc:mysql://localhost:3306/proj2?useUnicode=true&characterEncoding=utf8
+        url: jdbc:mysql://localhost:3306/proj3?useUnicode=true&characterEncoding=utf8
         name:
         username: root
-        password: MySQL@1
+        password: root
     jpa:
         database-platform: org.hibernate.dialect.MySQLInnoDBDialect
         database: MYSQL
@@ -43,7 +43,7 @@ liquibase:
     contexts: dev
 
 server:
-    port: 8081
+    port: 8080
 
 # ===================================================================
 # JHipster specific properties
@@ -56,7 +56,7 @@ jhipster:
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: proj2@localhost
+        from: proj3@localhost
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         spark:
@@ -67,4 +67,4 @@ jhipster:
             enabled: false
             host: localhost
             port: 2003
-            prefix: proj2
+            prefix: proj3

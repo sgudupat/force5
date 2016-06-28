@@ -67,7 +67,7 @@ class PaySheetsGatlingTest extends Simulation {
             .exec(http("Create new paySheets")
             .post("/api/paySheetss")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "regularDays":"0", "overtime":"0", "startDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{"id":null, "regularDays":"0", "overtime":"0"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_paySheets_url")))
             .pause(10)

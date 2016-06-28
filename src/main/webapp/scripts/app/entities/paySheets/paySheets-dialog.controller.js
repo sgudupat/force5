@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('proj2App').controller('PaySheetsDialogController',
-    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'PaySheets', 'Employee',
-        function($scope, $stateParams, $uibModalInstance, entity, PaySheets, Employee) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'PaySheets', 'Assignments',
+        function($scope, $stateParams, $uibModalInstance, entity, PaySheets, Assignments) {
 
         $scope.paySheets = entity;
-        $scope.employees = Employee.query();
+        $scope.assignmentss = Assignments.query();
         $scope.load = function(id) {
             PaySheets.get({id : id}, function(result) {
                 $scope.paySheets = result;
@@ -33,23 +33,5 @@ angular.module('proj2App').controller('PaySheetsDialogController',
 
         $scope.clear = function() {
             $uibModalInstance.dismiss('cancel');
-        };
-        $scope.datePickerForStartDate = {};
-
-        $scope.datePickerForStartDate.status = {
-            opened: false
-        };
-
-        $scope.datePickerForStartDateOpen = function($event) {
-            $scope.datePickerForStartDate.status.opened = true;
-        };
-        $scope.datePickerForEndDate = {};
-
-        $scope.datePickerForEndDate.status = {
-            opened: false
-        };
-
-        $scope.datePickerForEndDateOpen = function($event) {
-            $scope.datePickerForEndDate.status.opened = true;
         };
 }]);

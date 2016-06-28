@@ -25,23 +25,15 @@
             
             <column name="overtime" type="integer"/>
             
-            <column name="start_date" type="timestamp"/>
-            
-            <column name="end_date" type="timestamp"/>
-            
-            <column name="employee_id" type="bigint"/>
+            <column name="assignments_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="pay_sheets" columnName="start_date" columnDataType="datetime"/>
-
-        <dropDefaultValue tableName="pay_sheets" columnName="end_date" columnDataType="datetime"/>
-
         
-        <addForeignKeyConstraint baseColumnNames="employee_id"
+        <addForeignKeyConstraint baseColumnNames="assignments_id"
                                  baseTableName="pay_sheets"
-                                 constraintName="fk_paysheets_employee_id"
+                                 constraintName="fk_paysheets_assignments_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="employee"/>
+                                 referencedTableName="assignments"/>
 
     </changeSet>
 </databaseChangeLog>

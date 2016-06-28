@@ -26,10 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,22 +44,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class PaySheetsResourceIntTest {
 
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.of("Z"));
-
 
     private static final Integer DEFAULT_REGULAR_DAYS = 1;
     private static final Integer UPDATED_REGULAR_DAYS = 2;
 
     private static final Integer DEFAULT_OVERTIME = 1;
     private static final Integer UPDATED_OVERTIME = 2;
-
-    private static final ZonedDateTime DEFAULT_START_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
-    private static final ZonedDateTime UPDATED_START_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final String DEFAULT_START_DATE_STR = dateTimeFormatter.format(DEFAULT_START_DATE);
-
-    private static final ZonedDateTime DEFAULT_END_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
-    private static final ZonedDateTime UPDATED_END_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final String DEFAULT_END_DATE_STR = dateTimeFormatter.format(DEFAULT_END_DATE);
 
     @Inject
     private PaySheetsRepository paySheetsRepository;
@@ -100,8 +86,6 @@ public class PaySheetsResourceIntTest {
         paySheets = new PaySheets();
         paySheets.setRegularDays(DEFAULT_REGULAR_DAYS);
         paySheets.setOvertime(DEFAULT_OVERTIME);
-        paySheets.setStartDate(DEFAULT_START_DATE);
-        paySheets.setEndDate(DEFAULT_END_DATE);
     }
 
     @Test
@@ -123,8 +107,6 @@ public class PaySheetsResourceIntTest {
         PaySheets testPaySheets = paySheetss.get(paySheetss.size() - 1);
         assertThat(testPaySheets.getRegularDays()).isEqualTo(DEFAULT_REGULAR_DAYS);
         assertThat(testPaySheets.getOvertime()).isEqualTo(DEFAULT_OVERTIME);
-        assertThat(testPaySheets.getStartDate()).isEqualTo(DEFAULT_START_DATE);
-        assertThat(testPaySheets.getEndDate()).isEqualTo(DEFAULT_END_DATE);
     }
 
     @Test
@@ -139,9 +121,7 @@ public class PaySheetsResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(paySheets.getId().intValue())))
                 .andExpect(jsonPath("$.[*].regularDays").value(hasItem(DEFAULT_REGULAR_DAYS)))
-                .andExpect(jsonPath("$.[*].overtime").value(hasItem(DEFAULT_OVERTIME)))
-                .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE_STR)))
-                .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE_STR)));
+                .andExpect(jsonPath("$.[*].overtime").value(hasItem(DEFAULT_OVERTIME)));
     }
 
     @Test
@@ -156,9 +136,7 @@ public class PaySheetsResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(paySheets.getId().intValue()))
             .andExpect(jsonPath("$.regularDays").value(DEFAULT_REGULAR_DAYS))
-            .andExpect(jsonPath("$.overtime").value(DEFAULT_OVERTIME))
-            .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE_STR))
-            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE_STR));
+            .andExpect(jsonPath("$.overtime").value(DEFAULT_OVERTIME));
     }
 
     @Test
@@ -180,8 +158,6 @@ public class PaySheetsResourceIntTest {
         // Update the paySheets
         paySheets.setRegularDays(UPDATED_REGULAR_DAYS);
         paySheets.setOvertime(UPDATED_OVERTIME);
-        paySheets.setStartDate(UPDATED_START_DATE);
-        paySheets.setEndDate(UPDATED_END_DATE);
         PaySheetsDTO paySheetsDTO = paySheetsMapper.paySheetsToPaySheetsDTO(paySheets);
 
         restPaySheetsMockMvc.perform(put("/api/paySheetss")
@@ -195,8 +171,6 @@ public class PaySheetsResourceIntTest {
         PaySheets testPaySheets = paySheetss.get(paySheetss.size() - 1);
         assertThat(testPaySheets.getRegularDays()).isEqualTo(UPDATED_REGULAR_DAYS);
         assertThat(testPaySheets.getOvertime()).isEqualTo(UPDATED_OVERTIME);
-        assertThat(testPaySheets.getStartDate()).isEqualTo(UPDATED_START_DATE);
-        assertThat(testPaySheets.getEndDate()).isEqualTo(UPDATED_END_DATE);
     }
 
     @Test

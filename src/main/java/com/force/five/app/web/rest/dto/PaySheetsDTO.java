@@ -1,9 +1,6 @@
 package com.force.five.app.web.rest.dto;
 
-import java.time.ZonedDateTime;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 
@@ -18,14 +15,7 @@ public class PaySheetsDTO implements Serializable {
 
     private Integer overtime;
 
-    private ZonedDateTime startDate;
-
-    private ZonedDateTime endDate;
-    
-     private Long employeeId;
-
-    private String employeeName;
-    
+    private Long assignmentsId;
 
     public Long getId() {
         return id;
@@ -34,44 +24,7 @@ public class PaySheetsDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public Integer getRegularDays() {
-        return regularDays;
-    }
 
-    public void setRegularDays(Integer regularDays) {
-        this.regularDays = regularDays;
-    }
-    public Integer getOvertime() {
-        return overtime;
-    }
-
-    public void setOvertime(Integer overtime) {
-        this.overtime = overtime;
-    }
-    public ZonedDateTime getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(ZonedDateTime startDate) {
-        this.startDate = startDate;
-    }
-    public ZonedDateTime getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(ZonedDateTime endDate) {
-        this.endDate = endDate;
-    }
-
-    public Long getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
-    }
-    
-    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -88,16 +41,7 @@ public class PaySheetsDTO implements Serializable {
         return true;
     }
 
-    
-    public String getEmployeeName() {
-		return employeeName;
-	}
-
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
-	}
-
-	@Override
+    @Override
     public int hashCode() {
         return Objects.hashCode(id);
     }
@@ -106,11 +50,6 @@ public class PaySheetsDTO implements Serializable {
     public String toString() {
         return "PaySheetsDTO{" +
             "id=" + id +
-            ", regularDays='" + regularDays + "'" +
-            ", overtime='" + overtime + "'" +
-            ", startDate='" + startDate + "'" +
-            ", endDate='" + endDate + "'" +
-            ", employeeName='" + employeeName + "'" +
             '}';
     }
 }

@@ -13,13 +13,6 @@
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="paySheets.id" readonly />
         </div>
-         <div class="form-group">
-            <label for="field_employee">employee</label>
-            <select class="form-control" id="field_employee" name="employee" ng-model="paySheets.employeeId" ng-options="employee.id as employee.name for employee in employees">
-                <option value=""></option>
-            </select>
-        </div>
-        
         <div class="form-group">
             <label class="control-label" for="field_regularDays">RegularDays</label>
             <input type="number" class="form-control" name="regularDays" id="field_regularDays"
@@ -32,20 +25,14 @@
                     ng-model="paySheets.overtime"
                      />
         </div>
+
         <div class="form-group">
-            <label class="control-label" for="field_startDate">StartDate</label>
-            <input type="datetime-local" class="form-control" name="startDate" id="field_startDate"
-                    ng-model="paySheets.startDate"
-                     />
+            <label for="field_assignments">assignments</label>
+            <select class="form-control" id="field_assignments" name="assignments" ng-model="paySheets.assignmentsId" ng-options="assignments.id as assignments.id for assignments in assignmentss">
+                <option value=""></option>
+            </select>
         </div>
-        <div class="form-group">
-            <label class="control-label" for="field_endDate">EndDate</label>
-            <input type="datetime-local" class="form-control" name="endDate" id="field_endDate"
-                    ng-model="paySheets.endDate"
-                     />
-        </div>
-       </div>
-           
+    </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>

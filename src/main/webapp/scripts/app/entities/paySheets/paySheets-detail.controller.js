@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('proj2App')
-    .controller('PaySheetsDetailController', function ($scope, $rootScope, $stateParams, entity, PaySheets, Employee) {
+    .controller('PaySheetsDetailController', function ($scope, $rootScope, $stateParams, entity, PaySheets, Assignments) {
         $scope.paySheets = entity;
         $scope.load = function (id) {
             PaySheets.get({id: id}, function(result) {

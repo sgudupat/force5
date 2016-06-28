@@ -28,26 +28,10 @@
             </tr>
             <tr>
                 <td>
-                    <span>StartDate</span>
+                    <span>assignments</span>
                 </td>
                 <td>
-                    <span class="form-control-static">{{paySheets.startDate | date:'medium'}}</span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span>EndDate</span>
-                </td>
-                <td>
-                    <span class="form-control-static">{{paySheets.endDate | date:'medium'}}</span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span>employee</span>
-                </td>
-                <td>
-                    <a class="form-control-static" ui-sref="employee.detail({id:paySheets.employeeId})">{{paySheets.employeeId}}</a>
+                    <a class="form-control-static" ui-sref="assignments.detail({id:paySheets.assignmentsId})">{{paySheets.assignmentsId}}</a>
                 </td>
             </tr>
             </tbody>

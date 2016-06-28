@@ -21,8 +21,6 @@ angular.module('proj2App')
             $scope.paySheets = {
                 regularDays: null,
                 overtime: null,
-                startDate: null,
-                endDate: null,
                 id: null
             };
         };

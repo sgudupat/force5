@@ -1,6 +1,5 @@
 package com.force.five.app.domain;
 
-import java.time.ZonedDateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,15 +24,9 @@ public class PaySheets implements Serializable {
     @Column(name = "overtime")
     private Integer overtime;
     
-    @Column(name = "start_date")
-    private ZonedDateTime startDate;
-    
-    @Column(name = "end_date")
-    private ZonedDateTime endDate;
-    
     @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+    @JoinColumn(name = "assignments_id")
+    private Assignments assignments;
 
     public Long getId() {
         return id;
@@ -59,28 +52,12 @@ public class PaySheets implements Serializable {
         this.overtime = overtime;
     }
 
-    public ZonedDateTime getStartDate() {
-        return startDate;
-    }
-    
-    public void setStartDate(ZonedDateTime startDate) {
-        this.startDate = startDate;
+    public Assignments getAssignments() {
+        return assignments;
     }
 
-    public ZonedDateTime getEndDate() {
-        return endDate;
-    }
-    
-    public void setEndDate(ZonedDateTime endDate) {
-        this.endDate = endDate;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setAssignments(Assignments assignments) {
+        this.assignments = assignments;
     }
 
     @Override
@@ -109,8 +86,6 @@ public class PaySheets implements Serializable {
             "id=" + id +
             ", regularDays='" + regularDays + "'" +
             ", overtime='" + overtime + "'" +
-            ", startDate='" + startDate + "'" +
-            ", endDate='" + endDate + "'" +
             '}';
     }
 }
