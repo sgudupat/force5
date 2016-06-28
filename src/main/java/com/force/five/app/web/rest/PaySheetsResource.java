@@ -148,8 +148,8 @@ public class PaySheetsResource {
         Font bfBold12 = new Font(FontFamily.COURIER, 8, Font.BOLD, new BaseColor(0, 0, 0));
         Document document = new Document();
 
-        List<EmployeeSalarySheet> records = paySheetsService.getPaysheetRecords(clientName, month, year);
-
+        List<PaySheets> records = paySheetsService.getPaysheetRecords(clientName, month, year);
+        System.out.println("records::" + records);
 
         try {
             String fileName = "salary_sheet_" + clientName.toLowerCase() + "_" + month.toLowerCase() + "_" + year + ".pdf";
@@ -190,9 +190,9 @@ public class PaySheetsResource {
             log.debug("Table value display");
 
             //TODO: Fetch Data from Database
-            for (EmployeeSalarySheet record : records) {
+        /*    for (EmployeeSalarySheet record : records) {
                 log.debug("Record:" + record);
-            }
+            }*/
             /*int i = 1;
             for (EmployeeSalarySheet record : records) {
                 BigDecimal regDays = record.getRegularDays();

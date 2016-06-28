@@ -11,8 +11,9 @@ import java.util.List;
  * Spring Data JPA repository for the PaySheets entity.
  */
 public interface PaySheetsRepository extends JpaRepository<PaySheets, Long> {
+
     @Query(nativeQuery = true, value =
-        "select ps.regular_days, ps.overtime , e.name, e.category, e.basic, e.allowances " +
+        "select ps.* " +
             "  from client c " +
             "      ,assignments a " +
             "      ,pay_sheets ps " +
@@ -23,5 +24,5 @@ public interface PaySheetsRepository extends JpaRepository<PaySheets, Long> {
             "  and month(ps.start_date) = ?2 " +
             "  and year(ps.start_date) = ?3 " +
             "  and ps.employee_id = e.id;")
-    List<EmployeeSalarySheet> fetchSalarySheets(String clientName, Integer month, String year);
+    List<PaySheets> fetchSalarySheets(String clientName, Integer month, String year);
 }

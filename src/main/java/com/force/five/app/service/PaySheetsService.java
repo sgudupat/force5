@@ -36,5 +36,5 @@ public interface PaySheetsService {
     public void delete(Long id);
 
 
-    List<EmployeeSalarySheet> getPaysheetRecords(String clientName, String month, String year);
+    List<PaySheets> getPaysheetRecords(String clientName, String month, String year);
 }
