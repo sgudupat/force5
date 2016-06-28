@@ -8,7 +8,7 @@ angular.module('proj2App')
                 url: '/salarySheets',
                 data: {
                     authorities: ['ROLE_USER'],
-                    pageTitle: 'Salary Sheets'
+                    pageTitle: 'SalarySheets'
                 },
                 views: {
                     'content@': {
@@ -17,7 +17,7 @@ angular.module('proj2App')
                     }
                 },
                 resolve: {
-                    
+
                 }
             });
     });

@@ -13,7 +13,7 @@
             url: '/salarySheets',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'Salary Sheets'
+                pageTitle: 'SalarySheets'
             },
             views: {
                 'content@': {
