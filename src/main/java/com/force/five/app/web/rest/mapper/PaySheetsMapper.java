@@ -12,6 +12,8 @@ import org.mapstruct.*;
 public interface PaySheetsMapper {
 
     @Mapping(source = "assignments.id", target = "assignmentsId")
+    @Mapping(source = "assignments.client.name", target = "clientName")
+    @Mapping(source = "assignments.employee.name", target = "employeeName")
     PaySheetsDTO paySheetsToPaySheetsDTO(PaySheets paySheets);
 
     @Mapping(source = "assignmentsId", target = "assignments")
