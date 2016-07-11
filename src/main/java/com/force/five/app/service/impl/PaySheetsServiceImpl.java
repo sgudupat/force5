@@ -53,9 +53,14 @@ public class PaySheetsServiceImpl implements PaySheetsService {
     @Transactional(readOnly = true)
     public List<PaySheetsDTO> findAll() {
         log.debug("Request to get all PaySheetss");
-        List<PaySheetsDTO> result = paySheetsRepository.findAll().stream()
-            .map(paySheetsMapper::paySheetsToPaySheetsDTO)
-            .collect(Collectors.toCollection(LinkedList::new));
+        List<PaySheetsDTO> result = new ArrayList<PaySheetsDTO>();
+        List<PaySheets> sheets = paySheetsRepository.findAll();
+        for (PaySheets sheet : sheets) {
+            PaySheetsDTO dto = paySheetsMapper.paySheetsToPaySheetsDTO(sheet);
+            dto.setClientName(sheet.getAssignments().getClient().getName());
+            dto.setEmployeeName(sheet.getAssignments().getEmployee().getName());
+            result.add(dto);
+        }
         return result;
     }
 
