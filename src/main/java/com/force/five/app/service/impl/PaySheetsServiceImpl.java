@@ -1,21 +1,19 @@
 package com.force.five.app.service.impl;
 
-import com.force.five.app.domain.EmployeeSalarySheet;
-import com.force.five.app.service.PaySheetsService;
 import com.force.five.app.domain.PaySheets;
 import com.force.five.app.repository.PaySheetsRepository;
+import com.force.five.app.service.PaySheetsService;
 import com.force.five.app.web.rest.dto.PaySheetsDTO;
 import com.force.five.app.web.rest.mapper.PaySheetsMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing PaySheets.
@@ -66,7 +64,8 @@ public class PaySheetsServiceImpl implements PaySheetsService {
 
     /**
      * get one paySheets by id.
-     *\
+     * \
+     *
      * @return the entity
      */
     @Transactional(readOnly = true)
@@ -91,16 +90,16 @@ public class PaySheetsServiceImpl implements PaySheetsService {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
             int monthValue = cal.get(Calendar.MONTH);
-            List<PaySheets> records =  paySheetsRepository.fetchSalarySheets(clientName, (monthValue + 1), year);
+            List<PaySheets> records = paySheetsRepository.fetchSalarySheets(clientName, (monthValue + 1), year);
             System.out.println("records::" + records.size());
             System.out.println("records::" + records);
-            for (PaySheets record: records) {
+            for (PaySheets record : records) {
                 System.out.println("record::" + record);
             }
             return records;
         } catch (ParseException pe) {
             log.error("Parse Exception:", pe);
-            return  null;
+            return null;
         }
     }
 }

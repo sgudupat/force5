@@ -1,14 +1,12 @@
 package com.force.five.app.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.force.five.app.domain.Assignments;
 import com.force.five.app.service.AssignmentsService;
-import com.force.five.app.web.rest.util.HeaderUtil;
 import com.force.five.app.web.rest.dto.AssignmentsDTO;
 import com.force.five.app.web.rest.mapper.AssignmentsMapper;
+import com.force.five.app.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Assignments.
@@ -31,13 +27,13 @@ import java.util.stream.Collectors;
 public class AssignmentsResource {
 
     private final Logger log = LoggerFactory.getLogger(AssignmentsResource.class);
-        
+
     @Inject
     private AssignmentsService assignmentsService;
-    
+
     @Inject
     private AssignmentsMapper assignmentsMapper;
-    
+
     /**
      * POST  /assignmentss -> Create a new assignments.
      */
@@ -85,7 +81,7 @@ public class AssignmentsResource {
     public List<AssignmentsDTO> getAllAssignmentss() {
         log.debug("REST request to get all Assignmentss");
         return assignmentsService.findAll();
-            }
+    }
 
     /**
      * GET  /assignmentss/:id -> get the "id" assignments.

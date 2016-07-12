@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -24,13 +25,13 @@ import java.util.stream.Collectors;
 public class AssignmentsServiceImpl implements AssignmentsService{
 
     private final Logger log = LoggerFactory.getLogger(AssignmentsServiceImpl.class);
-    
+
     @Inject
     private AssignmentsRepository assignmentsRepository;
-    
+
     @Inject
     private AssignmentsMapper assignmentsMapper;
-    
+
     /**
      * Save a assignments.
      * @return the persisted entity
@@ -47,12 +48,17 @@ public class AssignmentsServiceImpl implements AssignmentsService{
      *  get all the assignmentss.
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<AssignmentsDTO> findAll() {
         log.debug("Request to get all Assignmentss");
-        List<AssignmentsDTO> result = assignmentsRepository.findAll().stream()
-            .map(assignmentsMapper::assignmentsToAssignmentsDTO)
-            .collect(Collectors.toCollection(LinkedList::new));
+        List<AssignmentsDTO> result = new ArrayList<AssignmentsDTO>();
+        List<Assignments> assignments = assignmentsRepository.findAll();
+        for (Assignments assignment : assignments) {
+            AssignmentsDTO dto = assignmentsMapper.assignmentsToAssignmentsDTO(assignment);
+            dto.setClientName(assignment.getClient().getName());
+            dto.setEmployeeName(assignment.getEmployee().getName());
+            result.add(dto);
+        }
         return result;
     }
 
@@ -60,7 +66,7 @@ public class AssignmentsServiceImpl implements AssignmentsService{
      *  get one assignments by id.
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public AssignmentsDTO findOne(Long id) {
         log.debug("Request to get Assignments : {}", id);
         Assignments assignments = assignmentsRepository.findOne(id);
