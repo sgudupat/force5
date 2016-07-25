@@ -60,7 +60,7 @@ public class AssignmentsResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<AssignmentsDTO> updateAssignments(@RequestBody AssignmentsDTO assignmentsDTO) throws URISyntaxException {
-        log.debug("REST request to update Assignments : {}", assignmentsDTO);
+        log.debug("REST request to update Assignmentss : {}", assignmentsDTO);
         if (assignmentsDTO.getId() == null) {
             return createAssignments(assignmentsDTO);
         }
