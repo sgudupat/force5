@@ -113,7 +113,7 @@ public class PaySheetsResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("paySheets", id.toString())).build();
     }
 
-    private static void insertCell(PdfPTable table, String text, int align, int colspan, Font font) {
+    private void insertCell(PdfPTable table, String text, int align, int colspan, Font font) {
         // create a new cell with the specified Text and Font
         PdfPCell cell = new PdfPCell(new Phrase(text.trim(), font));
         // set the cell alignment
