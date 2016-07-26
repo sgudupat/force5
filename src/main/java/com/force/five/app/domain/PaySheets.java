@@ -20,10 +20,10 @@ public class PaySheets implements Serializable {
 
     @Column(name = "regular_days")
     private Integer regularDays;
-    
+
     @Column(name = "overtime")
     private Integer overtime;
-    
+
     @ManyToOne
     @JoinColumn(name = "assignments_id")
     private Assignments assignments;
@@ -39,7 +39,7 @@ public class PaySheets implements Serializable {
     public Integer getRegularDays() {
         return regularDays;
     }
-    
+
     public void setRegularDays(Integer regularDays) {
         this.regularDays = regularDays;
     }
@@ -47,7 +47,7 @@ public class PaySheets implements Serializable {
     public Integer getOvertime() {
         return overtime;
     }
-    
+
     public void setOvertime(Integer overtime) {
         this.overtime = overtime;
     }
@@ -84,8 +84,9 @@ public class PaySheets implements Serializable {
     public String toString() {
         return "PaySheets{" +
             "id=" + id +
-            ", regularDays='" + regularDays + "'" +
-            ", overtime='" + overtime + "'" +
+            ", regularDays=" + regularDays +
+            ", overtime=" + overtime +
+            ", assignments=" + assignments +
             '}';
     }
 }

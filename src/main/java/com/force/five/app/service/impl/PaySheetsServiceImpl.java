@@ -91,11 +91,6 @@ public class PaySheetsServiceImpl implements PaySheetsService {
             cal.setTime(date);
             int monthValue = cal.get(Calendar.MONTH);
             List<PaySheets> records = paySheetsRepository.fetchSalarySheets(clientName, (monthValue + 1), year);
-            System.out.println("records::" + records.size());
-            System.out.println("records::" + records);
-            for (PaySheets record : records) {
-                System.out.println("record::" + record);
-            }
             return records;
         } catch (ParseException pe) {
             log.error("Parse Exception:", pe);

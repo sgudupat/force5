@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -142,10 +143,8 @@ public class PaySheetsResource {
             document.open();
             // create a paragraph
             Paragraph paragraph = new Paragraph();
-            log.debug("error");
             // Report Header
             float[] columnWidths = {3f, 5f, 4f, 5f, 6f, 6f, 6f, 6f, 6f, 5f, 6f, 6f, 5f, 5f, 5f, 5f, 5f, 6f, 6f, 5f};
-            log.debug("After Header Display");
             PdfPTable table = new PdfPTable(columnWidths);
             // set table width a percentage of the page width
             table.setWidthPercentage(90f);
@@ -174,49 +173,47 @@ public class PaySheetsResource {
             insertCell(table, "sign", Element.ALIGN_RIGHT, 1, bfBold12);
             log.debug("Table value display");
 
-            //TODO: Fetch Data from Database
-        /*    for (EmployeeSalarySheet record : records) {
-                log.debug("Record:" + record);
-            }*/
-            /*int i = 1;
-            for (EmployeeSalarySheet record : records) {
-                BigDecimal regDays = record.getRegularDays();
-                BigDecimal basic = record.getBasic();
+            int i = 1;
+            for (PaySheets record : records) {
+                BigDecimal regDays = new BigDecimal(record.getRegularDays());
+                BigDecimal basic = record.getAssignments().getEmployee().getBasic();
+                BigDecimal overTime = new BigDecimal(record.getOvertime());
+                BigDecimal allowance = record.getAssignments().getEmployee().getAllowances();
+                //BigDecimal value = new BigDecimal("30");
+                // BigDecimal earnedBasic = null;
 
-                Integer oT = record.getOvertime();
-                BigDecimal overTime = new BigDecimal(oT);
-                BigDecimal allowance = record.getAllowances();
-                BigDecimal value = new BigDecimal("30");
-               // BigDecimal earnedBasic = null;
 
                 BigDecimal totalWages = basic.add(allowance);
+/*
                 BigDecimal   earnedBasic = basic.divide(value).multiply(regDays);
                 BigDecimal otWags = totalWages.divide(value).multiply(overTime);
                 BigDecimal earnedAllowances = allowance.divide(value).multiply(regDays);
                 BigDecimal GW = basic.add(otWags).add(overTime);
                 BigDecimal netSalary = basic.add(otWags).add(overTime);
+*/
 
                 insertCell(table, String.valueOf(i++), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, record.getCategory(), Element.ALIGN_LEFT, 1, bfBold12);
-                insertCell(table, String.valueOf(record.getRegularDays()), Element.ALIGN_LEFT, 1, bfBold12);
-                insertCell(table, String.valueOf(record.getOvertime()), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, record.getName(), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, String.valueOf(record.getBasic()), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, String.valueOf(record.getAllowances()), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, totalWages.toString(), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table,earnedBasic.toString(), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table,  otWags.toString(), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, earnedAllowances.toString(), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table,  GW.toString(), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "P.F.", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "E.S.I.C", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "Unif", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "IDCA", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "Advance", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "Total deduction", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "Net salary", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "sign", Element.ALIGN_RIGHT, 1, bfBold12);
-            }*/
+                insertCell(table, record.getAssignments().getEmployee().getCategory(), Element.ALIGN_LEFT, 1, bfBold12);
+                insertCell(table, String.valueOf(regDays), Element.ALIGN_LEFT, 1, bfBold12);
+                insertCell(table, String.valueOf(overTime), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, record.getAssignments().getEmployee().getName(), Element.ALIGN_RIGHT, 1, bfBold12);
+
+                insertCell(table, String.valueOf(basic), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(allowance), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(totalWages), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12); //earnedBasic.toString()
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12); //otWags.toString()
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12); //earnedAllowances.toString()
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12); // GW.toString()
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            }
             // add the PDF table to the paragraph
             paragraph.add(table);
             // add the paragraph to the document

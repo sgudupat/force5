@@ -21,10 +21,10 @@ public class Assignments implements Serializable {
 
     @Column(name = "start_date")
     private ZonedDateTime startDate;
-    
+
     @Column(name = "end_date")
     private ZonedDateTime endDate;
-    
+
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
@@ -44,7 +44,7 @@ public class Assignments implements Serializable {
     public ZonedDateTime getStartDate() {
         return startDate;
     }
-    
+
     public void setStartDate(ZonedDateTime startDate) {
         this.startDate = startDate;
     }
@@ -52,7 +52,7 @@ public class Assignments implements Serializable {
     public ZonedDateTime getEndDate() {
         return endDate;
     }
-    
+
     public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
     }
@@ -97,8 +97,10 @@ public class Assignments implements Serializable {
     public String toString() {
         return "Assignments{" +
             "id=" + id +
-            ", startDate='" + startDate + "'" +
-            ", endDate='" + endDate + "'" +
+            ", startDate=" + startDate +
+            ", endDate=" + endDate +
+            ", employee=" + employee +
+            ", client=" + client +
             '}';
     }
 }
