@@ -87,7 +87,7 @@ public class PaySheetsResource {
     public List<PaySheetsDTO> getAllPaySheetss() {
         log.debug("REST request to get all PaySheetss");
         //generatePDF();
-        generateSalarySheets("Digital Age", "MARCH", "2016");
+        generateSalarySheets("PSC", "MARCH", "2016");
         log.debug("Run after PDF generation");
         return paySheetsService.findAll();
     }
@@ -147,7 +147,7 @@ public class PaySheetsResource {
             // Report Header
             float[] columnWidths = {3f, 5f, 4f, 5f, 6f, 6f, 6f, 6f, 6f, 5f, 6f, 6f, 5f, 5f, 5f, 5f, 5f, 6f, 6f, 5f};
             PdfPTable table = new PdfPTable(columnWidths);
-            // set table width a percentage of the page width
+            // set table width a percentage of the  page width
             table.setWidthPercentage(90f);
             //Put Header information
             insertCell(table, clientName, Element.ALIGN_CENTER, 20, bfBold12);
@@ -174,6 +174,21 @@ public class PaySheetsResource {
             insertCell(table, "sign", Element.ALIGN_RIGHT, 1, bfBold12);
             log.debug("Table value display");
 
+            //elements for total
+            BigDecimal grandTotalDays = BigDecimal.ZERO;
+            BigDecimal GrandTotalOT = BigDecimal.ZERO;
+            BigDecimal GrandTotalbasic = BigDecimal.ZERO;
+            BigDecimal GrandTotalAllow = BigDecimal.ZERO;
+            BigDecimal GrandToatlWages = BigDecimal.ZERO;
+            BigDecimal GrandTotalEarnedBasic = BigDecimal.ZERO;
+            BigDecimal GrandtotalOT = BigDecimal.ZERO;
+            BigDecimal GrandToatlEarnedAllow = BigDecimal.ZERO;
+            BigDecimal GrandToatlGW = BigDecimal.ZERO;
+            BigDecimal GrandTotalPF =BigDecimal.ZERO;
+            BigDecimal GrandTotalESIC = BigDecimal.ZERO;
+            BigDecimal GrandTotalTolDedu =BigDecimal.ZERO;
+            BigDecimal GrandTotalNatSal = BigDecimal.ZERO;
+
             int i = 1;
             for (PaySheets record : records) {
                 BigDecimal regDays = new BigDecimal(record.getRegularDays());
@@ -186,26 +201,52 @@ public class PaySheetsResource {
                 BigDecimal ESIC = new BigDecimal("1.75").divide(new BigDecimal("100"), 2, RoundingMode.HALF_EVEN);
                 // BigDecimal earnedBasic = null;
 
+                //add to total
+                grandTotalDays = grandTotalDays.add(regDays);
+                GrandTotalOT = GrandTotalOT.add(overTime);
+                GrandTotalbasic = GrandTotalbasic.add(basic);
+                GrandTotalAllow = GrandTotalAllow.add(allowance);
+
+
+
+
+
                 //Calculations
                 //basic + overtime
                 BigDecimal totalWages = basic.add(allowance);
+                GrandToatlWages = GrandToatlWages.add(totalWages);
+
                 // basic/30 * regDays
                 BigDecimal earnedBasic = basic.divide(totalDays, 2, RoundingMode.HALF_EVEN).multiply(regDays).setScale(2, RoundingMode.HALF_EVEN);
+                GrandTotalEarnedBasic = GrandTotalEarnedBasic.add(earnedBasic);
+
                 // totalWages/30 * overTime
                 BigDecimal otWags = totalWages.divide(totalDays, 2, RoundingMode.HALF_EVEN).multiply(overTime).setScale(2, RoundingMode.HALF_EVEN);
+                GrandtotalOT =GrandtotalOT.add(otWags);
+
                 // Allow/30*RegDays
                 BigDecimal earnedAllowances = allowance.divide(totalDays, 2, RoundingMode.HALF_EVEN).multiply(regDays).setScale(2, RoundingMode.HALF_EVEN);
+                GrandToatlEarnedAllow = GrandToatlEarnedAllow.add(earnedAllowances);
+
                 //GW=EarnedBasic+OT+Allow
                 BigDecimal GrossWages = earnedBasic.add(otWags).add(earnedAllowances);
+                GrandToatlGW = GrandToatlGW.add(GrossWages);
+
                 //P.F.=(EarnedBasic*12%)
                 BigDecimal pf = earnedBasic.multiply(PFCal).setScale(2, RoundingMode.HALF_EVEN);
+                GrandTotalPF =GrandTotalPF.add(pf);
+
                 //E.S.I.C =(EarnedBasic*1.75*)
                 BigDecimal esic = earnedBasic.multiply(ESIC).setScale(2, RoundingMode.HALF_EVEN);
+                GrandTotalESIC = GrandTotalESIC.add(esic);
+
                 //TotalDedu=PF+ESIC
                 BigDecimal TotalDedu = pf.add(esic);
+                GrandTotalTolDedu = GrandTotalTolDedu.add( TotalDedu);
 
                 //NetSalary= GrossWages-TotalDedu
                 BigDecimal NetSal = GrossWages.subtract(TotalDedu);
+                GrandTotalNatSal = GrandTotalNatSal.add(NetSal);
 
                 insertCell(table, String.valueOf(i++), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, record.getAssignments().getEmployee().getCategory(), Element.ALIGN_LEFT, 1, bfBold12);
@@ -229,6 +270,30 @@ public class PaySheetsResource {
                 insertCell(table, String.valueOf(NetSal), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
             }
+
+            //total or footer
+
+            insertCell(table, "TOTAL", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, String.valueOf(grandTotalDays), Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalOT), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalbasic), Element.ALIGN_RIGHT, 1, bfBold12);
+
+            insertCell(table, String.valueOf(GrandTotalAllow), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf( GrandToatlWages), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalEarnedBasic), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandtotalOT), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandToatlEarnedAllow), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandToatlGW), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf( GrandTotalPF), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalESIC), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalTolDedu), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalNatSal), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
             // add the PDF table to the paragraph
             paragraph.add(table);
             // add the paragraph to the document
