@@ -38,6 +38,8 @@ public class PaySheetsServiceImpl implements PaySheetsService {
     public PaySheetsDTO save(PaySheetsDTO paySheetsDTO) {
         log.debug("Request to save PaySheets : {}", paySheetsDTO);
         PaySheets paySheets = paySheetsMapper.paySheetsDTOToPaySheets(paySheetsDTO);
+        Integer days = paySheets.getDaysWorked() + paySheets.getWeeklyOff() + paySheets.getCompOff() + paySheets.getHolidays() ;
+        paySheets.setRegularDays(days);
         paySheets = paySheetsRepository.save(paySheets);
         PaySheetsDTO result = paySheetsMapper.paySheetsToPaySheetsDTO(paySheets);
         return result;
