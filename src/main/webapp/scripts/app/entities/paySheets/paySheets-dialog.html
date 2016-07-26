@@ -1,28 +1,60 @@
+
 <form name="editForm" role="form" novalidate ng-submit="save()">
+
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="clear()">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
         <h4 class="modal-title" id="myPaySheetsLabel">Create or edit a PaySheets</h4>
     </div>
     <div class="modal-body">
         <jh-alert-error></jh-alert-error>
         <div class="form-group">
             <label for="id">ID</label>
-            <input type="text" class="form-control" id="id" name="id" ng-model="paySheets.id" readonly />
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="paySheets.id" readonly />
         </div>
-        <div class="form-group">
-            <label for="field_assignments">Assignments</label>
-            <select class="form-control" id="field_assignments" name="assignments" ng-model="paySheets.assignmentsId" ng-options="assignments.id as (assignments.clientName ) + ' - ' +(assignments.employeeName) for assignments in assignmentss">
-                <option value=""></option>
-            </select>
-        </div>
-       
         <div class="form-group">
             <label class="control-label" for="field_regularDays">RegularDays</label>
-            <input type="number" class="form-control" name="regularDays" id="field_regularDays" ng-model="paySheets.regularDays"/>
+            <input type="number" class="form-control" name="regularDays" id="field_regularDays"
+                    ng-model="paySheets.regularDays"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_daysWorked">DaysWorked</label>
+            <input type="number" class="form-control" name="daysWorked" id="field_daysWorked"
+                    ng-model="paySheets.daysWorked"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_weeklyOff">WeeklyOff</label>
+            <input type="number" class="form-control" name="weeklyOff" id="field_weeklyOff"
+                    ng-model="paySheets.weeklyOff"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_compOff">CompOff</label>
+            <input type="number" class="form-control" name="compOff" id="field_compOff"
+                    ng-model="paySheets.compOff"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_holidays">Holidays</label>
+            <input type="number" class="form-control" name="holidays" id="field_holidays"
+                    ng-model="paySheets.holidays"
+                     />
         </div>
         <div class="form-group">
             <label class="control-label" for="field_overtime">Overtime</label>
-            <input type="number" class="form-control" name="overtime" id="field_overtime" ng-model="paySheets.overtime"/>
+            <input type="number" class="form-control" name="overtime" id="field_overtime"
+                    ng-model="paySheets.overtime"
+                     />
+        </div>
+
+        <div class="form-group">
+            <label for="field_assignments">assignments</label>
+            <select class="form-control" id="field_assignments" name="assignments" ng-model="paySheets.assignmentsId" ng-options="assignments.id as assignments.id for assignments in assignmentss">
+                <option value=""></option>
+            </select>
         </div>
     </div>
     <div class="modal-footer">

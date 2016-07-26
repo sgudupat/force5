@@ -22,6 +22,10 @@
                     <th><span>Client</span></th>
                     <th><span>Employee</span></th>
                     <th><span>RegularDays</span></th>
+                    <th><span>DaysWorked</span></th>
+                    <th><span>WeeklyOff</span></th>
+                    <th><span>CompOff</span></th>
+                    <th><span>Holidays</span></th>
                     <th><span>Overtime</span></th>
                     <th><span>Assignment ID</span></th>
                     <th></th>
@@ -33,6 +37,10 @@
                     <td>{{paySheets.clientName}}</td>
                     <td>{{paySheets.employeeName}}</td>
                     <td>{{paySheets.regularDays}}</td>
+                    <td>{{paySheets.daysWorked}}</td>
+                    <td>{{paySheets.weeklyOff}}</td>
+                    <td>{{paySheets.compOff}}</td>
+                    <td>{{paySheets.holidays}}</td>
                     <td>{{paySheets.overtime}}</td>
                     <td>
                         <a ui-sref="assignments.detail({id:paySheets.assignmentsId})">{{paySheets.assignmentsId}}</a>

@@ -20,10 +20,22 @@ public class PaySheets implements Serializable {
 
     @Column(name = "regular_days")
     private Integer regularDays;
-
+    
+    @Column(name = "days_worked")
+    private Integer daysWorked;
+    
+    @Column(name = "weekly_off")
+    private Integer weeklyOff;
+    
+    @Column(name = "comp_off")
+    private Integer compOff;
+    
+    @Column(name = "holidays")
+    private Integer holidays;
+    
     @Column(name = "overtime")
     private Integer overtime;
-
+    
     @ManyToOne
     @JoinColumn(name = "assignments_id")
     private Assignments assignments;
@@ -39,15 +51,47 @@ public class PaySheets implements Serializable {
     public Integer getRegularDays() {
         return regularDays;
     }
-
+    
     public void setRegularDays(Integer regularDays) {
         this.regularDays = regularDays;
+    }
+
+    public Integer getDaysWorked() {
+        return daysWorked;
+    }
+    
+    public void setDaysWorked(Integer daysWorked) {
+        this.daysWorked = daysWorked;
+    }
+
+    public Integer getWeeklyOff() {
+        return weeklyOff;
+    }
+    
+    public void setWeeklyOff(Integer weeklyOff) {
+        this.weeklyOff = weeklyOff;
+    }
+
+    public Integer getCompOff() {
+        return compOff;
+    }
+    
+    public void setCompOff(Integer compOff) {
+        this.compOff = compOff;
+    }
+
+    public Integer getHolidays() {
+        return holidays;
+    }
+    
+    public void setHolidays(Integer holidays) {
+        this.holidays = holidays;
     }
 
     public Integer getOvertime() {
         return overtime;
     }
-
+    
     public void setOvertime(Integer overtime) {
         this.overtime = overtime;
     }
@@ -84,9 +128,12 @@ public class PaySheets implements Serializable {
     public String toString() {
         return "PaySheets{" +
             "id=" + id +
-            ", regularDays=" + regularDays +
-            ", overtime=" + overtime +
-            ", assignments=" + assignments +
+            ", regularDays='" + regularDays + "'" +
+            ", daysWorked='" + daysWorked + "'" +
+            ", weeklyOff='" + weeklyOff + "'" +
+            ", compOff='" + compOff + "'" +
+            ", holidays='" + holidays + "'" +
+            ", overtime='" + overtime + "'" +
             '}';
     }
 }

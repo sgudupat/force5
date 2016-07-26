@@ -14,8 +14,28 @@
             "fieldName": "regularDays",
             "fieldType": "Integer"
         },
-        {
+		{
             "fieldId": 2,
+            "fieldName": "daysWorked",
+            "fieldType": "Integer"
+        },
+		{
+            "fieldId": 3,
+            "fieldName": "weeklyOff",
+            "fieldType": "Integer"
+        },
+		{
+            "fieldId": 4,
+            "fieldName": "compOff",
+            "fieldType": "Integer"
+        },
+		{
+            "fieldId": 5,
+            "fieldName": "holidays",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 6,
             "fieldName": "overtime",
             "fieldType": "Integer"
         }

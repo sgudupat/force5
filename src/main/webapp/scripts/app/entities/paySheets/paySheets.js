@@ -53,6 +53,10 @@ angular.module('proj2App')
                             entity: function () {
                                 return {
                                     regularDays: null,
+                                    daysWorked: null,
+                                    weeklyOff: null,
+                                    compOff: null,
+                                    holidays: null,
                                     overtime: null,
                                     id: null
                                 };

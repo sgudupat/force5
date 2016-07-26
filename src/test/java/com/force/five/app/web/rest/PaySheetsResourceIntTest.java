@@ -48,6 +48,18 @@ public class PaySheetsResourceIntTest {
     private static final Integer DEFAULT_REGULAR_DAYS = 1;
     private static final Integer UPDATED_REGULAR_DAYS = 2;
 
+    private static final Integer DEFAULT_DAYS_WORKED = 1;
+    private static final Integer UPDATED_DAYS_WORKED = 2;
+
+    private static final Integer DEFAULT_WEEKLY_OFF = 1;
+    private static final Integer UPDATED_WEEKLY_OFF = 2;
+
+    private static final Integer DEFAULT_COMP_OFF = 1;
+    private static final Integer UPDATED_COMP_OFF = 2;
+
+    private static final Integer DEFAULT_HOLIDAYS = 1;
+    private static final Integer UPDATED_HOLIDAYS = 2;
+
     private static final Integer DEFAULT_OVERTIME = 1;
     private static final Integer UPDATED_OVERTIME = 2;
 
@@ -85,6 +97,10 @@ public class PaySheetsResourceIntTest {
     public void initTest() {
         paySheets = new PaySheets();
         paySheets.setRegularDays(DEFAULT_REGULAR_DAYS);
+        paySheets.setDaysWorked(DEFAULT_DAYS_WORKED);
+        paySheets.setWeeklyOff(DEFAULT_WEEKLY_OFF);
+        paySheets.setCompOff(DEFAULT_COMP_OFF);
+        paySheets.setHolidays(DEFAULT_HOLIDAYS);
         paySheets.setOvertime(DEFAULT_OVERTIME);
     }
 
@@ -106,6 +122,10 @@ public class PaySheetsResourceIntTest {
         assertThat(paySheetss).hasSize(databaseSizeBeforeCreate + 1);
         PaySheets testPaySheets = paySheetss.get(paySheetss.size() - 1);
         assertThat(testPaySheets.getRegularDays()).isEqualTo(DEFAULT_REGULAR_DAYS);
+        assertThat(testPaySheets.getDaysWorked()).isEqualTo(DEFAULT_DAYS_WORKED);
+        assertThat(testPaySheets.getWeeklyOff()).isEqualTo(DEFAULT_WEEKLY_OFF);
+        assertThat(testPaySheets.getCompOff()).isEqualTo(DEFAULT_COMP_OFF);
+        assertThat(testPaySheets.getHolidays()).isEqualTo(DEFAULT_HOLIDAYS);
         assertThat(testPaySheets.getOvertime()).isEqualTo(DEFAULT_OVERTIME);
     }
 
@@ -121,6 +141,10 @@ public class PaySheetsResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(paySheets.getId().intValue())))
                 .andExpect(jsonPath("$.[*].regularDays").value(hasItem(DEFAULT_REGULAR_DAYS)))
+                .andExpect(jsonPath("$.[*].daysWorked").value(hasItem(DEFAULT_DAYS_WORKED)))
+                .andExpect(jsonPath("$.[*].weeklyOff").value(hasItem(DEFAULT_WEEKLY_OFF)))
+                .andExpect(jsonPath("$.[*].compOff").value(hasItem(DEFAULT_COMP_OFF)))
+                .andExpect(jsonPath("$.[*].holidays").value(hasItem(DEFAULT_HOLIDAYS)))
                 .andExpect(jsonPath("$.[*].overtime").value(hasItem(DEFAULT_OVERTIME)));
     }
 
@@ -136,6 +160,10 @@ public class PaySheetsResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(paySheets.getId().intValue()))
             .andExpect(jsonPath("$.regularDays").value(DEFAULT_REGULAR_DAYS))
+            .andExpect(jsonPath("$.daysWorked").value(DEFAULT_DAYS_WORKED))
+            .andExpect(jsonPath("$.weeklyOff").value(DEFAULT_WEEKLY_OFF))
+            .andExpect(jsonPath("$.compOff").value(DEFAULT_COMP_OFF))
+            .andExpect(jsonPath("$.holidays").value(DEFAULT_HOLIDAYS))
             .andExpect(jsonPath("$.overtime").value(DEFAULT_OVERTIME));
     }
 
@@ -157,6 +185,10 @@ public class PaySheetsResourceIntTest {
 
         // Update the paySheets
         paySheets.setRegularDays(UPDATED_REGULAR_DAYS);
+        paySheets.setDaysWorked(UPDATED_DAYS_WORKED);
+        paySheets.setWeeklyOff(UPDATED_WEEKLY_OFF);
+        paySheets.setCompOff(UPDATED_COMP_OFF);
+        paySheets.setHolidays(UPDATED_HOLIDAYS);
         paySheets.setOvertime(UPDATED_OVERTIME);
         PaySheetsDTO paySheetsDTO = paySheetsMapper.paySheetsToPaySheetsDTO(paySheets);
 
@@ -170,6 +202,10 @@ public class PaySheetsResourceIntTest {
         assertThat(paySheetss).hasSize(databaseSizeBeforeUpdate);
         PaySheets testPaySheets = paySheetss.get(paySheetss.size() - 1);
         assertThat(testPaySheets.getRegularDays()).isEqualTo(UPDATED_REGULAR_DAYS);
+        assertThat(testPaySheets.getDaysWorked()).isEqualTo(UPDATED_DAYS_WORKED);
+        assertThat(testPaySheets.getWeeklyOff()).isEqualTo(UPDATED_WEEKLY_OFF);
+        assertThat(testPaySheets.getCompOff()).isEqualTo(UPDATED_COMP_OFF);
+        assertThat(testPaySheets.getHolidays()).isEqualTo(UPDATED_HOLIDAYS);
         assertThat(testPaySheets.getOvertime()).isEqualTo(UPDATED_OVERTIME);
     }
 

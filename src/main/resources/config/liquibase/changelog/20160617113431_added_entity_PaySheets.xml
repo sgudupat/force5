@@ -23,6 +23,14 @@
             </column>
             <column name="regular_days" type="integer"/>
             
+            <column name="days_worked" type="integer"/>
+            
+            <column name="weekly_off" type="integer"/>
+            
+            <column name="comp_off" type="integer"/>
+            
+            <column name="holidays" type="integer"/>
+            
             <column name="overtime" type="integer"/>
             
             <column name="assignments_id" type="bigint"/>

@@ -20,6 +20,10 @@ angular.module('proj2App')
         $scope.clear = function () {
             $scope.paySheets = {
                 regularDays: null,
+                daysWorked: null,
+                weeklyOff: null,
+                compOff: null,
+                holidays: null,
                 overtime: null,
                 id: null
             };
