@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -86,7 +87,7 @@ public class PaySheetsResource {
     public List<PaySheetsDTO> getAllPaySheetss() {
         log.debug("REST request to get all PaySheetss");
         //generatePDF();
-        generateSalarySheets("PSC", "MARCH", "2016");
+        generateSalarySheets("Digital Age", "MARCH", "2016");
         log.debug("Run after PDF generation");
         return paySheetsService.findAll();
     }
@@ -179,18 +180,32 @@ public class PaySheetsResource {
                 BigDecimal basic = record.getAssignments().getEmployee().getBasic();
                 BigDecimal overTime = new BigDecimal(record.getOvertime());
                 BigDecimal allowance = record.getAssignments().getEmployee().getAllowances();
-                //BigDecimal value = new BigDecimal("30");
+
+                BigDecimal totalDays = new BigDecimal("30");
+                BigDecimal PFCal = new BigDecimal("12").divide(new BigDecimal("100"), 2, RoundingMode.HALF_EVEN);
+                BigDecimal ESIC = new BigDecimal("1.75").divide(new BigDecimal("100"), 2, RoundingMode.HALF_EVEN);
                 // BigDecimal earnedBasic = null;
 
-
+                //Calculations
+                //basic + overtime
                 BigDecimal totalWages = basic.add(allowance);
-/*
-                BigDecimal   earnedBasic = basic.divide(value).multiply(regDays);
-                BigDecimal otWags = totalWages.divide(value).multiply(overTime);
-                BigDecimal earnedAllowances = allowance.divide(value).multiply(regDays);
-                BigDecimal GW = basic.add(otWags).add(overTime);
-                BigDecimal netSalary = basic.add(otWags).add(overTime);
-*/
+                // basic/30 * regDays
+                BigDecimal earnedBasic = basic.divide(totalDays, 2, RoundingMode.HALF_EVEN).multiply(regDays).setScale(2, RoundingMode.HALF_EVEN);
+                // totalWages/30 * overTime
+                BigDecimal otWags = totalWages.divide(totalDays, 2, RoundingMode.HALF_EVEN).multiply(overTime).setScale(2, RoundingMode.HALF_EVEN);
+                // Allow/30*RegDays
+                BigDecimal earnedAllowances = allowance.divide(totalDays, 2, RoundingMode.HALF_EVEN).multiply(regDays).setScale(2, RoundingMode.HALF_EVEN);
+                //GW=EarnedBasic+OT+Allow
+                BigDecimal GrossWages = earnedBasic.add(otWags).add(earnedAllowances);
+                //P.F.=(EarnedBasic*12%)
+                BigDecimal pf = earnedBasic.multiply(PFCal).setScale(2, RoundingMode.HALF_EVEN);
+                //E.S.I.C =(EarnedBasic*1.75*)
+                BigDecimal esic = earnedBasic.multiply(ESIC).setScale(2, RoundingMode.HALF_EVEN);
+                //TotalDedu=PF+ESIC
+                BigDecimal TotalDedu = pf.add(esic);
+
+                //NetSalary= GrossWages-TotalDedu
+                BigDecimal NetSal = GrossWages.subtract(TotalDedu);
 
                 insertCell(table, String.valueOf(i++), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, record.getAssignments().getEmployee().getCategory(), Element.ALIGN_LEFT, 1, bfBold12);
@@ -201,17 +216,17 @@ public class PaySheetsResource {
                 insertCell(table, String.valueOf(basic), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, String.valueOf(allowance), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, String.valueOf(totalWages), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12); //earnedBasic.toString()
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12); //otWags.toString()
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12); //earnedAllowances.toString()
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12); // GW.toString()
+                insertCell(table, String.valueOf(earnedBasic), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(otWags), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(earnedAllowances), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(GrossWages), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(pf), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(esic), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(TotalDedu), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(NetSal), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
             }
             // add the PDF table to the paragraph
