@@ -87,7 +87,8 @@ public class PaySheetsResource {
     public List<PaySheetsDTO> getAllPaySheetss() {
         log.debug("REST request to get all PaySheetss");
         //generatePDF();
-        generateSalarySheets("PSC", "MARCH", "2016");
+        generateBillingReport("PSC", "MARCH", "2016");
+       // generateSalarySheets("PSC", "MARCH", "2016");
         log.debug("Run after PDF generation");
         return paySheetsService.findAll();
     }
@@ -294,6 +295,120 @@ public class PaySheetsResource {
             insertCell(table, String.valueOf(GrandTotalTolDedu), Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, String.valueOf(GrandTotalNatSal), Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            // add the PDF table to the paragraph
+            paragraph.add(table);
+            // add the paragraph to the document
+            document.add(paragraph);
+            PdfPCell cell1 = new PdfPCell(new Paragraph("Cell 1"));
+            PdfPCell cell2 = new PdfPCell(new Paragraph("Cell 2"));
+            PdfPCell cell3 = new PdfPCell(new Paragraph("Cell 3"));
+            table.addCell(cell1);
+            table.addCell(cell2);
+            table.addCell(cell3);
+            document.close();
+        } catch (Exception e) {
+        }
+    }
+
+    private void generateBillingReport(String clientName, String month, String year) {
+
+        Font bfBold12 = new Font(FontFamily.COURIER, 8, Font.BOLD, new BaseColor(0, 0, 0));
+        Document document = new Document();
+
+        List<PaySheets> records = paySheetsService.getPaysheetRecords(clientName, month, year);
+        System.out.println("records::" + records);
+
+        try {
+            String fileName = "salary_sheet_" + clientName.toLowerCase() + "_" + month.toLowerCase() + "_" + year + ".pdf";
+            PdfWriter.getInstance(document, new FileOutputStream(fileName));
+            document.open();
+            // create a paragraph
+            Paragraph paragraph = new Paragraph();
+            // Report Header
+            float[] columnWidths = {3f, 5f,5f,5f, 5f, 6f, 6f, 6f, 6f, 5f, 5f, 8f};
+            PdfPTable table = new PdfPTable(columnWidths);
+            // set table width a percentage of the  page width
+            table.setWidthPercentage(90f);
+            //Put Header information
+            insertCell(table, clientName, Element.ALIGN_CENTER, 20, bfBold12);
+            insertCell(table, "SALARY SHEET FOR THE MONTH OF " + month + " " + year, Element.ALIGN_CENTER, 20, bfBold12);
+            insertCell(table, "SLNO", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "Design", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "Name", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "No of Days worked", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "Weekly Off", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "Comp Off", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "OT No of days", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "Holidays", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "Total", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "Cost", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "Per day cost", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "GrandTotal", Element.ALIGN_RIGHT, 1, bfBold12);
+
+            log.debug("Table value display");
+
+
+
+
+            int i = 1;
+            for (PaySheets record : records) {
+
+
+                BigDecimal DaysWorked = new BigDecimal(record.getDaysWorked());
+               BigDecimal WeeklyOff = new BigDecimal(record.getWeeklyOff());
+                BigDecimal CompOff = new BigDecimal(record.getCompOff());
+                BigDecimal overtime = new BigDecimal(record.getOvertime());
+                BigDecimal Holidays = new BigDecimal(record.getHolidays());
+
+                //Calculations
+                //Toatl= No of days worked + Weekly off + Comp off + OT No of days + Holidays
+                BigDecimal Total =DaysWorked.add(WeeklyOff).add(CompOff).add(overtime);
+
+                // Per day Cost = Cost/29
+                BigDecimal PerdayCost = new BigDecimal("Cost/29");
+                //GrandTotal = PerdayCost * Total
+                BigDecimal GrandTotal  = PerdayCost.multiply(Total);
+
+                insertCell(table, String.valueOf(i++), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf( DaysWorked), Element.ALIGN_LEFT, 1, bfBold12);
+                insertCell(table, String.valueOf( WeeklyOff), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(CompOff), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(overtime), Element.ALIGN_RIGHT, 1, bfBold12);
+
+                insertCell(table, String .valueOf(Holidays), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(Total), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+
+
+            }
+
+            //total or footer
+
+          /*  insertCell(table, "TOTAL", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, String.valueOf(grandTotalDays), Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalOT), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalbasic), Element.ALIGN_RIGHT, 1, bfBold12);
+
+            insertCell(table, String.valueOf(GrandTotalAllow), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf( GrandToatlWages), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalEarnedBasic), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandtotalOT), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandToatlEarnedAllow), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandToatlGW), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf( GrandTotalPF), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalESIC), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalTolDedu), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalNatSal), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);*/
             // add the PDF table to the paragraph
             paragraph.add(table);
             // add the paragraph to the document
