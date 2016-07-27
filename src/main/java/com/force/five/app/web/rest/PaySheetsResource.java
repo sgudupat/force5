@@ -88,7 +88,7 @@ public class PaySheetsResource {
         log.debug("REST request to get all PaySheetss");
         //generatePDF();
         generateBillingReport("PSC", "MARCH", "2016");
-       // generateSalarySheets("PSC", "MARCH", "2016");
+        // generateSalarySheets("PSC", "MARCH", "2016");
         log.debug("Run after PDF generation");
         return paySheetsService.findAll();
     }
@@ -185,9 +185,9 @@ public class PaySheetsResource {
             BigDecimal GrandtotalOT = BigDecimal.ZERO;
             BigDecimal GrandToatlEarnedAllow = BigDecimal.ZERO;
             BigDecimal GrandToatlGW = BigDecimal.ZERO;
-            BigDecimal GrandTotalPF =BigDecimal.ZERO;
+            BigDecimal GrandTotalPF = BigDecimal.ZERO;
             BigDecimal GrandTotalESIC = BigDecimal.ZERO;
-            BigDecimal GrandTotalTolDedu =BigDecimal.ZERO;
+            BigDecimal GrandTotalTolDedu = BigDecimal.ZERO;
             BigDecimal GrandTotalNatSal = BigDecimal.ZERO;
 
             int i = 1;
@@ -209,9 +209,6 @@ public class PaySheetsResource {
                 GrandTotalAllow = GrandTotalAllow.add(allowance);
 
 
-
-
-
                 //Calculations
                 //basic + overtime
                 BigDecimal totalWages = basic.add(allowance);
@@ -223,7 +220,7 @@ public class PaySheetsResource {
 
                 // totalWages/30 * overTime
                 BigDecimal otWags = totalWages.divide(totalDays, 2, RoundingMode.HALF_EVEN).multiply(overTime).setScale(2, RoundingMode.HALF_EVEN);
-                GrandtotalOT =GrandtotalOT.add(otWags);
+                GrandtotalOT = GrandtotalOT.add(otWags);
 
                 // Allow/30*RegDays
                 BigDecimal earnedAllowances = allowance.divide(totalDays, 2, RoundingMode.HALF_EVEN).multiply(regDays).setScale(2, RoundingMode.HALF_EVEN);
@@ -235,7 +232,7 @@ public class PaySheetsResource {
 
                 //P.F.=(EarnedBasic*12%)
                 BigDecimal pf = earnedBasic.multiply(PFCal).setScale(2, RoundingMode.HALF_EVEN);
-                GrandTotalPF =GrandTotalPF.add(pf);
+                GrandTotalPF = GrandTotalPF.add(pf);
 
                 //E.S.I.C =(EarnedBasic*1.75*)
                 BigDecimal esic = earnedBasic.multiply(ESIC).setScale(2, RoundingMode.HALF_EVEN);
@@ -243,7 +240,7 @@ public class PaySheetsResource {
 
                 //TotalDedu=PF+ESIC
                 BigDecimal TotalDedu = pf.add(esic);
-                GrandTotalTolDedu = GrandTotalTolDedu.add( TotalDedu);
+                GrandTotalTolDedu = GrandTotalTolDedu.add(TotalDedu);
 
                 //NetSalary= GrossWages-TotalDedu
                 BigDecimal NetSal = GrossWages.subtract(TotalDedu);
@@ -282,12 +279,12 @@ public class PaySheetsResource {
             insertCell(table, String.valueOf(GrandTotalbasic), Element.ALIGN_RIGHT, 1, bfBold12);
 
             insertCell(table, String.valueOf(GrandTotalAllow), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, String.valueOf( GrandToatlWages), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandToatlWages), Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, String.valueOf(GrandTotalEarnedBasic), Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, String.valueOf(GrandtotalOT), Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, String.valueOf(GrandToatlEarnedAllow), Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, String.valueOf(GrandToatlGW), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, String.valueOf( GrandTotalPF), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, String.valueOf(GrandTotalPF), Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, String.valueOf(GrandTotalESIC), Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
@@ -310,6 +307,9 @@ public class PaySheetsResource {
         }
     }
 
+
+
+
     private void generateBillingReport(String clientName, String month, String year) {
 
         Font bfBold12 = new Font(FontFamily.COURIER, 8, Font.BOLD, new BaseColor(0, 0, 0));
@@ -319,19 +319,19 @@ public class PaySheetsResource {
         System.out.println("records::" + records);
 
         try {
-            String fileName = "salary_sheet_" + clientName.toLowerCase() + "_" + month.toLowerCase() + "_" + year + ".pdf";
+            String fileName = "billing_summary_sheet_" + clientName.toLowerCase() + "_" + month.toLowerCase() + "_" + year + ".pdf";
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
             // create a paragraph
             Paragraph paragraph = new Paragraph();
             // Report Header
-            float[] columnWidths = {3f, 5f,5f,5f, 5f, 6f, 6f, 6f, 6f, 5f, 5f, 8f};
+            float[] columnWidths = {3f, 5f, 5f, 5f, 5f, 6f, 6f, 6f, 6f, 5f, 5f, 8f};
             PdfPTable table = new PdfPTable(columnWidths);
             // set table width a percentage of the  page width
             table.setWidthPercentage(90f);
             //Put Header information
             insertCell(table, clientName, Element.ALIGN_CENTER, 20, bfBold12);
-            insertCell(table, "SALARY SHEET FOR THE MONTH OF " + month + " " + year, Element.ALIGN_CENTER, 20, bfBold12);
+          insertCell(table, "SALARY SHEET FOR THE MONTH OF " + month + " " + year, Element.ALIGN_CENTER, 20, bfBold12);
             insertCell(table, "SLNO", Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, "Design", Element.ALIGN_LEFT, 1, bfBold12);
             insertCell(table, "Name", Element.ALIGN_LEFT, 1, bfBold12);
@@ -346,44 +346,36 @@ public class PaySheetsResource {
             insertCell(table, "GrandTotal", Element.ALIGN_RIGHT, 1, bfBold12);
 
             log.debug("Table value display");
-
-
-
-
             int i = 1;
+
             for (PaySheets record : records) {
-
-
                 BigDecimal DaysWorked = new BigDecimal(record.getDaysWorked());
-               BigDecimal WeeklyOff = new BigDecimal(record.getWeeklyOff());
+                BigDecimal WeeklyOff = new BigDecimal(record.getWeeklyOff());
                 BigDecimal CompOff = new BigDecimal(record.getCompOff());
                 BigDecimal overtime = new BigDecimal(record.getOvertime());
                 BigDecimal Holidays = new BigDecimal(record.getHolidays());
 
                 //Calculations
                 //Toatl= No of days worked + Weekly off + Comp off + OT No of days + Holidays
-                BigDecimal Total =DaysWorked.add(WeeklyOff).add(CompOff).add(overtime);
+               BigDecimal Total = DaysWorked.add(WeeklyOff).add(CompOff).add(overtime).add( Holidays);
 
                 // Per day Cost = Cost/29
-                BigDecimal PerdayCost = new BigDecimal("Cost/29");
+              //BigDecimal PerdayCost = new BigDecimal("Cost/29");
                 //GrandTotal = PerdayCost * Total
-                BigDecimal GrandTotal  = PerdayCost.multiply(Total);
+               // BigDecimal GrandTotal = PerdayCost.multiply(Total);
 
                 insertCell(table, String.valueOf(i++), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, String.valueOf( DaysWorked), Element.ALIGN_LEFT, 1, bfBold12);
-                insertCell(table, String.valueOf( WeeklyOff), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(DaysWorked), Element.ALIGN_LEFT, 1, bfBold12);
+                insertCell(table, String.valueOf(WeeklyOff), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, String.valueOf(CompOff), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, String.valueOf(overtime), Element.ALIGN_RIGHT, 1, bfBold12);
-
-                insertCell(table, String .valueOf(Holidays), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, String.valueOf(Total), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(Holidays), Element.ALIGN_RIGHT, 1, bfBold12);
+               insertCell(table, String.valueOf(Total), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-
-
             }
 
             //total or footer
