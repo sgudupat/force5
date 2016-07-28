@@ -1,6 +1,7 @@
 package com.force.five.app.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.force.five.app.domain.Client;
 import com.force.five.app.domain.PaySheets;
 import com.force.five.app.service.PaySheetsService;
 import com.force.five.app.web.rest.dto.PaySheetsDTO;
@@ -25,6 +26,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,8 +89,9 @@ public class PaySheetsResource {
     public List<PaySheetsDTO> getAllPaySheetss() {
         log.debug("REST request to get all PaySheetss");
         //generatePDF();
-        generateBillingReport("PSC", "MARCH", "2016");
-        // generateSalarySheets("PSC", "MARCH", "2016");
+       // generateBillingReport("PSC", "MARCH", "2016");
+         generateSalarySheets("PSC", "MARCH", "2016");
+        //generateInvoiceReport("PSC", "MARCH", "2016");
         log.debug("Run after PDF generation");
         return paySheetsService.findAll();
     }
@@ -197,9 +200,6 @@ public class PaySheetsResource {
                 BigDecimal overTime = new BigDecimal(record.getOvertime());
                 BigDecimal allowance = record.getAssignments().getEmployee().getAllowances();
 
-                BigDecimal totalDays = new BigDecimal("30");
-                BigDecimal PFCal = new BigDecimal("12").divide(new BigDecimal("100"), 2, RoundingMode.HALF_EVEN);
-                BigDecimal ESIC = new BigDecimal("1.75").divide(new BigDecimal("100"), 2, RoundingMode.HALF_EVEN);
                 // BigDecimal earnedBasic = null;
 
                 //add to total
@@ -208,42 +208,41 @@ public class PaySheetsResource {
                 GrandTotalbasic = GrandTotalbasic.add(basic);
                 GrandTotalAllow = GrandTotalAllow.add(allowance);
 
-
                 //Calculations
                 //basic + overtime
-                BigDecimal totalWages = basic.add(allowance);
+                BigDecimal totalWages = record.getTotalWages();
                 GrandToatlWages = GrandToatlWages.add(totalWages);
 
                 // basic/30 * regDays
-                BigDecimal earnedBasic = basic.divide(totalDays, 2, RoundingMode.HALF_EVEN).multiply(regDays).setScale(2, RoundingMode.HALF_EVEN);
+                BigDecimal earnedBasic = record.getEarnedBasic();
                 GrandTotalEarnedBasic = GrandTotalEarnedBasic.add(earnedBasic);
 
                 // totalWages/30 * overTime
-                BigDecimal otWags = totalWages.divide(totalDays, 2, RoundingMode.HALF_EVEN).multiply(overTime).setScale(2, RoundingMode.HALF_EVEN);
+                BigDecimal otWags = record.getOTWages();
                 GrandtotalOT = GrandtotalOT.add(otWags);
 
                 // Allow/30*RegDays
-                BigDecimal earnedAllowances = allowance.divide(totalDays, 2, RoundingMode.HALF_EVEN).multiply(regDays).setScale(2, RoundingMode.HALF_EVEN);
+                BigDecimal earnedAllowances =record.getEarnedAllowances();
                 GrandToatlEarnedAllow = GrandToatlEarnedAllow.add(earnedAllowances);
 
                 //GW=EarnedBasic+OT+Allow
-                BigDecimal GrossWages = earnedBasic.add(otWags).add(earnedAllowances);
+                BigDecimal GrossWages = record.getGrossWages();
                 GrandToatlGW = GrandToatlGW.add(GrossWages);
 
                 //P.F.=(EarnedBasic*12%)
-                BigDecimal pf = earnedBasic.multiply(PFCal).setScale(2, RoundingMode.HALF_EVEN);
+                BigDecimal pf = record.getPF();
                 GrandTotalPF = GrandTotalPF.add(pf);
 
                 //E.S.I.C =(EarnedBasic*1.75*)
-                BigDecimal esic = earnedBasic.multiply(ESIC).setScale(2, RoundingMode.HALF_EVEN);
+                BigDecimal esic = record.getESIC();
                 GrandTotalESIC = GrandTotalESIC.add(esic);
 
                 //TotalDedu=PF+ESIC
-                BigDecimal TotalDedu = pf.add(esic);
+                BigDecimal TotalDedu = record.getTotalDedu();
                 GrandTotalTolDedu = GrandTotalTolDedu.add(TotalDedu);
 
                 //NetSalary= GrossWages-TotalDedu
-                BigDecimal NetSal = GrossWages.subtract(TotalDedu);
+                BigDecimal NetSal = record.getNetSalary();
                 GrandTotalNatSal = GrandTotalNatSal.add(NetSal);
 
                 insertCell(table, String.valueOf(i++), Element.ALIGN_RIGHT, 1, bfBold12);
@@ -307,9 +306,6 @@ public class PaySheetsResource {
         }
     }
 
-
-
-
     private void generateBillingReport(String clientName, String month, String year) {
 
         Font bfBold12 = new Font(FontFamily.COURIER, 8, Font.BOLD, new BaseColor(0, 0, 0));
@@ -331,7 +327,7 @@ public class PaySheetsResource {
             table.setWidthPercentage(90f);
             //Put Header information
             insertCell(table, clientName, Element.ALIGN_CENTER, 20, bfBold12);
-          insertCell(table, "SALARY SHEET FOR THE MONTH OF " + month + " " + year, Element.ALIGN_CENTER, 20, bfBold12);
+            insertCell(table, "SALARY SHEET FOR THE MONTH OF " + month + " " + year, Element.ALIGN_CENTER, 20, bfBold12);
             insertCell(table, "SLNO", Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, "Design", Element.ALIGN_LEFT, 1, bfBold12);
             insertCell(table, "Name", Element.ALIGN_LEFT, 1, bfBold12);
@@ -379,28 +375,6 @@ public class PaySheetsResource {
             }
 
             //total or footer
-
-          /*  insertCell(table, "TOTAL", Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
-            insertCell(table, String.valueOf(grandTotalDays), Element.ALIGN_LEFT, 1, bfBold12);
-            insertCell(table, String.valueOf(GrandTotalOT), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, String.valueOf(GrandTotalbasic), Element.ALIGN_RIGHT, 1, bfBold12);
-
-            insertCell(table, String.valueOf(GrandTotalAllow), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, String.valueOf( GrandToatlWages), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, String.valueOf(GrandTotalEarnedBasic), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, String.valueOf(GrandtotalOT), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, String.valueOf(GrandToatlEarnedAllow), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, String.valueOf(GrandToatlGW), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, String.valueOf( GrandTotalPF), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, String.valueOf(GrandTotalESIC), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, String.valueOf(GrandTotalTolDedu), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, String.valueOf(GrandTotalNatSal), Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);*/
             // add the PDF table to the paragraph
             paragraph.add(table);
             // add the paragraph to the document
@@ -412,6 +386,149 @@ public class PaySheetsResource {
             table.addCell(cell2);
             table.addCell(cell3);
             document.close();
+        } catch (Exception e) {
+        }
+    }
+
+    private void generateInvoiceReport(String clientName, String month, String year) {
+
+        Font bfBold12 = new Font(FontFamily.COURIER, 8, Font.BOLD, new BaseColor(0, 0, 0));
+        Document document = new Document();
+
+        List<PaySheets> records = paySheetsService.getPaysheetRecords(clientName, month, year);
+        System.out.println("records::" + records);
+        Client client = new Client();
+        for (PaySheets record : records) {
+            client = record.getAssignments().getClient();
+            break;
+        }
+        try {
+            String fileName = "Invoice_summary_sheet_" + clientName.toLowerCase() + "_" + month.toLowerCase() + "_" + year + ".pdf";
+
+            PdfWriter.getInstance(document, new FileOutputStream(fileName));
+            document.open();
+            // create a paragraph
+            Paragraph paragraph = new Paragraph();
+            //Invoice Header
+            // Report Header
+            float[] invoiceHeaderCols = {45f, 45f};
+            PdfPTable invoiceHeader = new PdfPTable(invoiceHeaderCols);
+            // set table width a percentage of the  page width
+            invoiceHeader.setWidthPercentage(90f);
+            insertCell(invoiceHeader, "INVOICE NO:" + "F5PMSPL/2015-16/1744", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeader, "Dated:" + new Date(), Element.ALIGN_RIGHT, 1, bfBold12);
+
+            insertCell(invoiceHeader, client.getName(), Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeader, "", Element.ALIGN_RIGHT, 1, bfBold12);
+
+            insertCell(invoiceHeader, client.getAddress(), Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeader, "", Element.ALIGN_RIGHT, 1, bfBold12);
+
+            insertCell(invoiceHeader, client.getCity(), Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeader, "", Element.ALIGN_RIGHT, 1, bfBold12);
+
+            insertCell(invoiceHeader, client.getState(), Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeader, "" , Element.ALIGN_RIGHT, 1, bfBold12);
+
+            log.debug("Table value display");
+            int i = 1;
+
+            // add the PDF table to the paragraph
+            paragraph.add(invoiceHeader);
+            // add the paragraph to the document
+            document.add(paragraph);
+
+
+            //Second Table for Body
+
+            Paragraph paragraphBody = new Paragraph();
+            //Invoice Header
+            // Report Header
+            float[] invoiceHeadercolBody = {20f,80f,40f,40f,50f};
+            PdfPTable invoiceHeaderBody = new PdfPTable(invoiceHeadercolBody);
+            // set table width a percentage of the  page width
+            invoiceHeader.setWidthPercentage(90f);
+            insertCell(invoiceHeaderBody, "SL.NO", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "DESCRIPTION" , Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "NO.OF DUTIES", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "RATE", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "AMOUNT", Element.ALIGN_CENTER, 1, bfBold12);
+
+            int j = 1;
+            for (PaySheets record : records){
+            insertCell(invoiceHeaderBody, String.valueOf(j++), Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "House Keeping  charges for the month of February 26th 2016 To March 25th 2016 " , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "in hrs/days", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+                log.debug("Table value display");
+            }
+
+            insertCell(invoiceHeaderBody, String.valueOf(j) , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, " Charges For House Keeper" , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+
+            insertCell(invoiceHeaderBody, String.valueOf(j+1) , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, " Payment by cross order cheque only" , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+
+            insertCell(invoiceHeaderBody, String.valueOf(j+2) , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "Interest at 25%will be charged if the payment is not paid within 15 days of this bill" , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+
+            insertCell(invoiceHeaderBody, String.valueOf(j+3) , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "All disputes subject to Bangalore jurisidiction ,E.& O.E" , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+
+
+            insertCell(invoiceHeaderBody, String.valueOf(j+4) , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "Regist No U55101KA2007PTC043136/2007-2008.Date 15/6/2007" , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+
+            insertCell(invoiceHeaderBody, String.valueOf(j+5) , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, " E.S.I. C. NO. 53-22645-101" , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+
+            insertCell(invoiceHeaderBody, String.valueOf(j+6) , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, " P.F. NO. KN/WF/45011" , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+
+            insertCell(invoiceHeaderBody, String.valueOf(j+7) , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, " PAN NO: AABCF3440P" , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+
+
+            insertCell(invoiceHeaderBody, String.valueOf(j+8) , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, " Service Tax No :AABCF3440PST001 We here by certify that our Regd. Cert.under the BS Act 1956 is in force on the date on which the sale of goods specified in this bill/cash memo" +
+                "is made by us,and that the transaction of the sale covered in this bill/cash memo has been effected by us in the regular course of our business" , Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+
+            // add the PDF table to the paragraph
+            paragraphBody.add(invoiceHeaderBody);
+            // add the paragraph to the document
+            document.add(paragraphBody);
+
+
+            document.close();
+
         } catch (Exception e) {
 
         }
