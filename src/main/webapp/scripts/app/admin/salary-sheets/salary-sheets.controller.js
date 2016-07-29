@@ -1,10 +1,13 @@
 'use strict';
 
 angular.module('proj2App')
-    .controller('UserManagementController', function ($scope, Principal, User, ParseLinks) {
-        $scope.users = [];
+    .controller('UserManagementController', function ($scope, Principal, User, ParseLinks, Client, SalarySheets ) {
+        $scope.salarySheet = entity;
+        $scope.salarysheet = [];
+        $scope.clients = Client.query();
+        console.log($scope.clients);
         $scope.authorities = ["ROLE_USER", "ROLE_ADMIN"];
-		
+
 		Principal.identity().then(function(account) {
             $scope.currentAccount = account;
         });
@@ -40,5 +43,14 @@ angular.module('proj2App')
             };
             $scope.editForm.$setPristine();
             $scope.editForm.$setUntouched();
+        };
+
+        $scope.save = function () {
+            $scope.isSaving = true;
+//            if ($scope.assignments.id != null) {
+                SalarySheets.generateSalarySheets($scope.assignments, onSaveSuccess, onSaveError);
+//            } else {
+//                SalarySheets.save($scope.assignments, onSaveSuccess, onSaveError);
+//            }
         };
     });
