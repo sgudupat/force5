@@ -86,13 +86,13 @@ public class PaySheetsServiceImpl implements PaySheetsService {
         paySheetsRepository.delete(id);
     }
 
-    public List<PaySheets> getPaysheetRecords(String clientName, String month, String year) {
+    public List<PaySheets> getPaysheetRecords(Long clientId, String month, String year) {
         try {
             Date date = new SimpleDateFormat("MMM", Locale.ENGLISH).parse(month);
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
             int monthValue = cal.get(Calendar.MONTH);
-            List<PaySheets> records = paySheetsRepository.fetchSalarySheets(clientName, (monthValue + 1), year);
+            List<PaySheets> records = paySheetsRepository.fetchSalarySheets(clientId, (monthValue + 1), year);
             return records;
         } catch (ParseException pe) {
             log.error("Parse Exception:", pe);

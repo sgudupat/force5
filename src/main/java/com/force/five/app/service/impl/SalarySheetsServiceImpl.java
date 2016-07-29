@@ -33,30 +33,34 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
     public void generateSalarySheets(SalarySheets ss) {
         log.debug("This is the Salary Sheet call");
         log.debug("Data:" + ss.toString());
-        generateSalarySheets("psc", "March", "2016");
+        generateSalarySheets(ss.getClientId(), ss.getMonth(), ss.getYear());
     }
 
-    public void generateBillingReport(SalarySheets br) {
+    public void generateBillingReport(SalarySheets ss) {
         log.debug("This is the Billing Report call");
-        log.debug("Data:" + br.toString());
-        generateBillingReport("psc", "March", "2016");
+        log.debug("Data:" + ss.toString());
+        generateBillingReport(ss.getClientId(), ss.getMonth(), ss.getYear());
     }
 
-    public void generateInvoiceReport(SalarySheets ir) {
+    public void generateInvoiceReport(SalarySheets ss) {
         log.debug("This is the Invoice  call");
-        log.debug("Data:" + ir.toString());
-        generateInvoiceReport("psc", "March", "2016");
+        log.debug("Data:" + ss.toString());
+        generateInvoiceReport(ss.getClientId(), ss.getMonth(), ss.getYear());
     }
 
-    private void generateSalarySheets(String clientName, String month, String year) {
+    private void generateSalarySheets(Long clientId, String month, String year) {
         Font bfBold12 = new Font(Font.FontFamily.COURIER, 8, Font.BOLD, new BaseColor(0, 0, 0));
         Document document = new Document();
 
-        List<PaySheets> records = paySheetsService.getPaysheetRecords(clientName, month, year);
+        List<PaySheets> records = paySheetsService.getPaysheetRecords(clientId, month, year);
         System.out.println("records::" + records);
-
+        Client client = new Client();
+        for (PaySheets record : records) {
+            client = record.getAssignments().getClient();
+            break;
+        }
         try {
-            String fileName = "salary_sheet_" + clientName.toLowerCase() + "_" + month.toLowerCase() + "_" + year + ".pdf";
+            String fileName = "salary_sheet_" + clientId + "_" + month.toLowerCase() + "_" + year + ".pdf";
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
             // create a paragraph
@@ -67,7 +71,7 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             // set table width a percentage of the  page width
             table.setWidthPercentage(90f);
             //Put Header information
-            insertCell(table, clientName, Element.ALIGN_CENTER, 20, bfBold12);
+            insertCell(table, client.getName(), Element.ALIGN_CENTER, 20, bfBold12);
             insertCell(table, "SALARY SHEET FOR THE MONTH OF " + month + " " + year, Element.ALIGN_CENTER, 20, bfBold12);
             insertCell(table, "SLNO", Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, "Rank", Element.ALIGN_LEFT, 1, bfBold12);
@@ -219,16 +223,22 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
         }
     }
 
-    private void generateBillingReport(String clientName, String month, String year) {
+    private void generateBillingReport(Long clientId, String month, String year) {
 
         Font bfBold12 = new Font(Font.FontFamily.COURIER, 8, Font.BOLD, new BaseColor(0, 0, 0));
         Document document = new Document();
 
-        List<PaySheets> records = paySheetsService.getPaysheetRecords(clientName, month, year);
+        List<PaySheets> records = paySheetsService.getPaysheetRecords(clientId, month, year);
         System.out.println("records::" + records);
+        Client client = new Client();
+        for (PaySheets record : records) {
+            client = record.getAssignments().getClient();
+            break;
+        }
+
 
         try {
-            String fileName = "billing_summary_sheet_" + clientName.toLowerCase() + "_" + month.toLowerCase() + "_" + year + ".pdf";
+            String fileName = "billing_summary_sheet_" + clientId + "_" + month.toLowerCase() + "_" + year + ".pdf";
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
             // create a paragraph
@@ -239,7 +249,7 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             // set table width a percentage of the  page width
             table.setWidthPercentage(90f);
             //Put Header information
-            insertCell(table, clientName, Element.ALIGN_CENTER, 20, bfBold12);
+            insertCell(table, client.getName(), Element.ALIGN_CENTER, 20, bfBold12);
             insertCell(table, "SALARY SHEET FOR THE MONTH OF " + month + " " + year, Element.ALIGN_CENTER, 20, bfBold12);
             insertCell(table, "SLNO", Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, "Design", Element.ALIGN_LEFT, 1, bfBold12);
@@ -303,12 +313,12 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
         }
     }
 
-    private void generateInvoiceReport(String clientName, String month, String year) {
+    private void generateInvoiceReport(Long clientId, String month, String year) {
 
         Font bfBold12 = new Font(Font.FontFamily.COURIER, 8, Font.BOLD, new BaseColor(0, 0, 0));
         Document document = new Document();
 
-        List<PaySheets> records = paySheetsService.getPaysheetRecords(clientName, month, year);
+        List<PaySheets> records = paySheetsService.getPaysheetRecords(clientId, month, year);
         System.out.println("records::" + records);
         Client client = new Client();
         for (PaySheets record : records) {
@@ -316,7 +326,7 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             break;
         }
         try {
-            String fileName = "Invoice_summary_sheet_" + clientName.toLowerCase() + "_" + month.toLowerCase() + "_" + year + ".pdf";
+            String fileName = "Invoice_summary_sheet_" + clientId + "_" + month.toLowerCase() + "_" + year + ".pdf";
 
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
