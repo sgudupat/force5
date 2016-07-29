@@ -2,6 +2,7 @@ package com.force.five.app.web.rest.dto;
 
 import java.time.ZonedDateTime;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -14,6 +15,8 @@ public class AssignmentsDTO implements Serializable {
 
     private Long id;
 
+    private BigDecimal cost;
+
     private ZonedDateTime startDate;
 
     private ZonedDateTime endDate;
@@ -21,7 +24,7 @@ public class AssignmentsDTO implements Serializable {
     private Long employeeId;
 
     private Long clientId;
-    
+
     private String employeeName;
     
     private String clientName;
@@ -32,6 +35,13 @@ public class AssignmentsDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public BigDecimal getCost() {
+        return cost;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
     }
     public ZonedDateTime getStartDate() {
         return startDate;
@@ -100,12 +110,13 @@ public class AssignmentsDTO implements Serializable {
         return Objects.hashCode(id);
     }
 
-	@Override
-	public String toString() {
-		return "AssignmentsDTO [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", employeeId="
-				+ employeeId + ", clientId=" + clientId + ", employeeName=" + employeeName + ", clientName="
-				+ clientName + "]";
-	}
-
-    
+    @Override
+    public String toString() {
+        return "AssignmentsDTO{" +
+            "id=" + id +
+            ", cost='" + cost + "'" +
+            ", startDate=" + startDate + ", endDate=" + endDate + ", employeeId="
+			+ employeeId + ", clientId=" + clientId + ", employeeName=" + employeeName + ", clientName="
+			+ clientName + "]";
+    }
 }

@@ -52,6 +52,7 @@ angular.module('proj2App')
                         resolve: {
                             entity: function () {
                                 return {
+                                    cost: null,
                                     startDate: null,
                                     endDate: null,
                                     id: null

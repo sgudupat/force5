@@ -30,6 +30,7 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.ZoneId;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,6 +51,9 @@ public class AssignmentsResourceIntTest {
 
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.of("Z"));
 
+
+    private static final BigDecimal DEFAULT_COST = new BigDecimal(1);
+    private static final BigDecimal UPDATED_COST = new BigDecimal(2);
 
     private static final ZonedDateTime DEFAULT_START_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
     private static final ZonedDateTime UPDATED_START_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
@@ -92,6 +96,7 @@ public class AssignmentsResourceIntTest {
     @Before
     public void initTest() {
         assignments = new Assignments();
+        assignments.setCost(DEFAULT_COST);
         assignments.setStartDate(DEFAULT_START_DATE);
         assignments.setEndDate(DEFAULT_END_DATE);
     }
@@ -113,6 +118,7 @@ public class AssignmentsResourceIntTest {
         List<Assignments> assignmentss = assignmentsRepository.findAll();
         assertThat(assignmentss).hasSize(databaseSizeBeforeCreate + 1);
         Assignments testAssignments = assignmentss.get(assignmentss.size() - 1);
+        assertThat(testAssignments.getCost()).isEqualTo(DEFAULT_COST);
         assertThat(testAssignments.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testAssignments.getEndDate()).isEqualTo(DEFAULT_END_DATE);
     }
@@ -128,6 +134,7 @@ public class AssignmentsResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(assignments.getId().intValue())))
+                .andExpect(jsonPath("$.[*].cost").value(hasItem(DEFAULT_COST.intValue())))
                 .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE_STR)))
                 .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE_STR)));
     }
@@ -143,6 +150,7 @@ public class AssignmentsResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(assignments.getId().intValue()))
+            .andExpect(jsonPath("$.cost").value(DEFAULT_COST.intValue()))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE_STR))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE_STR));
     }
@@ -164,6 +172,7 @@ public class AssignmentsResourceIntTest {
 		int databaseSizeBeforeUpdate = assignmentsRepository.findAll().size();
 
         // Update the assignments
+        assignments.setCost(UPDATED_COST);
         assignments.setStartDate(UPDATED_START_DATE);
         assignments.setEndDate(UPDATED_END_DATE);
         AssignmentsDTO assignmentsDTO = assignmentsMapper.assignmentsToAssignmentsDTO(assignments);
@@ -177,6 +186,7 @@ public class AssignmentsResourceIntTest {
         List<Assignments> assignmentss = assignmentsRepository.findAll();
         assertThat(assignmentss).hasSize(databaseSizeBeforeUpdate);
         Assignments testAssignments = assignmentss.get(assignmentss.size() - 1);
+        assertThat(testAssignments.getCost()).isEqualTo(UPDATED_COST);
         assertThat(testAssignments.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testAssignments.getEndDate()).isEqualTo(UPDATED_END_DATE);
     }

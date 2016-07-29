@@ -21,6 +21,7 @@
                     <th><span>ID</span></th>
                     <th><span>Client</span></th>
                     <th><span>Employee</span></th>
+                    <th><span>Cost</span></th>
                     <th><span>StartDate</span></th>
                     <th><span>EndDate</span></th>
                     <th></th>
@@ -31,6 +32,7 @@
                     <td><a ui-sref="assignments.detail({id:assignments.id})">{{assignments.id}}</a></td>
                     <td><a ui-sref="client.detail({id:assignments.clientId})">{{assignments.clientName}}</a></td>
                     <td><a ui-sref="employee.detail({id:assignments.employeeId})">{{assignments.employeeName}}</a></td>
+                    <td>{{assignments.cost}}</td>
                     <td>{{assignments.startDate | date:'medium'}}</td>
                     <td>{{assignments.endDate | date:'medium'}}</td>
                     <td class="text-right">

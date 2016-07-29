@@ -17,13 +17,18 @@
     ],
     "fields": [
        
-        {
+	    {
             "fieldId": 1,
+            "fieldName": "cost",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 2,
             "fieldName": "startDate",
             "fieldType": "ZonedDateTime"
         },
         {
-            "fieldId": 2,
+            "fieldId": 3,
             "fieldName": "endDate",
             "fieldType": "ZonedDateTime"
         }

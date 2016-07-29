@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -19,6 +20,9 @@ public class Assignments implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "cost", precision=10, scale=2)
+    private BigDecimal cost;
+    
     @Column(name = "start_date")
     private ZonedDateTime startDate;
 
@@ -39,6 +43,14 @@ public class Assignments implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public BigDecimal getCost() {
+        return cost;
+    }
+    
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
     }
 
     public ZonedDateTime getStartDate() {
@@ -97,8 +109,9 @@ public class Assignments implements Serializable {
     public String toString() {
         return "Assignments{" +
             "id=" + id +
-            ", startDate=" + startDate +
-            ", endDate=" + endDate +
+            ", cost='" + cost + "'" +
+            ", startDate='" + startDate + "'" +
+            ", endDate='" + endDate + "'" +
             ", employee=" + employee +
             ", client=" + client +
             '}';

@@ -19,6 +19,7 @@ angular.module('proj2App')
 
         $scope.clear = function () {
             $scope.assignments = {
+                cost: null,
                 startDate: null,
                 endDate: null,
                 id: null
