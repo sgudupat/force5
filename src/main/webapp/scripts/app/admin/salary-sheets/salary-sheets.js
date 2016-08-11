@@ -20,6 +20,48 @@ angular.module('proj2App')
 
                 }
             })
+
+            .state('billing-sheets', {
+                            parent: 'admin',
+                            url: '/billing-sheets',
+                            data: {
+                                authorities: ['ROLE_ADMIN'],
+                                pageTitle: 'Billing Sheets'
+                            },
+                            views: {
+                                'content@': {
+                                    templateUrl: 'scripts/app/admin/salary-sheets/billing-sheets.html',
+                                    controller: 'UserManagementController'
+                                }
+                            },
+                            resolve: {
+
+                            }
+                        })
+
+
+
+                             .state('invoice-sheets', {
+                                                    parent: 'admin',
+                                                    url: '/invoice-sheets',
+                                                    data: {
+                                                        authorities: ['ROLE_ADMIN'],
+                                                        pageTitle: 'Invoice Sheets'
+                                                    },
+                                                    views: {
+                                                        'content@': {
+                                                            templateUrl: 'scripts/app/admin/salary-sheets/invoice-sheets.html',
+                                                            controller: 'UserManagementController'
+                                                        }
+                                                    },
+                                                    resolve: {
+
+                                                    }
+                                                })
+
+
+
+
             .state('salary-sheets-detail', {
                 parent: 'admin',
                 url: '/user/:login',
