@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('proj2App')
-    .controller('UserManagementController', function ($scope, Principal, User, ParseLinks, Client, SalarySheets ) {
-        $scope.salarySheet = entity;
-        $scope.salarysheet = [];
+    .controller('UserManagementController', function ($scope,Principal, User, ParseLinks, Client ) {
+
+        $scope.salarySheets = [];
         $scope.clients = Client.query();
         console.log($scope.clients);
         $scope.authorities = ["ROLE_USER", "ROLE_ADMIN"];
@@ -53,4 +53,10 @@ angular.module('proj2App')
 //                SalarySheets.save($scope.assignments, onSaveSuccess, onSaveError);
 //            }
         };
+
+
+
+
+
+
     });

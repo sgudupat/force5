@@ -2,7 +2,6 @@
 
 angular.module('proj2App')
     .controller('AssignmentsController', function ($scope, $state, Assignments) {
-
         $scope.assignmentss = [];
         $scope.loadAll = function() {
             Assignments.query(function(result) {
@@ -10,8 +9,6 @@ angular.module('proj2App')
             });
         };
         $scope.loadAll();
-
-
         $scope.refresh = function () {
             $scope.loadAll();
             $scope.clear();
