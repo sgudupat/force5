@@ -1,33 +1,41 @@
 <h2>Generate Salary Sheets</h2>
-
-
 <form name="salary-sheet-gen" role="form" novalidate ng-submit="save()">
     <div class="modal-body">
         <jh-alert-error></jh-alert-error>
-
         <div class="form-group">
             <label for="field_client">client</label>
-            <select class="form-control" id="field_client" name="client" ng-model="clients.clientId" ng-options="client.id as client.name for client in clients">
+            <select class="form-control" id="field_client" name="client" ng-model="salarySheets.clientId" ng-options="client.id as client.name for client in clients">
                 <option value=""></option>
             </select>
         </div>
 
         <div class="form-group">
             <label class="control-label" for="field_month">Month</label>
-            <select class="form-control" id="field_month" name="month" ng-model="" ng-options="">
-                <option value="1">Jan</option>
-                <option value="2">Feb</option>
+            <select class="form-control" id="field_month" name="month" ng-model="salarySheets.month" ng-options="">
+                <option value="JANUARY">Jan</option>
+                <option value="FEBRUARY">Feb</option>
+                <option value="MARCH">Mar</option>
+                <option value="APRIL">April</option>
+                <option value="MAY">May</option>
+                <option value="JUNE">June</option>
+                <option value="JULY">July</option>
+                <option value="AUGUST">Aug</option>
+                <option value="SEPTEMBER">Sept</option>
+                <option value="OCTOBER">Oct</option>
+                <option value="NOVEMBER">Nov</option>
+                <option value="DECEMBER">Dec</option>
             </select>
         </div>
-
         <div class="form-group">
             <label class="control-label" for="field_year">Year</label>
-            <select class="form-control" id="field_year" name="client" ng-model="client." ng-options="">
+            <select class="form-control" id="field_year" name="year" ng-model="salarySheets.year" ng-options="">
                 <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
             </select>
         </div>
-
-
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
@@ -38,78 +46,3 @@
         </button>
     </div>
 </form>
-
-<!--<div>-->
-    <!--<h2>Salary Sheets</h2>-->
-    <!--<jh-alert></jh-alert>-->
-    <!--<div class="container">-->
-        <!--<div class="row">-->
-          <!--<div class="col-md-4">-->
-              <!--<button class="btn btn-primary" ui-sref="salary-sheets.new">-->
-                  <!--<span class="glyphicon glyphicon-flash"></span> <span>Create a new User</span>-->
-              <!--</button>-->
-          <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="table-responsive">-->
-        <!--<table class="table table-striped">-->
-            <!--<thead>-->
-            <!--<tr>-->
-                <!--<th>ID</th>-->
-                <!--<th>Login</th>-->
-                <!--<th>Email</th>-->
-                <!--<th></th>-->
-
-                <!--<th>Profiles</th>-->
-                <!--<th>CreatedDate</th>-->
-                <!--<th>LastModifiedBy</th>-->
-                <!--<th>LastModifiedDate</th>-->
-                <!--<th></th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <!--<tbody>-->
-            <!--<tr ng-repeat="user in users track by user.id">-->
-                <!--<td><a ui-sref="salary-sheets-detail({login:user.login})">{{user.id}}</a></td>-->
-                <!--<td>{{user.login}}</td>-->
-                <!--<td>{{user.email}}</td>-->
-                <!--<td>-->
-                    <!--<span class="label label-danger" ng-click="setActive(user, true)" ng-show="!user.activated"-->
-                          <!--style="cursor: pointer;">Desactivated</span>-->
-                    <!--<span class="label label-success" ng-click="setActive(user, false)" ng-show="user.activated"-->
-                          <!--style="cursor: pointer;">Activated</span>-->
-                <!--</td>-->
-
-                <!--<td>-->
-                    <!--<div ng-repeat="authority in user.authorities">-->
-                        <!--<span class="label label-info">{{ authority }}</span>-->
-                    <!--</div>-->
-                <!--</td>-->
-                <!--<td>{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>-->
-                <!--<td>{{user.lastModifiedBy}}</td>-->
-                <!--<td>{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>-->
-                <!--<td class="text-right">-->
-                    <!--<button type="submit"-->
-                            <!--ui-sref="salary-sheets-detail({login:user.login})"-->
-                            <!--class="btn btn-info btn-sm">-->
-                        <!--<span class="glyphicon glyphicon-eye-open"></span>-->
-                    <!--</button>-->
-                    <!--<button style="display:none;" type="submit"-->
-                            <!--ui-sref="salary-sheets.edit({login:user.login})"-->
-                            <!--class="btn btn-primary btn-sm">-->
-                        <!--<span class="glyphicon glyphicon-pencil"></span>-->
-                    <!--</button>-->
-                    <!--<button style="display:none;" type="submit"-->
-                            <!--ui-sref="salary-sheets.delete({login:user.login})"-->
-                            <!--class="btn btn-danger btn-sm"-->
-                            <!--ng-disabled="currentAccount.login==user.login">-->
-                        <!--<span class="glyphicon glyphicon-remove-circle"></span>-->
-                    <!--</button>-->
-                <!--</td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-        <!--</table>-->
-    <!--</div>-->
-    <!--<div class="text-center">-->
-        <!--<uib-pagination class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="loadAll()"></uib-pagination>-->
-    <!--</div>-->
-<!--</div>-->
