@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -177,6 +178,35 @@ public class PaySheets implements Serializable {
 
     public BigDecimal getNetSalary() {
         return getGrossWages().subtract(getTotalDedu());
+    }
+
+    public BigDecimal getCost() {
+        return this.getAssignments().getCost();
+    }
+
+    public BigDecimal getCostPerDay() {
+        BigDecimal cost = getCost();
+        Calendar c = Calendar.getInstance();
+        int monthMaxDays = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+        BigDecimal monthMaxDaysBigDecimal=new BigDecimal(monthMaxDays);
+        //costperdayn = cost/No of days in a month
+
+        BigDecimal costPerDay= cost.divide(monthMaxDaysBigDecimal).setScale(2,RoundingMode.HALF_EVEN);
+
+        return costPerDay ;
+    }
+    public  BigDecimal getTotal() {
+
+        BigDecimal total  = new BigDecimal(getDaysWorked()+getWeeklyOff() + getCompOff()+getOvertime()+getHolidays());
+        return total;
+    }
+
+    //GrandTotal = PerdayCost * Toatl
+
+    public  BigDecimal getGrandToatl()
+    {
+        return  getCostPerDay().multiply(getTotal()).setScale(2,BigDecimal.ROUND_HALF_EVEN);
+
     }
 
 }

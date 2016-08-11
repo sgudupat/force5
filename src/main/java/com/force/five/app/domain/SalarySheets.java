@@ -1,21 +1,11 @@
 package com.force.five.app.domain;
 
-import javax.persistence.*;
-import java.io.Serializable;
-/**
- * A Assignments.
- */
-@Entity
-@Table(name = "salarySheets")
-public class SalarySheets implements Serializable {
+public class SalarySheets {
 
-    @Column(name = "client_id")
     private Long clientId;
 
-    @Column(name = "month")
     private String month;
 
-    @Column(name = "year")
     private String year;
 
     public Long getClientId() {

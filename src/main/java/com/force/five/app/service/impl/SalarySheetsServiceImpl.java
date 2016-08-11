@@ -250,7 +250,8 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             table.setWidthPercentage(90f);
             //Put Header information
             insertCell(table, client.getName(), Element.ALIGN_CENTER, 20, bfBold12);
-            insertCell(table, "SALARY SHEET FOR THE MONTH OF " + month + " " + year, Element.ALIGN_CENTER, 20, bfBold12);
+            //TODO: Rename title
+            insertCell(table, "BILLING SUMMARY FOR THE MONTH OF " + month + " " + year, Element.ALIGN_CENTER, 20, bfBold12);
             insertCell(table, "SLNO", Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, "Design", Element.ALIGN_LEFT, 1, bfBold12);
             insertCell(table, "Name", Element.ALIGN_LEFT, 1, bfBold12);
@@ -276,12 +277,13 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
 
                 //Calculations
                 //Toatl= No of days worked + Weekly off + Comp off + OT No of days + Holidays
-                BigDecimal Total = DaysWorked.add(WeeklyOff).add(CompOff).add(overtime).add(Holidays);
-
+                BigDecimal Total = record.getTotal();
+                BigDecimal GrandToatl = record.getGrandToatl();
                 // Per day Cost = Cost/29
                 //BigDecimal PerdayCost = new BigDecimal("Cost/29");
                 //GrandTotal = PerdayCost * Total
                 // BigDecimal GrandTotal = PerdayCost.multiply(Total);
+
 
                 insertCell(table, String.valueOf(i++), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
