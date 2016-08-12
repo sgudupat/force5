@@ -10,17 +10,6 @@ function SalarySheetsController($scope, Principal, User, ParseLinks, Client) {
         $scope.currentAccount = account;
     });
 
-    $scope.clear = function () {
-        $scope.user = {
-            id: null, login: null, firstName: null, lastName: null, email: null,
-            activated: null, langKey: null, createdBy: null, createdDate: null,
-            lastModifiedBy: null, lastModifiedDate: null, resetDate: null,
-            resetKey: null
-        };
-        $scope.editForm.$setPristine();
-        $scope.editForm.$setUntouched();
-    };
-
     $scope.salaryReport = function () {
        console.log("In save")
        console.dir($scope.salarySheets)
