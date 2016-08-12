@@ -13,21 +13,18 @@ function SalarySheetsController($scope, Principal, User, ParseLinks, Client) {
     $scope.salaryReport = function () {
        console.log("In save")
        console.dir($scope.salarySheets)
-        $scope.isSaving = true;
-        SalarySheets.generateSalarySheets($scope.salarySheets, onSaveSuccess, onSaveError);
+       SalarySheets.generateSalarySheets($scope.salarySheets, onSaveSuccess, onSaveError);
     };
 
      $scope.billingReport = function () {
        console.log("In billingReport save")
        console.dir($scope.salarySheets)
-        $scope.isSaving = true;
-        SalarySheets.generateSalarySheets($scope.salarySheets, onSaveSuccess, onSaveError);
+       SalarySheets.generateBillingReport($scope.salarySheets, onSaveSuccess, onSaveError);
     };
 
      $scope.invoiceReport = function () {
        console.log("In invoiceReport save")
        console.dir($scope.salarySheets)
-        $scope.isSaving = true;
-        SalarySheets.generateSalarySheets($scope.salarySheets, onSaveSuccess, onSaveError);
+       SalarySheets.generateInvoiceReport($scope.salarySheets, onSaveSuccess, onSaveError);
     };
 }
