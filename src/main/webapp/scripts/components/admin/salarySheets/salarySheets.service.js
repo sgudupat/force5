@@ -2,10 +2,17 @@
 
 angular.module('proj2App')
     .factory('SalarySheets',function ($resource, DateUtils) {
-    console.log('Salary Sheets services');
         return $resource('api/salarySheets/generate', {}, {
-            'generateSalarySheets': { method:'PUT' },
-            'generateBillingReport': { method:'PUT' },
+            'generateSalarySheets': { method:'PUT' }
+         });
+    })
+    .factory('BillingSheets',function ($resource, DateUtils) {
+        return $resource('api/billingReport/generate', {}, {
+            'generateBillingReport': { method:'PUT' }
+         });
+    })
+    .factory('InvoiceSheets',function ($resource, DateUtils) {
+        return $resource('api/invoiceReport/generate', {}, {
             'generateInvoiceReport': { method:'PUT' }
          });
     });
