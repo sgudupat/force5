@@ -2,6 +2,7 @@
 
 angular.module('proj2App')
     .factory('Client', function ($resource, DateUtils) {
+    console.log('client services');
         return $resource('api/clients/:id', {}, {
             'query': { method: 'GET', isArray: true},
             'get': {

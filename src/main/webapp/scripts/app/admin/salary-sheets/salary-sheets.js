@@ -13,11 +13,10 @@ angular.module('proj2App')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/app/admin/salary-sheets/salary-sheets.html',
-                        controller: 'UserManagementController'
+                        controller: 'SalarySheetsController'
                     }
                 },
                 resolve: {
-
                 }
             })
 
