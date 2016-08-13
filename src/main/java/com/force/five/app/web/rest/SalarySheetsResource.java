@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -41,6 +42,35 @@ public class SalarySheetsResource {
             .headers(HeaderUtil.createEntityUpdateAlert("assignments", ""))
             .body(null);
     }
+
+    @RequestMapping(value = "/salarySheets/fetch", method = RequestMethod.GET)
+    @Timed
+    public ResponseEntity<?> fetchSalarySheets() throws URISyntaxException,IOException {
+        List<String> reports = salarySheetsService.fetchSalarySheets();
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("assignments", ""))
+            .body(reports);
+    }
+
+    @RequestMapping(value = "/billingSheets/fetch", method = RequestMethod.GET)
+    @Timed
+    public ResponseEntity<?> fetchBillingSheets() throws URISyntaxException,IOException {
+        List<String> reports = salarySheetsService.fetchBillingSheets();
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("assignments", ""))
+            .body(reports);
+    }
+
+    @RequestMapping(value = "/invoiceSheets/fetch", method = RequestMethod.GET)
+    @Timed
+    public ResponseEntity<?> fetchInvoiceSheets() throws URISyntaxException,IOException {
+        List<String> reports = salarySheetsService.fetchInvoiceSheets();
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("assignments", ""))
+            .body(reports);
+    }
+
+
 
     @RequestMapping(value = "/billingReport/generate", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed

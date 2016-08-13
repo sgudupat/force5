@@ -6,6 +6,7 @@ import com.force.five.app.domain.SalarySheets;
 import com.force.five.app.service.PaySheetsService;
 import com.force.five.app.service.SalarySheetsService;
 import com.force.five.app.service.util.ForceConstants;
+import com.force.five.app.service.util.ForceProperties;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -16,9 +17,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +52,56 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
         log.debug("This is the Invoice  call");
         log.debug("Data:" + ss.toString());
         generateInvoiceReport(ss.getClientId(), ss.getMonth(), ss.getYear());
+    }
+
+    @Override
+    public List<String> fetchSalarySheets() throws IOException {
+        //Fetch all files from a path and return list of file names
+        File folder = new File(ForceProperties.REPORT_PATH);
+        File[] listOfFiles = folder.listFiles();
+        List<String> files = new ArrayList<String>();
+        for (int i = 0; i < listOfFiles.length; i++) {
+            File file = listOfFiles[i];
+            if (file.isFile() && file.getName().endsWith(".pdf") && file.getName().startsWith("salary")) {
+                files.add(file.getName());
+            }
+        }
+        return files;
+    }
+
+    //Billing
+    @Override
+    public List<String> fetchBillingSheets() throws IOException {
+        //Fetch all files from a path and return list of file names
+        File folder = new File(ForceProperties.REPORT_PATH);
+        File[] listOfFiles = folder.listFiles();
+        List<String> files = new ArrayList<String>();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            File file = listOfFiles[i];
+            if (file.isFile() && file.getName().endsWith(".pdf") && file.getName().startsWith("billing")) {
+                files.add(file.getName());
+            }
+        }
+        return files;
+    }
+  //Invoice
+
+    @Override
+    public List<String> fetchInvoiceSheets() throws IOException {
+        //Fetch all files from a path and return list of file names
+
+        File folder = new File(ForceProperties.REPORT_PATH);
+        File[] listOfFiles = folder.listFiles();
+        List<String> files = new ArrayList<String>();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            File file = listOfFiles[i];
+            if (file.isFile() && file.getName().endsWith(".pdf") && file.getName().startsWith("Invoice")) {
+                files.add(file.getName());
+            }
+        }
+        return files;
     }
 
     private void generateSalarySheets(Long clientId, String month, String year) {
