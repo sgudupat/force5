@@ -1,4 +1,7 @@
 <h1>Generate Invoice Sheets</h1>
+<div class="alerts" ng-cloak="" ng-if="alertMessage == true">
+    <uib-alert ng-cloak="" type="success" close="alert.close()"><pre>{{ message }}</pre></uib-alert>
+</div>
 
 <form name="invoice-sheet-gen" role="form" novalidate ng-submit="invoiceReport()">
     <div class="modal-body">

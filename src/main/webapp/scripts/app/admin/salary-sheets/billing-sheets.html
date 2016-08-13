@@ -1,5 +1,7 @@
 <h1>Generate Billing Sheets</h1>
-
+<div class="alerts" ng-cloak="" ng-if="alertMessage == true">
+    <uib-alert ng-cloak="" type="success" close="alert.close()"><pre>{{ message }}</pre></uib-alert>
+</div>
 
 <form name="billing-sheet-gen" role="form" novalidate ng-submit="billingReport()">
     <div class="modal-body">
