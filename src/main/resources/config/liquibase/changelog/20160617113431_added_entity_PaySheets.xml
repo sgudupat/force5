@@ -21,6 +21,10 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="month" type="varchar(255)"/>
+            
+            <column name="year" type="varchar(255)"/>
+            
             <column name="regular_days" type="integer"/>
             
             <column name="days_worked" type="integer"/>

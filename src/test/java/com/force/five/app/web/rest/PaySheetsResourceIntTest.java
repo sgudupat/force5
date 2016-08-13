@@ -44,6 +44,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class PaySheetsResourceIntTest {
 
+    private static final String DEFAULT_MONTH = "AAAAA";
+    private static final String UPDATED_MONTH = "BBBBB";
+    private static final String DEFAULT_YEAR = "AAAAA";
+    private static final String UPDATED_YEAR = "BBBBB";
 
     private static final Integer DEFAULT_REGULAR_DAYS = 1;
     private static final Integer UPDATED_REGULAR_DAYS = 2;
@@ -96,6 +100,8 @@ public class PaySheetsResourceIntTest {
     @Before
     public void initTest() {
         paySheets = new PaySheets();
+        paySheets.setMonth(DEFAULT_MONTH);
+        paySheets.setYear(DEFAULT_YEAR);
         paySheets.setRegularDays(DEFAULT_REGULAR_DAYS);
         paySheets.setDaysWorked(DEFAULT_DAYS_WORKED);
         paySheets.setWeeklyOff(DEFAULT_WEEKLY_OFF);
@@ -121,6 +127,8 @@ public class PaySheetsResourceIntTest {
         List<PaySheets> paySheetss = paySheetsRepository.findAll();
         assertThat(paySheetss).hasSize(databaseSizeBeforeCreate + 1);
         PaySheets testPaySheets = paySheetss.get(paySheetss.size() - 1);
+        assertThat(testPaySheets.getMonth()).isEqualTo(DEFAULT_MONTH);
+        assertThat(testPaySheets.getYear()).isEqualTo(DEFAULT_YEAR);
         assertThat(testPaySheets.getRegularDays()).isEqualTo(DEFAULT_REGULAR_DAYS);
         assertThat(testPaySheets.getDaysWorked()).isEqualTo(DEFAULT_DAYS_WORKED);
         assertThat(testPaySheets.getWeeklyOff()).isEqualTo(DEFAULT_WEEKLY_OFF);
@@ -140,6 +148,8 @@ public class PaySheetsResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(paySheets.getId().intValue())))
+                .andExpect(jsonPath("$.[*].month").value(hasItem(DEFAULT_MONTH.toString())))
+                .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR.toString())))
                 .andExpect(jsonPath("$.[*].regularDays").value(hasItem(DEFAULT_REGULAR_DAYS)))
                 .andExpect(jsonPath("$.[*].daysWorked").value(hasItem(DEFAULT_DAYS_WORKED)))
                 .andExpect(jsonPath("$.[*].weeklyOff").value(hasItem(DEFAULT_WEEKLY_OFF)))
@@ -159,6 +169,8 @@ public class PaySheetsResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(paySheets.getId().intValue()))
+            .andExpect(jsonPath("$.month").value(DEFAULT_MONTH.toString()))
+            .andExpect(jsonPath("$.year").value(DEFAULT_YEAR.toString()))
             .andExpect(jsonPath("$.regularDays").value(DEFAULT_REGULAR_DAYS))
             .andExpect(jsonPath("$.daysWorked").value(DEFAULT_DAYS_WORKED))
             .andExpect(jsonPath("$.weeklyOff").value(DEFAULT_WEEKLY_OFF))
@@ -184,6 +196,8 @@ public class PaySheetsResourceIntTest {
 		int databaseSizeBeforeUpdate = paySheetsRepository.findAll().size();
 
         // Update the paySheets
+        paySheets.setMonth(UPDATED_MONTH);
+        paySheets.setYear(UPDATED_YEAR);
         paySheets.setRegularDays(UPDATED_REGULAR_DAYS);
         paySheets.setDaysWorked(UPDATED_DAYS_WORKED);
         paySheets.setWeeklyOff(UPDATED_WEEKLY_OFF);
@@ -201,6 +215,8 @@ public class PaySheetsResourceIntTest {
         List<PaySheets> paySheetss = paySheetsRepository.findAll();
         assertThat(paySheetss).hasSize(databaseSizeBeforeUpdate);
         PaySheets testPaySheets = paySheetss.get(paySheetss.size() - 1);
+        assertThat(testPaySheets.getMonth()).isEqualTo(UPDATED_MONTH);
+        assertThat(testPaySheets.getYear()).isEqualTo(UPDATED_YEAR);
         assertThat(testPaySheets.getRegularDays()).isEqualTo(UPDATED_REGULAR_DAYS);
         assertThat(testPaySheets.getDaysWorked()).isEqualTo(UPDATED_DAYS_WORKED);
         assertThat(testPaySheets.getWeeklyOff()).isEqualTo(UPDATED_WEEKLY_OFF);

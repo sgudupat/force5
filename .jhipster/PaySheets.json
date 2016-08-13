@@ -11,31 +11,41 @@
     "fields": [
         {
             "fieldId": 1,
+            "fieldName": "month",
+            "fieldType": "String"
+        },
+		 {
+            "fieldId": 2,
+            "fieldName": "year",
+            "fieldType": "String"
+        },
+		 {
+            "fieldId":3,
             "fieldName": "regularDays",
             "fieldType": "Integer"
         },
 		{
-            "fieldId": 2,
+            "fieldId": 4,
             "fieldName": "daysWorked",
             "fieldType": "Integer"
         },
 		{
-            "fieldId": 3,
+            "fieldId": 5,
             "fieldName": "weeklyOff",
             "fieldType": "Integer"
         },
 		{
-            "fieldId": 4,
+            "fieldId": 6,
             "fieldName": "compOff",
             "fieldType": "Integer"
         },
 		{
-            "fieldId": 5,
+            "fieldId": 7,
             "fieldName": "holidays",
             "fieldType": "Integer"
         },
         {
-            "fieldId": 6,
+            "fieldId": 8,
             "fieldName": "overtime",
             "fieldType": "Integer"
         }

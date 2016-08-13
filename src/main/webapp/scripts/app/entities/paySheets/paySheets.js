@@ -52,6 +52,8 @@ angular.module('proj2App')
                         resolve: {
                             entity: function () {
                                 return {
+                                    month: null,
+                                    year: null,
                                     regularDays: null,
                                     daysWorked: null,
                                     weeklyOff: null,

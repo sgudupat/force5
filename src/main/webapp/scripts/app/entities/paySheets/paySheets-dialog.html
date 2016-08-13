@@ -18,9 +18,19 @@
             <select class="form-control" id="field_assignments" name="assignments" ng-model="paySheets.assignmentsId" ng-options="assignments.id as (assignments.clientName ) + ' - ' +(assignments.employeeName) for assignments in assignmentss">
                 <option value=""></option>
             </select>
-        </div>
-<!--
         <div class="form-group">
+            <label class="control-label" for="field_month">Month</label>
+            <input type="text" class="form-control" name="month" id="field_month"
+                    ng-model="paySheets.month"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_year">Year</label>
+            <input type="text" class="form-control" name="year" id="field_year"
+                    ng-model="paySheets.year"
+                     />
+        </div>
+<!--        <div class="form-group">
             <label class="control-label" for="field_regularDays">RegularDays</label>
             <input type="number" class="form-control" name="regularDays" id="field_regularDays"
                     ng-model="paySheets.regularDays"
@@ -57,6 +67,7 @@
                     ng-model="paySheets.overtime"
                      />
         </div>
+
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">

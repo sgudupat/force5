@@ -1,6 +1,8 @@
 package com.force.five.app.web.rest.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 
@@ -11,24 +13,34 @@ public class PaySheetsDTO implements Serializable {
 
     private Long id;
 
+    private String month;
+
+
+    private String year;
+
+
     private Integer regularDays;
+
 
     private Integer daysWorked;
 
+
     private Integer weeklyOff;
+
 
     private Integer compOff;
 
+
     private Integer holidays;
+
 
     private Integer overtime;
 
     private String clientName;
 
     private String employeeName;
-
+    
     private Long assignmentsId;
-
     public Long getId() {
         return id;
     }
@@ -36,7 +48,20 @@ public class PaySheetsDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    public String getMonth() {
+        return month;
+    }
 
+    public void setMonth(String month) {
+        this.month = month;
+    }
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
     public Integer getRegularDays() {
         return regularDays;
     }
@@ -44,7 +69,6 @@ public class PaySheetsDTO implements Serializable {
     public void setRegularDays(Integer regularDays) {
         this.regularDays = regularDays;
     }
-
     public Integer getDaysWorked() {
         return daysWorked;
     }
@@ -52,7 +76,6 @@ public class PaySheetsDTO implements Serializable {
     public void setDaysWorked(Integer daysWorked) {
         this.daysWorked = daysWorked;
     }
-
     public Integer getWeeklyOff() {
         return weeklyOff;
     }
@@ -60,7 +83,6 @@ public class PaySheetsDTO implements Serializable {
     public void setWeeklyOff(Integer weeklyOff) {
         this.weeklyOff = weeklyOff;
     }
-
     public Integer getCompOff() {
         return compOff;
     }
@@ -68,7 +90,6 @@ public class PaySheetsDTO implements Serializable {
     public void setCompOff(Integer compOff) {
         this.compOff = compOff;
     }
-
     public Integer getHolidays() {
         return holidays;
     }
@@ -76,7 +97,6 @@ public class PaySheetsDTO implements Serializable {
     public void setHolidays(Integer holidays) {
         this.holidays = holidays;
     }
-
     public Integer getOvertime() {
         return overtime;
     }
@@ -108,7 +128,6 @@ public class PaySheetsDTO implements Serializable {
     public void setAssignmentsId(Long assignmentsId) {
         this.assignmentsId = assignmentsId;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -120,7 +139,7 @@ public class PaySheetsDTO implements Serializable {
 
         PaySheetsDTO paySheetsDTO = (PaySheetsDTO) o;
 
-        if (!Objects.equals(id, paySheetsDTO.id)) return false;
+        if ( ! Objects.equals(id, paySheetsDTO.id)) return false;
 
         return true;
     }
@@ -134,12 +153,14 @@ public class PaySheetsDTO implements Serializable {
     public String toString() {
         return "PaySheetsDTO{" +
             "id=" + id +
-            ", regularDays=" + regularDays +
-            ", daysWorked=" + daysWorked +
-            ", weeklyOff=" + weeklyOff +
-            ", compOff=" + compOff +
-            ", holidays=" + holidays +
-            ", overtime=" + overtime +
+            ", month='" + month + "'" +
+            ", year='" + year + "'" +
+            ", regularDays='" + regularDays + "'" +
+            ", daysWorked='" + daysWorked + "'" +
+            ", weeklyOff='" + weeklyOff + "'" +
+            ", compOff='" + compOff + "'" +
+            ", holidays='" + holidays + "'" +
+            ", overtime='" + overtime + "'" +
             ", clientName='" + clientName + '\'' +
             ", employeeName='" + employeeName + '\'' +
             ", assignmentsId=" + assignmentsId +

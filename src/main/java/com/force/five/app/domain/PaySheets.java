@@ -1,6 +1,5 @@
 package com.force.five.app.domain;
 
-
 import com.force.five.app.service.util.ForceConstants;
 
 import javax.persistence.*;
@@ -21,24 +20,30 @@ public class PaySheets implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "month")
+    private String month;
+    
+    @Column(name = "year")
+    private String year;
+    
     @Column(name = "regular_days")
     private Integer regularDays;
-
+    
     @Column(name = "days_worked")
     private Integer daysWorked;
-
+    
     @Column(name = "weekly_off")
     private Integer weeklyOff;
-
+    
     @Column(name = "comp_off")
     private Integer compOff;
-
+    
     @Column(name = "holidays")
     private Integer holidays;
-
+    
     @Column(name = "overtime")
     private Integer overtime;
-
+    
     @ManyToOne
     @JoinColumn(name = "assignments_id")
     private Assignments assignments;
@@ -51,10 +56,26 @@ public class PaySheets implements Serializable {
         this.id = id;
     }
 
+    public String getMonth() {
+        return month;
+    }
+    
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getYear() {
+        return year;
+    }
+    
+    public void setYear(String year) {
+        this.year = year;
+    }
+
     public Integer getRegularDays() {
         return regularDays;
     }
-
+    
     public void setRegularDays(Integer regularDays) {
         this.regularDays = regularDays;
     }
@@ -62,7 +83,7 @@ public class PaySheets implements Serializable {
     public Integer getDaysWorked() {
         return daysWorked;
     }
-
+    
     public void setDaysWorked(Integer daysWorked) {
         this.daysWorked = daysWorked;
     }
@@ -70,7 +91,7 @@ public class PaySheets implements Serializable {
     public Integer getWeeklyOff() {
         return weeklyOff;
     }
-
+    
     public void setWeeklyOff(Integer weeklyOff) {
         this.weeklyOff = weeklyOff;
     }
@@ -78,7 +99,7 @@ public class PaySheets implements Serializable {
     public Integer getCompOff() {
         return compOff;
     }
-
+    
     public void setCompOff(Integer compOff) {
         this.compOff = compOff;
     }
@@ -86,7 +107,7 @@ public class PaySheets implements Serializable {
     public Integer getHolidays() {
         return holidays;
     }
-
+    
     public void setHolidays(Integer holidays) {
         this.holidays = holidays;
     }
@@ -94,7 +115,7 @@ public class PaySheets implements Serializable {
     public Integer getOvertime() {
         return overtime;
     }
-
+    
     public void setOvertime(Integer overtime) {
         this.overtime = overtime;
     }
@@ -131,6 +152,8 @@ public class PaySheets implements Serializable {
     public String toString() {
         return "PaySheets{" +
             "id=" + id +
+            ", month='" + month + "'" +
+            ", year='" + year + "'" +
             ", regularDays='" + regularDays + "'" +
             ", daysWorked='" + daysWorked + "'" +
             ", weeklyOff='" + weeklyOff + "'" +
