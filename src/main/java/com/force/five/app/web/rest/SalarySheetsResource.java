@@ -7,6 +7,8 @@ import com.force.five.app.service.SalarySheetsService;
 import com.force.five.app.web.rest.dto.AssignmentsDTO;
 import com.force.five.app.web.rest.mapper.AssignmentsMapper;
 import com.force.five.app.web.rest.util.HeaderUtil;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -45,29 +47,35 @@ public class SalarySheetsResource {
 
     @RequestMapping(value = "/salarySheets/fetch", method = RequestMethod.GET)
     @Timed
-    public ResponseEntity<?> fetchSalarySheets() throws URISyntaxException,IOException {
+    public ResponseEntity<?> fetchSalarySheets() throws URISyntaxException, IOException, JSONException {
         List<String> reports = salarySheetsService.fetchSalarySheets();
+        JSONObject result = new JSONObject();
+        result.put("reports", reports);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("assignments", ""))
-            .body(reports);
+            .body(result);
     }
 
     @RequestMapping(value = "/billingSheets/fetch", method = RequestMethod.GET)
     @Timed
-    public ResponseEntity<?> fetchBillingSheets() throws URISyntaxException,IOException {
+    public ResponseEntity<?> fetchBillingSheets() throws URISyntaxException, IOException, JSONException {
         List<String> reports = salarySheetsService.fetchBillingSheets();
+        JSONObject result = new JSONObject();
+        result.put("reports", reports);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("assignments", ""))
-            .body(reports);
+            .body(result);
     }
 
     @RequestMapping(value = "/invoiceSheets/fetch", method = RequestMethod.GET)
     @Timed
-    public ResponseEntity<?> fetchInvoiceSheets() throws URISyntaxException,IOException {
+    public ResponseEntity<?> fetchInvoiceSheets() throws URISyntaxException, IOException, JSONException {
         List<String> reports = salarySheetsService.fetchInvoiceSheets();
+        JSONObject result = new JSONObject();
+        result.put("reports", reports);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("assignments", ""))
-            .body(reports);
+            .body(result);
     }
 
 
