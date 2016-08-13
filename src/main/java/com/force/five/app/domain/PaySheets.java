@@ -203,11 +203,9 @@ public class PaySheets implements Serializable {
         return total;
     }
 
-    //GrandTotal = PerdayCost * Toatl
-
-    public BigDecimal getGrandToatl() {
+    //GrandTotal = PerDayCost * Total
+    public BigDecimal getGrandTotal() {
         return getCostPerDay().multiply(getTotal()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
-
     }
 
 }

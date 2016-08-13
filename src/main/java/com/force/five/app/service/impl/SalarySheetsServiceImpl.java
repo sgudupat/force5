@@ -5,6 +5,7 @@ import com.force.five.app.domain.PaySheets;
 import com.force.five.app.domain.SalarySheets;
 import com.force.five.app.service.PaySheetsService;
 import com.force.five.app.service.SalarySheetsService;
+import com.force.five.app.service.util.ForceConstants;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -250,7 +252,6 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             table.setWidthPercentage(90f);
             //Put Header information
             insertCell(table, client.getName(), Element.ALIGN_CENTER, 20, bfBold12);
-            //TODO: Rename title
             insertCell(table, "BILLING SUMMARY FOR THE MONTH OF " + month + " " + year, Element.ALIGN_CENTER, 20, bfBold12);
             insertCell(table, "SLNO", Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, "Design", Element.ALIGN_LEFT, 1, bfBold12);
@@ -264,6 +265,10 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             insertCell(table, "Cost", Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, "Per day cost", Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(table, "GrandTotal", Element.ALIGN_RIGHT, 1, bfBold12);
+
+            //element for total
+            BigDecimal totalDaysWorked = BigDecimal.ZERO;
+            BigDecimal totalAmount = BigDecimal.ZERO;
 
             log.debug("Table value display");
             int i = 1;
@@ -279,15 +284,17 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
                 //Calculations
                 //Toatl= No of days worked + Weekly off + Comp off + OT No of days + Holidays
                 BigDecimal Total = record.getTotal();
+                totalDaysWorked = totalDaysWorked.add(Total);
+
                 // Per day Cost = Cost/29
                 BigDecimal PerDayCost = record.getCostPerDay();
-                //GrandTotal = PerdayCost * Total
-                 BigDecimal GrandTotal = record.getGrandToatl();
-
+                //GrandTotal = PerDayCost * Total
+                BigDecimal GrandTotal = record.getGrandTotal();
+                totalAmount = totalAmount.add(GrandTotal);
 
                 insertCell(table, String.valueOf(i++), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, record.getAssignments().getEmployee().getCategory(), Element.ALIGN_CENTER, 1, bfBold12);
+                insertCell(table, record.getAssignments().getEmployee().getName(), Element.ALIGN_CENTER, 1, bfBold12);
                 insertCell(table, String.valueOf(DaysWorked), Element.ALIGN_LEFT, 1, bfBold12);
                 insertCell(table, String.valueOf(WeeklyOff), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, String.valueOf(CompOff), Element.ALIGN_RIGHT, 1, bfBold12);
@@ -300,6 +307,55 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             }
 
             //total or footer
+
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "TOTAL", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, String.valueOf(totalDaysWorked), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, String.valueOf(totalAmount), Element.ALIGN_LEFT, 1, bfBold12);
+
+            //Footer2
+            log.debug("totalAmount::" + totalAmount);
+            log.debug("Tax::" + ForceConstants.SERVICE_TAX);
+            BigDecimal serviceTax = totalAmount.multiply(ForceConstants.SERVICE_TAX).setScale(2, RoundingMode.HALF_EVEN);
+            log.debug("serviceTax::" + serviceTax);
+
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "SERVICE TAX @14.5%", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, String.valueOf(serviceTax), Element.ALIGN_LEFT, 1, bfBold12);
+
+            //Footer3
+            BigDecimal grandTotalAmountToPay = totalAmount.add(serviceTax);
+
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "GRAND TOTAL", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, "", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(table, toString().valueOf(grandTotalAmountToPay), Element.ALIGN_LEFT, 1, bfBold12);
+
             // add the PDF table to the paragraph
             paragraph.add(table);
             // add the paragraph to the document
