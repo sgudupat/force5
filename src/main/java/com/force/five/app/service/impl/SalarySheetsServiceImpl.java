@@ -274,15 +274,15 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
                 BigDecimal CompOff = new BigDecimal(record.getCompOff());
                 BigDecimal overtime = new BigDecimal(record.getOvertime());
                 BigDecimal Holidays = new BigDecimal(record.getHolidays());
+                BigDecimal cost = record.getAssignments().getCost();
 
                 //Calculations
                 //Toatl= No of days worked + Weekly off + Comp off + OT No of days + Holidays
                 BigDecimal Total = record.getTotal();
-                BigDecimal GrandToatl = record.getGrandToatl();
                 // Per day Cost = Cost/29
-                //BigDecimal PerdayCost = new BigDecimal("Cost/29");
+                BigDecimal PerDayCost = record.getCostPerDay();
                 //GrandTotal = PerdayCost * Total
-                // BigDecimal GrandTotal = PerdayCost.multiply(Total);
+                 BigDecimal GrandTotal = record.getGrandToatl();
 
 
                 insertCell(table, String.valueOf(i++), Element.ALIGN_RIGHT, 1, bfBold12);
@@ -294,9 +294,9 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
                 insertCell(table, String.valueOf(overtime), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, String.valueOf(Holidays), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, String.valueOf(Total), Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
-                insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(cost), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(PerDayCost), Element.ALIGN_RIGHT, 1, bfBold12);
+                insertCell(table, String.valueOf(GrandTotal), Element.ALIGN_RIGHT, 1, bfBold12);
             }
 
             //total or footer
@@ -304,12 +304,6 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             paragraph.add(table);
             // add the paragraph to the document
             document.add(paragraph);
-            PdfPCell cell1 = new PdfPCell(new Paragraph("Cell 1"));
-            PdfPCell cell2 = new PdfPCell(new Paragraph("Cell 2"));
-            PdfPCell cell3 = new PdfPCell(new Paragraph("Cell 3"));
-            table.addCell(cell1);
-            table.addCell(cell2);
-            table.addCell(cell3);
             document.close();
         } catch (Exception e) {
         }

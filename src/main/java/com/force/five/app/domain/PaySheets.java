@@ -8,8 +8,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -24,7 +22,7 @@ public class PaySheets implements Serializable {
     private Long id;
 
     @Column(name = "regular_days")
-    private Integer regularDays ;
+    private Integer regularDays;
 
     @Column(name = "days_worked")
     private Integer daysWorked;
@@ -118,7 +116,7 @@ public class PaySheets implements Serializable {
             return false;
         }
         PaySheets paySheets = (PaySheets) o;
-        if(paySheets.id == null || id == null) {
+        if (paySheets.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, paySheets.id);
@@ -158,6 +156,7 @@ public class PaySheets implements Serializable {
     public BigDecimal getOTWages() {
         return getTotalWages().divide(ForceConstants.TOTAL_DAYS, 2, RoundingMode.HALF_EVEN).multiply(new BigDecimal(this.overtime)).setScale(2, RoundingMode.HALF_EVEN);
     }
+
     public BigDecimal getEarnedAllowances() {
         return getAssignments().getEmployee().getAllowances().divide(ForceConstants.TOTAL_DAYS, 2, RoundingMode.HALF_EVEN).multiply(new BigDecimal(this.regularDays)).setScale(2, RoundingMode.HALF_EVEN);
     }
@@ -169,9 +168,11 @@ public class PaySheets implements Serializable {
     public BigDecimal getPF() {
         return getEarnedBasic().multiply(ForceConstants.PF_CAL).setScale(2, RoundingMode.HALF_EVEN);
     }
+
     public BigDecimal getESIC() {
         return getEarnedBasic().multiply(ForceConstants.ESIC).setScale(2, RoundingMode.HALF_EVEN);
     }
+
     public BigDecimal getTotalDedu() {
         return getPF().add(getESIC());
     }
@@ -187,25 +188,25 @@ public class PaySheets implements Serializable {
     public BigDecimal getCostPerDay() {
         BigDecimal cost = getCost();
         Calendar c = Calendar.getInstance();
+
         int monthMaxDays = c.getActualMaximum(Calendar.DAY_OF_MONTH);
-        BigDecimal monthMaxDaysBigDecimal=new BigDecimal(monthMaxDays);
-        //costperdayn = cost/No of days in a month
+        BigDecimal monthMaxDaysBigDecimal = new BigDecimal(monthMaxDays);
 
-        BigDecimal costPerDay= cost.divide(monthMaxDaysBigDecimal).setScale(2,RoundingMode.HALF_EVEN);
-
-        return costPerDay ;
+        //costperday = cost/No of days in a month
+        BigDecimal costPerDay = cost.divide(monthMaxDaysBigDecimal, 2, RoundingMode.HALF_EVEN);
+        return costPerDay;
     }
-    public  BigDecimal getTotal() {
 
-        BigDecimal total  = new BigDecimal(getDaysWorked()+getWeeklyOff() + getCompOff()+getOvertime()+getHolidays());
+    public BigDecimal getTotal() {
+
+        BigDecimal total = new BigDecimal(getDaysWorked() + getWeeklyOff() + getCompOff() + getOvertime() + getHolidays());
         return total;
     }
 
     //GrandTotal = PerdayCost * Toatl
 
-    public  BigDecimal getGrandToatl()
-    {
-        return  getCostPerDay().multiply(getTotal()).setScale(2,BigDecimal.ROUND_HALF_EVEN);
+    public BigDecimal getGrandToatl() {
+        return getCostPerDay().multiply(getTotal()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
 
     }
 
