@@ -52,8 +52,8 @@ jhipster:
             # security key (this key should be unique for your application, and kept secret)
             key: ba8e26ef4bad6ae5b19493518ce26118c1c89180
     swagger:
-        title: proj2 API
-        description: proj2 API documentation
+        title: Force5 API
+        description: Force5 API documentation
         version: 0.0.1
         termsOfServiceUrl:
         contact:

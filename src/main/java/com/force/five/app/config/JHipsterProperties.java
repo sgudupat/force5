@@ -221,9 +221,9 @@ public class JHipsterProperties {
 
     public static class Swagger {
 
-        private String title = "proj2 API";
+        private String title = "Force5 API";
 
-        private String description = "proj2 API documentation";
+        private String description = "Force5 API documentation";
 
         private String version = "0.0.1";
 
