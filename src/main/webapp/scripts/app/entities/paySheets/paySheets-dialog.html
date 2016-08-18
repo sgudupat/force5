@@ -18,23 +18,43 @@
             <select class="form-control" id="field_assignments" name="assignments" ng-model="paySheets.assignmentsId" ng-options="assignments.id as (assignments.clientName ) + ' - ' +(assignments.employeeName) for assignments in assignmentss">
                 <option value=""></option>
             </select>
-        <div class="form-group">
-            <label class="control-label" for="field_month">Month</label>
-            <input type="text" class="form-control" name="month" id="field_month" ng-model="paySheets.month"/>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_year">Year</label>
-            <input type="text" class="form-control" name="year" id="field_year"
-                    ng-model="paySheets.year"
-                     />
-        </div>
-<!--        <div class="form-group">
-            <label class="control-label" for="field_regularDays">RegularDays</label>
-            <input type="number" class="form-control" name="regularDays" id="field_regularDays"
-                    ng-model="paySheets.regularDays"
-                     />
-        </div>
--->
+
+            <div class="form-group">
+                <label class="control-label" for="field_month">Month</label>
+                <select class="form-control" id="field_month" name="month" ng-model="paySheets.month">
+                    <option value="JANUARY">Jan</option>
+                    <option value="FEBRUARY">Feb</option>
+                    <option value="MARCH">Mar</option>
+                    <option value="APRIL">April</option>
+                    <option value="MAY">May</option>
+                    <option value="JUNE">June</option>
+                    <option value="JULY">July</option>
+                    <option value="AUGUST">Aug</option>
+                    <option value="SEPTEMBER">Sept</option>
+                    <option value="OCTOBER">Oct</option>
+                    <option value="NOVEMBER">Nov</option>
+                    <option value="DECEMBER">Dec</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="field_year">Year</label>
+                <select class="form-control" id="field_year" name="year" ng-model="paySheets.year">
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                </select>
+            </div>
+
+
+            <!--        <div class="form-group">
+                        <label class="control-label" for="field_regularDays">RegularDays</label>
+                        <input type="number" class="form-control" name="regularDays" id="field_regularDays"
+                                ng-model="paySheets.regularDays"
+                                 />
+                    </div>
+            -->
         <div class="form-group">
             <label class="control-label" for="field_daysWorked">DaysWorked</label>
             <input type="number" class="form-control" name="daysWorked" id="field_daysWorked"
