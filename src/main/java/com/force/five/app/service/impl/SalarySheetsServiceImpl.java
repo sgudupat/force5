@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -105,7 +106,7 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
     }
 
     private void generateSalarySheets(Long clientId, String month, String year) {
-        Font bfBold12 = new Font(Font.FontFamily.COURIER, 8, Font.BOLD, new BaseColor(0, 0, 0));
+        Font bfBold12 = new Font(Font.FontFamily.COURIER, 6, Font.NORMAL, new BaseColor(0, 0, 0));
         Document document = new Document();
 
         List<PaySheets> records = paySheetsService.getPaysheetRecords(clientId, month, year);
@@ -116,7 +117,7 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             break;
         }
         try {
-            String fileName = "salary_sheet_" + clientId + "_" + month.toLowerCase() + "_" + year + ".pdf";
+            String fileName = "salary_sheet_" + client.getName() + "_" + month.toLowerCase() + "_" + year + ".pdf";
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
             // create a paragraph
@@ -281,7 +282,7 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
 
     private void generateBillingReport(Long clientId, String month, String year) {
 
-        Font bfBold12 = new Font(Font.FontFamily.COURIER, 8, Font.BOLD, new BaseColor(0, 0, 0));
+        Font bfBold12 = new Font(Font.FontFamily.COURIER, 6, Font.NORMAL, new BaseColor(0, 0, 0));
         Document document = new Document();
 
         List<PaySheets> records = paySheetsService.getPaysheetRecords(clientId, month, year);
@@ -294,7 +295,7 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
 
 
         try {
-            String fileName = "billing_summary_sheet_" + clientId + "_" + month.toLowerCase() + "_" + year + ".pdf";
+            String fileName = "billing_summary_sheet_" + client.getName() + "_" + month.toLowerCase() + "_" + year + ".pdf";
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
             // create a paragraph
@@ -421,7 +422,7 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
 
     private void generateInvoiceReport(Long clientId, String month, String year) {
 
-        Font bfBold12 = new Font(Font.FontFamily.COURIER, 8, Font.BOLD, new BaseColor(0, 0, 0));
+        Font bfBold12 = new Font(Font.FontFamily.COURIER, 6, Font.NORMAL, new BaseColor(0, 0, 0));
         Document document = new Document();
 
         List<PaySheets> records = paySheetsService.getPaysheetRecords(clientId, month, year);
@@ -432,7 +433,7 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             break;
         }
         try {
-            String fileName = "Invoice_summary_sheet_" + clientId + "_" + month.toLowerCase() + "_" + year + ".pdf";
+            String fileName = "Invoice_summary_sheet_" + client.getName() + "_" + month.toLowerCase() + "_" + year + ".pdf";
 
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
@@ -444,8 +445,9 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             PdfPTable invoiceHeader = new PdfPTable(invoiceHeaderCols);
             // set table width a percentage of the  page width
             invoiceHeader.setWidthPercentage(90f);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
             insertCell(invoiceHeader, "INVOICE NO:" + "F5PMSPL/2015-16/1744", Element.ALIGN_LEFT, 1, bfBold12);
-            insertCell(invoiceHeader, "Dated:" + new Date(), Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeader, "Dated:" + sdf.format(new Date()), Element.ALIGN_RIGHT, 1, bfBold12);
 
             insertCell(invoiceHeader, client.getName(), Element.ALIGN_LEFT, 1, bfBold12);
             insertCell(invoiceHeader, "", Element.ALIGN_RIGHT, 1, bfBold12);
@@ -460,14 +462,10 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             insertCell(invoiceHeader, "", Element.ALIGN_RIGHT, 1, bfBold12);
 
             log.debug("Table value display");
-            int i = 1;
-
             // add the PDF table to the paragraph
             paragraph.add(invoiceHeader);
             // add the paragraph to the document
             document.add(paragraph);
-
-
             //Second Table for Body
 
             Paragraph paragraphBody = new Paragraph();
@@ -484,35 +482,40 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             insertCell(invoiceHeaderBody, "AMOUNT", Element.ALIGN_CENTER, 1, bfBold12);
 
             int j = 1;
-            for (PaySheets record : records) {
                 insertCell(invoiceHeaderBody, String.valueOf(j++), Element.ALIGN_LEFT, 1, bfBold12);
-                insertCell(invoiceHeaderBody, "House Keeping  charges for the month of February 26th 2016 To March 25th 2016 ", Element.ALIGN_LEFT, 1, bfBold12);
+                insertCell(invoiceHeaderBody, "House Keeping charges for " + month + " " + year, Element.ALIGN_LEFT, 1, bfBold12);
                 insertCell(invoiceHeaderBody, "in hrs/days", Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
                 insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
                 log.debug("Table value display");
-            }
 
+            BigDecimal totalHours = BigDecimal.ZERO;
+            BigDecimal totalCharge = BigDecimal.ZERO;
+            for (PaySheets record : records) {
+                totalHours = totalHours.add(record.getTotal());
+                totalCharge = totalCharge.add(record.getGrandTotal());
+            }
             insertCell(invoiceHeaderBody, String.valueOf(j), Element.ALIGN_LEFT, 1, bfBold12);
             insertCell(invoiceHeaderBody, " Charges For House Keeper", Element.ALIGN_LEFT, 1, bfBold12);
-            insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, String.valueOf(totalHours), Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
-            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, String.valueOf(totalCharge), Element.ALIGN_CENTER, 1, bfBold12);
 
             insertCell(invoiceHeaderBody, String.valueOf(j + 1), Element.ALIGN_LEFT, 1, bfBold12);
             insertCell(invoiceHeaderBody, " Payment by cross order cheque only", Element.ALIGN_LEFT, 1, bfBold12);
             insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
-            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "Total", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, String.valueOf(totalCharge), Element.ALIGN_CENTER, 1, bfBold12);
 
+            BigDecimal serviceTax = totalCharge.multiply(ForceConstants.SERVICE_TAX).setScale(2, RoundingMode.HALF_EVEN);
             insertCell(invoiceHeaderBody, String.valueOf(j + 2), Element.ALIGN_LEFT, 1, bfBold12);
             insertCell(invoiceHeaderBody, "Interest at 25%will be charged if the payment is not paid within 15 days of this bill", Element.ALIGN_LEFT, 1, bfBold12);
             insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
-            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "Service Tax 14.5%", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, String.valueOf(serviceTax), Element.ALIGN_CENTER, 1, bfBold12);
 
             insertCell(invoiceHeaderBody, String.valueOf(j + 3), Element.ALIGN_LEFT, 1, bfBold12);
-            insertCell(invoiceHeaderBody, "All disputes subject to Bangalore jurisidiction ,E.& O.E", Element.ALIGN_LEFT, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "All disputes subject to Bangalore jurisdiction ,E.& O.E", Element.ALIGN_LEFT, 1, bfBold12);
             insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
             insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
             insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
@@ -542,13 +545,13 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
             insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
 
-
+            BigDecimal netAmount = serviceTax.add(totalCharge);
             insertCell(invoiceHeaderBody, String.valueOf(j + 8), Element.ALIGN_LEFT, 1, bfBold12);
             insertCell(invoiceHeaderBody, " Service Tax No :AABCF3440PST001 We here by certify that our Regd. Cert.under the BS Act 1956 is in force on the date on which the sale of goods specified in this bill/cash memo" +
                 "is made by us,and that the transaction of the sale covered in this bill/cash memo has been effected by us in the regular course of our business", Element.ALIGN_LEFT, 1, bfBold12);
             insertCell(invoiceHeaderBody, "", Element.ALIGN_RIGHT, 1, bfBold12);
-            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
-            insertCell(invoiceHeaderBody, "", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, "Net Amt.", Element.ALIGN_CENTER, 1, bfBold12);
+            insertCell(invoiceHeaderBody, String.valueOf(netAmount), Element.ALIGN_CENTER, 1, bfBold12);
 
             // add the PDF table to the paragraph
             paragraphBody.add(invoiceHeaderBody);
