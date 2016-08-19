@@ -39,6 +39,8 @@
             
             <column name="vda" type="bit"/>
             
+            <column name="partial_tax" type="bit"/>
+            
             <column name="work_hours" type="integer"/>
             
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->

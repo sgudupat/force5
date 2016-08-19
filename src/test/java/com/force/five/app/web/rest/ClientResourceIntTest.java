@@ -67,6 +67,9 @@ public class ClientResourceIntTest {
     private static final Boolean DEFAULT_VDA = false;
     private static final Boolean UPDATED_VDA = true;
 
+    private static final Boolean DEFAULT_PARTIAL_TAX = false;
+    private static final Boolean UPDATED_PARTIAL_TAX = true;
+
     private static final Integer DEFAULT_WORK_HOURS = 1;
     private static final Integer UPDATED_WORK_HOURS = 2;
 
@@ -112,6 +115,7 @@ public class ClientResourceIntTest {
         client.setPf(DEFAULT_PF);
         client.setEsic(DEFAULT_ESIC);
         client.setVda(DEFAULT_VDA);
+        client.setPartialTax(DEFAULT_PARTIAL_TAX);
         client.setWorkHours(DEFAULT_WORK_HOURS);
     }
 
@@ -141,6 +145,7 @@ public class ClientResourceIntTest {
         assertThat(testClient.getPf()).isEqualTo(DEFAULT_PF);
         assertThat(testClient.getEsic()).isEqualTo(DEFAULT_ESIC);
         assertThat(testClient.getVda()).isEqualTo(DEFAULT_VDA);
+        assertThat(testClient.getPartialTax()).isEqualTo(DEFAULT_PARTIAL_TAX);
         assertThat(testClient.getWorkHours()).isEqualTo(DEFAULT_WORK_HOURS);
     }
 
@@ -164,6 +169,7 @@ public class ClientResourceIntTest {
                 .andExpect(jsonPath("$.[*].pf").value(hasItem(DEFAULT_PF.booleanValue())))
                 .andExpect(jsonPath("$.[*].esic").value(hasItem(DEFAULT_ESIC.booleanValue())))
                 .andExpect(jsonPath("$.[*].vda").value(hasItem(DEFAULT_VDA.booleanValue())))
+                .andExpect(jsonPath("$.[*].partialTax").value(hasItem(DEFAULT_PARTIAL_TAX.booleanValue())))
                 .andExpect(jsonPath("$.[*].workHours").value(hasItem(DEFAULT_WORK_HOURS)));
     }
 
@@ -187,6 +193,7 @@ public class ClientResourceIntTest {
             .andExpect(jsonPath("$.pf").value(DEFAULT_PF.booleanValue()))
             .andExpect(jsonPath("$.esic").value(DEFAULT_ESIC.booleanValue()))
             .andExpect(jsonPath("$.vda").value(DEFAULT_VDA.booleanValue()))
+            .andExpect(jsonPath("$.partialTax").value(DEFAULT_PARTIAL_TAX.booleanValue()))
             .andExpect(jsonPath("$.workHours").value(DEFAULT_WORK_HOURS));
     }
 
@@ -216,6 +223,7 @@ public class ClientResourceIntTest {
         client.setPf(UPDATED_PF);
         client.setEsic(UPDATED_ESIC);
         client.setVda(UPDATED_VDA);
+        client.setPartialTax(UPDATED_PARTIAL_TAX);
         client.setWorkHours(UPDATED_WORK_HOURS);
         ClientDTO clientDTO = clientMapper.clientToClientDTO(client);
 
@@ -237,6 +245,7 @@ public class ClientResourceIntTest {
         assertThat(testClient.getPf()).isEqualTo(UPDATED_PF);
         assertThat(testClient.getEsic()).isEqualTo(UPDATED_ESIC);
         assertThat(testClient.getVda()).isEqualTo(UPDATED_VDA);
+        assertThat(testClient.getPartialTax()).isEqualTo(UPDATED_PARTIAL_TAX);
         assertThat(testClient.getWorkHours()).isEqualTo(UPDATED_WORK_HOURS);
     }
 

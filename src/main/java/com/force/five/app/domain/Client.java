@@ -43,6 +43,9 @@ public class Client implements Serializable {
     @Column(name = "vda")
     private Boolean vda;
     
+    @Column(name = "partial_tax")
+    private Boolean partialTax;
+    
     @Column(name = "work_hours")
     private Integer workHours;
     
@@ -126,6 +129,14 @@ public class Client implements Serializable {
         this.vda = vda;
     }
 
+    public Boolean getPartialTax() {
+        return partialTax;
+    }
+    
+    public void setPartialTax(Boolean partialTax) {
+        this.partialTax = partialTax;
+    }
+
     public Integer getWorkHours() {
         return workHours;
     }
@@ -167,6 +178,7 @@ public class Client implements Serializable {
             ", pf='" + pf + "'" +
             ", esic='" + esic + "'" +
             ", vda='" + vda + "'" +
+            ", partialTax='" + partialTax + "'" +
             ", workHours='" + workHours + "'" +
             '}';
     }

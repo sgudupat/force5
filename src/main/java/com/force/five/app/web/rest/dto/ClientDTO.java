@@ -38,6 +38,9 @@ public class ClientDTO implements Serializable {
     private Boolean vda;
 
 
+    private Boolean partialTax;
+
+
     private Integer workHours;
 
 
@@ -111,6 +114,13 @@ public class ClientDTO implements Serializable {
     public void setVda(Boolean vda) {
         this.vda = vda;
     }
+    public Boolean getPartialTax() {
+        return partialTax;
+    }
+
+    public void setPartialTax(Boolean partialTax) {
+        this.partialTax = partialTax;
+    }
     public Integer getWorkHours() {
         return workHours;
     }
@@ -153,6 +163,7 @@ public class ClientDTO implements Serializable {
             ", pf='" + pf + "'" +
             ", esic='" + esic + "'" +
             ", vda='" + vda + "'" +
+            ", partialTax='" + partialTax + "'" +
             ", workHours='" + workHours + "'" +
             '}';
     }

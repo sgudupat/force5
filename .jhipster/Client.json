@@ -48,6 +48,11 @@
         },
         {
             "fieldId": 10,
+            "fieldName": "partialTax",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 11,
             "fieldName": "workHours",
             "fieldType": "Integer"
         }

@@ -28,6 +28,7 @@ angular.module('proj2App')
                 pf: null,
                 esic: null,
                 vda: null,
+                partialTax: null,
                 workHours: null,
                 id: null
             };
