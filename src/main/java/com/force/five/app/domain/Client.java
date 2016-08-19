@@ -19,8 +19,8 @@ public class Client implements Serializable {
     @Column(name = "name")
     private String name;
     
-    @Column(name = "conatact_person")
-    private String conatactPerson;
+    @Column(name = "contact_person")
+    private String contactPerson;
     
     @Column(name = "address")
     private String address;
@@ -62,12 +62,12 @@ public class Client implements Serializable {
         this.name = name;
     }
 
-    public String getConatactPerson() {
-        return conatactPerson;
+    public String getContactPerson() {
+        return contactPerson;
     }
     
-    public void setConatactPerson(String conatactPerson) {
-        this.conatactPerson = conatactPerson;
+    public void setContactPerson(String contactPerson) {
+        this.contactPerson = contactPerson;
     }
 
     public String getAddress() {
@@ -159,7 +159,7 @@ public class Client implements Serializable {
         return "Client{" +
             "id=" + id +
             ", name='" + name + "'" +
-            ", conatactPerson='" + conatactPerson + "'" +
+            ", contactPerson='" + contactPerson + "'" +
             ", address='" + address + "'" +
             ", city='" + city + "'" +
             ", state='" + state + "'" +

@@ -20,7 +20,7 @@
                 <tr>
                     <th><span>ID</span></th>
                     <th><span>Name</span></th>
-                    <th><span>ConatactPerson</span></th>
+                    <th><span>ContactPerson</span></th>
                     <th><span>Address</span></th>
                     <th><span>City</span></th>
                     <th><span>State</span></th>
@@ -36,7 +36,7 @@
                 <tr ng-repeat="client in clients track by client.id">
                     <td><a ui-sref="client.detail({id:client.id})">{{client.id}}</a></td>
                     <td>{{client.name}}</td>
-                    <td>{{client.conatactPerson}}</td>
+                    <td>{{client.contactPerson}}</td>
                     <td>{{client.address}}</td>
                     <td>{{client.city}}</td>
                     <td>{{client.state}}</td>

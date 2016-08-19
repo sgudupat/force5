@@ -14,7 +14,7 @@ public class ClientDTO implements Serializable {
     private String name;
 
 
-    private String conatactPerson;
+    private String contactPerson;
 
 
     private String address;
@@ -55,12 +55,12 @@ public class ClientDTO implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    public String getConatactPerson() {
-        return conatactPerson;
+    public String getContactPerson() {
+        return contactPerson;
     }
 
-    public void setConatactPerson(String conatactPerson) {
-        this.conatactPerson = conatactPerson;
+    public void setContactPerson(String contactPerson) {
+        this.contactPerson = contactPerson;
     }
     public String getAddress() {
         return address;
@@ -145,7 +145,7 @@ public class ClientDTO implements Serializable {
         return "ClientDTO{" +
             "id=" + id +
             ", name='" + name + "'" +
-            ", conatactPerson='" + conatactPerson + "'" +
+            ", contactPerson='" + contactPerson + "'" +
             ", address='" + address + "'" +
             ", city='" + city + "'" +
             ", state='" + state + "'" +

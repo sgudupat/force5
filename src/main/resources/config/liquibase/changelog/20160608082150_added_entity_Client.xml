@@ -23,7 +23,7 @@
             </column>
             <column name="name" type="varchar(255)"/>
             
-            <column name="conatact_person" type="varchar(255)"/>
+            <column name="contact_person" type="varchar(255)"/>
             
             <column name="address" type="varchar(255)"/>
             

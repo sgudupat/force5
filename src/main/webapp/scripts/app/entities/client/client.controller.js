@@ -20,7 +20,7 @@ angular.module('proj2App')
         $scope.clear = function () {
             $scope.client = {
                 name: null,
-                conatactPerson: null,
+                contactPerson: null,
                 address: null,
                 city: null,
                 state: null,

@@ -53,7 +53,7 @@ angular.module('proj2App')
                             entity: function () {
                                 return {
                                     name: null,
-                                    conatactPerson: null,
+                                    contactPerson: null,
                                     address: null,
                                     city: null,
                                     state: null,

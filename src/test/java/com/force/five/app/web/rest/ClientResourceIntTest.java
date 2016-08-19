@@ -46,8 +46,8 @@ public class ClientResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAA";
     private static final String UPDATED_NAME = "BBBBB";
-    private static final String DEFAULT_CONATACT_PERSON = "AAAAA";
-    private static final String UPDATED_CONATACT_PERSON = "BBBBB";
+    private static final String DEFAULT_CONTACT_PERSON = "AAAAA";
+    private static final String UPDATED_CONTACT_PERSON = "BBBBB";
     private static final String DEFAULT_ADDRESS = "AAAAA";
     private static final String UPDATED_ADDRESS = "BBBBB";
     private static final String DEFAULT_CITY = "AAAAA";
@@ -104,7 +104,7 @@ public class ClientResourceIntTest {
     public void initTest() {
         client = new Client();
         client.setName(DEFAULT_NAME);
-        client.setConatactPerson(DEFAULT_CONATACT_PERSON);
+        client.setContactPerson(DEFAULT_CONTACT_PERSON);
         client.setAddress(DEFAULT_ADDRESS);
         client.setCity(DEFAULT_CITY);
         client.setState(DEFAULT_STATE);
@@ -133,7 +133,7 @@ public class ClientResourceIntTest {
         assertThat(clients).hasSize(databaseSizeBeforeCreate + 1);
         Client testClient = clients.get(clients.size() - 1);
         assertThat(testClient.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testClient.getConatactPerson()).isEqualTo(DEFAULT_CONATACT_PERSON);
+        assertThat(testClient.getContactPerson()).isEqualTo(DEFAULT_CONTACT_PERSON);
         assertThat(testClient.getAddress()).isEqualTo(DEFAULT_ADDRESS);
         assertThat(testClient.getCity()).isEqualTo(DEFAULT_CITY);
         assertThat(testClient.getState()).isEqualTo(DEFAULT_STATE);
@@ -156,7 +156,7 @@ public class ClientResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(client.getId().intValue())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-                .andExpect(jsonPath("$.[*].conatactPerson").value(hasItem(DEFAULT_CONATACT_PERSON.toString())))
+                .andExpect(jsonPath("$.[*].contactPerson").value(hasItem(DEFAULT_CONTACT_PERSON.toString())))
                 .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
                 .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY.toString())))
                 .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.toString())))
@@ -179,7 +179,7 @@ public class ClientResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(client.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.conatactPerson").value(DEFAULT_CONATACT_PERSON.toString()))
+            .andExpect(jsonPath("$.contactPerson").value(DEFAULT_CONTACT_PERSON.toString()))
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()))
             .andExpect(jsonPath("$.city").value(DEFAULT_CITY.toString()))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.toString()))
@@ -208,7 +208,7 @@ public class ClientResourceIntTest {
 
         // Update the client
         client.setName(UPDATED_NAME);
-        client.setConatactPerson(UPDATED_CONATACT_PERSON);
+        client.setContactPerson(UPDATED_CONTACT_PERSON);
         client.setAddress(UPDATED_ADDRESS);
         client.setCity(UPDATED_CITY);
         client.setState(UPDATED_STATE);
@@ -229,7 +229,7 @@ public class ClientResourceIntTest {
         assertThat(clients).hasSize(databaseSizeBeforeUpdate);
         Client testClient = clients.get(clients.size() - 1);
         assertThat(testClient.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testClient.getConatactPerson()).isEqualTo(UPDATED_CONATACT_PERSON);
+        assertThat(testClient.getContactPerson()).isEqualTo(UPDATED_CONTACT_PERSON);
         assertThat(testClient.getAddress()).isEqualTo(UPDATED_ADDRESS);
         assertThat(testClient.getCity()).isEqualTo(UPDATED_CITY);
         assertThat(testClient.getState()).isEqualTo(UPDATED_STATE);
