@@ -16,21 +16,25 @@
         <div class="form-group">
             <label class="control-label" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
-                    ng-model="employee.name" 
+                    ng-model="employee.name"
                      />
         </div>
-        
         <div class="form-group">
             <label for="field_category">Category</label>
       <select  class="form-control" id="field_category" name="category" ng-model="employee.category" ng-options="category.parent as category.parent for category in categories">
                 <option value=""></option>
             </select>
         </div>
-              
         <div class="form-group">
             <label class="control-label" for="field_basic">Basic</label>
             <input type="number" class="form-control" name="basic" id="field_basic"
                     ng-model="employee.basic"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_vda">VDA</label>
+            <input type="number" class="form-control" name="vda" id="field_vda"
+                    ng-model="employee.vda"
                      />
         </div>
         <div class="form-group">
@@ -97,4 +101,4 @@
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
         </button>
     </div>
-  </form>
+</form>

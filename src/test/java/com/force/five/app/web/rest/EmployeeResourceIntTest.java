@@ -59,6 +59,9 @@ public class EmployeeResourceIntTest {
     private static final BigDecimal DEFAULT_BASIC = new BigDecimal(1);
     private static final BigDecimal UPDATED_BASIC = new BigDecimal(2);
 
+    private static final BigDecimal DEFAULT_VDA = new BigDecimal(1);
+    private static final BigDecimal UPDATED_VDA = new BigDecimal(2);
+
     private static final BigDecimal DEFAULT_ALLOWANCES = new BigDecimal(1);
     private static final BigDecimal UPDATED_ALLOWANCES = new BigDecimal(2);
 
@@ -121,6 +124,7 @@ public class EmployeeResourceIntTest {
         employee.setName(DEFAULT_NAME);
         employee.setCategory(DEFAULT_CATEGORY);
         employee.setBasic(DEFAULT_BASIC);
+        employee.setVda(DEFAULT_VDA);
         employee.setAllowances(DEFAULT_ALLOWANCES);
         employee.setStartDate(DEFAULT_START_DATE);
         employee.setEndDate(DEFAULT_END_DATE);
@@ -152,6 +156,7 @@ public class EmployeeResourceIntTest {
         assertThat(testEmployee.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testEmployee.getCategory()).isEqualTo(DEFAULT_CATEGORY);
         assertThat(testEmployee.getBasic()).isEqualTo(DEFAULT_BASIC);
+        assertThat(testEmployee.getVda()).isEqualTo(DEFAULT_VDA);
         assertThat(testEmployee.getAllowances()).isEqualTo(DEFAULT_ALLOWANCES);
         assertThat(testEmployee.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testEmployee.getEndDate()).isEqualTo(DEFAULT_END_DATE);
@@ -177,6 +182,7 @@ public class EmployeeResourceIntTest {
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
                 .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY.toString())))
                 .andExpect(jsonPath("$.[*].basic").value(hasItem(DEFAULT_BASIC.intValue())))
+                .andExpect(jsonPath("$.[*].vda").value(hasItem(DEFAULT_VDA.intValue())))
                 .andExpect(jsonPath("$.[*].allowances").value(hasItem(DEFAULT_ALLOWANCES.intValue())))
                 .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE_STR)))
                 .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE_STR)))
@@ -202,6 +208,7 @@ public class EmployeeResourceIntTest {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.category").value(DEFAULT_CATEGORY.toString()))
             .andExpect(jsonPath("$.basic").value(DEFAULT_BASIC.intValue()))
+            .andExpect(jsonPath("$.vda").value(DEFAULT_VDA.intValue()))
             .andExpect(jsonPath("$.allowances").value(DEFAULT_ALLOWANCES.intValue()))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE_STR))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE_STR))
@@ -233,6 +240,7 @@ public class EmployeeResourceIntTest {
         employee.setName(UPDATED_NAME);
         employee.setCategory(UPDATED_CATEGORY);
         employee.setBasic(UPDATED_BASIC);
+        employee.setVda(UPDATED_VDA);
         employee.setAllowances(UPDATED_ALLOWANCES);
         employee.setStartDate(UPDATED_START_DATE);
         employee.setEndDate(UPDATED_END_DATE);
@@ -256,6 +264,7 @@ public class EmployeeResourceIntTest {
         assertThat(testEmployee.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testEmployee.getCategory()).isEqualTo(UPDATED_CATEGORY);
         assertThat(testEmployee.getBasic()).isEqualTo(UPDATED_BASIC);
+        assertThat(testEmployee.getVda()).isEqualTo(UPDATED_VDA);
         assertThat(testEmployee.getAllowances()).isEqualTo(UPDATED_ALLOWANCES);
         assertThat(testEmployee.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testEmployee.getEndDate()).isEqualTo(UPDATED_END_DATE);

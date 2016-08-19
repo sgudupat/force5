@@ -22,6 +22,9 @@ public class EmployeeDTO implements Serializable {
     private BigDecimal basic;
 
 
+    private BigDecimal vda;
+
+
     private BigDecimal allowances;
 
 
@@ -76,6 +79,13 @@ public class EmployeeDTO implements Serializable {
 
     public void setBasic(BigDecimal basic) {
         this.basic = basic;
+    }
+    public BigDecimal getVda() {
+        return vda;
+    }
+
+    public void setVda(BigDecimal vda) {
+        this.vda = vda;
     }
     public BigDecimal getAllowances() {
         return allowances;
@@ -169,6 +179,7 @@ public class EmployeeDTO implements Serializable {
             ", name='" + name + "'" +
             ", category='" + category + "'" +
             ", basic='" + basic + "'" +
+            ", vda='" + vda + "'" +
             ", allowances='" + allowances + "'" +
             ", startDate='" + startDate + "'" +
             ", endDate='" + endDate + "'" +

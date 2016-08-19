@@ -18,46 +18,51 @@
         },
         {
             "fieldId": 4,
-            "fieldName": "allowances",
+            "fieldName": "vda",
             "fieldType": "BigDecimal"
         },
         {
             "fieldId": 5,
+            "fieldName": "allowances",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 6,
             "fieldName": "startDate",
             "fieldType": "ZonedDateTime"
         },
         {
-            "fieldId": 6,
+            "fieldId": 7,
             "fieldName": "endDate",
             "fieldType": "ZonedDateTime"
         },
         {
-            "fieldId": 7,
+            "fieldId": 8,
             "fieldName": "mobile",
             "fieldType": "Long"
         },
         {
-            "fieldId": 8,
+            "fieldId": 9,
             "fieldName": "mobile2",
             "fieldType": "Long"
         },
         {
-            "fieldId": 9,
+            "fieldId": 10,
             "fieldName": "address",
             "fieldType": "String"
         },
         {
-            "fieldId": 10,
+            "fieldId": 11,
             "fieldName": "city",
             "fieldType": "String"
         },
         {
-            "fieldId": 11,
+            "fieldId": 12,
             "fieldName": "state",
             "fieldType": "String"
         },
         {
-            "fieldId": 12,
+            "fieldId": 13,
             "fieldName": "zipcode",
             "fieldType": "Long"
         }

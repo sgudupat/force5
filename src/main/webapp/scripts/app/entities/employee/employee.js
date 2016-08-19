@@ -55,6 +55,7 @@ angular.module('proj2App')
                                     name: null,
                                     category: null,
                                     basic: null,
+                                    vda: null,
                                     allowances: null,
                                     startDate: null,
                                     endDate: null,

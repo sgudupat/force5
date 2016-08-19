@@ -27,6 +27,9 @@ public class Employee implements Serializable {
     @Column(name = "basic", precision=10, scale=2)
     private BigDecimal basic;
     
+    @Column(name = "vda", precision=10, scale=2)
+    private BigDecimal vda;
+    
     @Column(name = "allowances", precision=10, scale=2)
     private BigDecimal allowances;
     
@@ -84,6 +87,14 @@ public class Employee implements Serializable {
     
     public void setBasic(BigDecimal basic) {
         this.basic = basic;
+    }
+
+    public BigDecimal getVda() {
+        return vda;
+    }
+    
+    public void setVda(BigDecimal vda) {
+        this.vda = vda;
     }
 
     public BigDecimal getAllowances() {
@@ -185,6 +196,7 @@ public class Employee implements Serializable {
             ", name='" + name + "'" +
             ", category='" + category + "'" +
             ", basic='" + basic + "'" +
+            ", vda='" + vda + "'" +
             ", allowances='" + allowances + "'" +
             ", startDate='" + startDate + "'" +
             ", endDate='" + endDate + "'" +

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('proj2App').controller('EmployeeDialogController',
-    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Employee', 'TripleSet', 
+    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Employee', 'TripleSet',
         function($scope, $stateParams, $uibModalInstance, entity, Employee, TripleSet) {
 
         $scope.employee = entity;
