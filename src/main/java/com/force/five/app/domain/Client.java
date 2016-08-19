@@ -40,6 +40,9 @@ public class Client implements Serializable {
     @Column(name = "esic")
     private Boolean esic;
     
+    @Column(name = "vda")
+    private Boolean vda;
+    
     @Column(name = "work_hours")
     private Integer workHours;
     
@@ -115,6 +118,14 @@ public class Client implements Serializable {
         this.esic = esic;
     }
 
+    public Boolean getVda() {
+        return vda;
+    }
+    
+    public void setVda(Boolean vda) {
+        this.vda = vda;
+    }
+
     public Integer getWorkHours() {
         return workHours;
     }
@@ -155,6 +166,7 @@ public class Client implements Serializable {
             ", zipcode='" + zipcode + "'" +
             ", pf='" + pf + "'" +
             ", esic='" + esic + "'" +
+            ", vda='" + vda + "'" +
             ", workHours='" + workHours + "'" +
             '}';
     }

@@ -35,6 +35,9 @@ public class ClientDTO implements Serializable {
     private Boolean esic;
 
 
+    private Boolean vda;
+
+
     private Integer workHours;
 
 
@@ -101,6 +104,13 @@ public class ClientDTO implements Serializable {
     public void setEsic(Boolean esic) {
         this.esic = esic;
     }
+    public Boolean getVda() {
+        return vda;
+    }
+
+    public void setVda(Boolean vda) {
+        this.vda = vda;
+    }
     public Integer getWorkHours() {
         return workHours;
     }
@@ -142,6 +152,7 @@ public class ClientDTO implements Serializable {
             ", zipcode='" + zipcode + "'" +
             ", pf='" + pf + "'" +
             ", esic='" + esic + "'" +
+            ", vda='" + vda + "'" +
             ", workHours='" + workHours + "'" +
             '}';
     }

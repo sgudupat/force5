@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class ClientResource {
 
-    private final Logger log  = LoggerFactory.getLogger(ClientResource.class);
+    private final Logger log = LoggerFactory.getLogger(ClientResource.class);
         
     @Inject
     private ClientService clientService;

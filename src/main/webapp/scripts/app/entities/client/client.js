@@ -60,6 +60,7 @@ angular.module('proj2App')
                                     zipcode: null,
                                     pf: null,
                                     esic: null,
+                                    vda: null,
                                     workHours: null,
                                     id: null
                                 };

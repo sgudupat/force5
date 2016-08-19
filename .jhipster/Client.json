@@ -43,6 +43,11 @@
         },
         {
             "fieldId": 9,
+            "fieldName": "vda",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 10,
             "fieldName": "workHours",
             "fieldType": "Integer"
         }
