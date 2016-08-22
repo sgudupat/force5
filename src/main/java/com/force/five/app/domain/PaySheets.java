@@ -22,28 +22,28 @@ public class PaySheets implements Serializable {
 
     @Column(name = "month")
     private String month;
-    
+
     @Column(name = "year")
     private String year;
-    
+
     @Column(name = "regular_days")
     private Integer regularDays;
-    
+
     @Column(name = "days_worked")
     private Integer daysWorked;
-    
+
     @Column(name = "weekly_off")
     private Integer weeklyOff;
-    
+
     @Column(name = "comp_off")
     private Integer compOff;
-    
+
     @Column(name = "holidays")
     private Integer holidays;
-    
+
     @Column(name = "overtime")
     private Integer overtime;
-    
+
     @ManyToOne
     @JoinColumn(name = "assignments_id")
     private Assignments assignments;
@@ -59,7 +59,7 @@ public class PaySheets implements Serializable {
     public String getMonth() {
         return month;
     }
-    
+
     public void setMonth(String month) {
         this.month = month;
     }
@@ -67,7 +67,7 @@ public class PaySheets implements Serializable {
     public String getYear() {
         return year;
     }
-    
+
     public void setYear(String year) {
         this.year = year;
     }
@@ -75,47 +75,47 @@ public class PaySheets implements Serializable {
     public Integer getRegularDays() {
         return regularDays;
     }
-    
+
     public void setRegularDays(Integer regularDays) {
         this.regularDays = regularDays;
     }
 
     public Integer getDaysWorked() {
-        return daysWorked;
+        return (daysWorked != null ? daysWorked : 0);
     }
-    
+
     public void setDaysWorked(Integer daysWorked) {
         this.daysWorked = daysWorked;
     }
 
     public Integer getWeeklyOff() {
-        return weeklyOff;
+        return (weeklyOff != null ? weeklyOff : 0);
     }
-    
+
     public void setWeeklyOff(Integer weeklyOff) {
         this.weeklyOff = weeklyOff;
     }
 
     public Integer getCompOff() {
-        return compOff;
+        return (compOff != null ? compOff : 0);
     }
-    
+
     public void setCompOff(Integer compOff) {
         this.compOff = compOff;
     }
 
     public Integer getHolidays() {
-        return holidays;
+        return (holidays != null ? holidays : 0);
     }
-    
+
     public void setHolidays(Integer holidays) {
         this.holidays = holidays;
     }
 
     public Integer getOvertime() {
-        return overtime;
+        return (overtime != null ? overtime : 0);
     }
-    
+
     public void setOvertime(Integer overtime) {
         this.overtime = overtime;
     }
@@ -194,14 +194,6 @@ public class PaySheets implements Serializable {
 
     public BigDecimal getESIC() {
         return getEarnedBasic().multiply(ForceConstants.ESIC).setScale(2, RoundingMode.HALF_EVEN);
-    }
-
-    public BigDecimal getTotalDedu() {
-        return getPF().add(getESIC());
-    }
-
-    public BigDecimal getNetSalary() {
-        return getGrossWages().subtract(getTotalDedu());
     }
 
     public BigDecimal getCost() {

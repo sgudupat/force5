@@ -11,9 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Service Implementation for managing PaySheets.
@@ -38,7 +37,7 @@ public class PaySheetsServiceImpl implements PaySheetsService {
     public PaySheetsDTO save(PaySheetsDTO paySheetsDTO) {
         log.debug("Request to save PaySheets : {}", paySheetsDTO);
         PaySheets paySheets = paySheetsMapper.paySheetsDTOToPaySheets(paySheetsDTO);
-        Integer days = paySheets.getDaysWorked() + paySheets.getWeeklyOff() + paySheets.getCompOff() + paySheets.getHolidays() ;
+        Integer days = paySheets.getDaysWorked() + paySheets.getWeeklyOff() + paySheets.getCompOff() + paySheets.getHolidays();
         paySheets.setRegularDays(days);
         paySheets = paySheetsRepository.save(paySheets);
         PaySheetsDTO result = paySheetsMapper.paySheetsToPaySheetsDTO(paySheets);
@@ -87,16 +86,7 @@ public class PaySheetsServiceImpl implements PaySheetsService {
     }
 
     public List<PaySheets> getPaysheetRecords(Long clientId, String month, String year) {
-        try {
-            Date date = new SimpleDateFormat("MMM", Locale.ENGLISH).parse(month);
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(date);
-            int monthValue = cal.get(Calendar.MONTH);
-            List<PaySheets> records = paySheetsRepository.fetchSalarySheets(clientId, (monthValue + 1), year);
-            return records;
-        } catch (ParseException pe) {
-            log.error("Parse Exception:", pe);
-            return null;
-        }
+        List<PaySheets> records = paySheetsRepository.fetchSalarySheets(clientId, month, year);
+        return records;
     }
 }

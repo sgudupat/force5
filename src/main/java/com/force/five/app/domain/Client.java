@@ -18,37 +18,37 @@ public class Client implements Serializable {
 
     @Column(name = "name")
     private String name;
-    
+
     @Column(name = "contact_person")
     private String contactPerson;
-    
+
     @Column(name = "address")
     private String address;
-    
+
     @Column(name = "city")
     private String city;
-    
+
     @Column(name = "state")
     private String state;
-    
+
     @Column(name = "zipcode")
     private Long zipcode;
-    
+
     @Column(name = "pf")
     private Boolean pf;
-    
+
     @Column(name = "esic")
     private Boolean esic;
-    
+
     @Column(name = "vda")
     private Boolean vda;
-    
+
     @Column(name = "partial_tax")
     private Boolean partialTax;
-    
+
     @Column(name = "work_hours")
     private Integer workHours;
-    
+
     public Long getId() {
         return id;
     }
@@ -60,7 +60,7 @@ public class Client implements Serializable {
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
@@ -68,7 +68,7 @@ public class Client implements Serializable {
     public String getContactPerson() {
         return contactPerson;
     }
-    
+
     public void setContactPerson(String contactPerson) {
         this.contactPerson = contactPerson;
     }
@@ -76,7 +76,7 @@ public class Client implements Serializable {
     public String getAddress() {
         return address;
     }
-    
+
     public void setAddress(String address) {
         this.address = address;
     }
@@ -84,7 +84,7 @@ public class Client implements Serializable {
     public String getCity() {
         return city;
     }
-    
+
     public void setCity(String city) {
         this.city = city;
     }
@@ -92,7 +92,7 @@ public class Client implements Serializable {
     public String getState() {
         return state;
     }
-    
+
     public void setState(String state) {
         this.state = state;
     }
@@ -100,39 +100,39 @@ public class Client implements Serializable {
     public Long getZipcode() {
         return zipcode;
     }
-    
+
     public void setZipcode(Long zipcode) {
         this.zipcode = zipcode;
     }
 
     public Boolean getPf() {
-        return pf;
+        return (pf != null ? pf : false);
     }
-    
+
     public void setPf(Boolean pf) {
         this.pf = pf;
     }
 
     public Boolean getEsic() {
-        return esic;
+        return (esic != null ? esic : false);
     }
-    
+
     public void setEsic(Boolean esic) {
         this.esic = esic;
     }
 
     public Boolean getVda() {
-        return vda;
+        return (vda != null ? vda : false);
     }
-    
+
     public void setVda(Boolean vda) {
         this.vda = vda;
     }
 
     public Boolean getPartialTax() {
-        return partialTax;
+        return (partialTax != null ? partialTax : false);
     }
-    
+
     public void setPartialTax(Boolean partialTax) {
         this.partialTax = partialTax;
     }
@@ -140,7 +140,7 @@ public class Client implements Serializable {
     public Integer getWorkHours() {
         return workHours;
     }
-    
+
     public void setWorkHours(Integer workHours) {
         this.workHours = workHours;
     }

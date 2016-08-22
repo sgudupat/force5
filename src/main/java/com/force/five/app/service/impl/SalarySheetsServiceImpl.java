@@ -7,6 +7,7 @@ import com.force.five.app.service.PaySheetsService;
 import com.force.five.app.service.SalarySheetsService;
 import com.force.five.app.service.util.ForceConstants;
 import com.force.five.app.service.util.ForceProperties;
+import com.force.five.app.service.util.ReportUtil;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -117,7 +118,7 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             break;
         }
         try {
-            String fileName = "salary_sheet_" + client.getName() + "_" + month.toLowerCase() + "_" + year + ".pdf";
+            String fileName = ForceProperties.REPORT_PATH + "\\salary_sheet_" + client.getName() + "_" + month.toLowerCase() + "_" + year + ".pdf";
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
             // create a paragraph
@@ -173,7 +174,6 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
                 BigDecimal basic = record.getAssignments().getEmployee().getBasic();
                 BigDecimal overTime = new BigDecimal(record.getOvertime());
                 BigDecimal allowance = record.getAssignments().getEmployee().getAllowances();
-
                 // BigDecimal earnedBasic = null;
 
                 //add to total
@@ -204,19 +204,24 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
                 GrandToatlGW = GrandToatlGW.add(GrossWages);
 
                 //P.F.=(EarnedBasic*12%)
-                BigDecimal pf = record.getPF();
+                BigDecimal pf = BigDecimal.ZERO;
+                if (client.getPf()) {
+                    pf = record.getPF();
+                }
                 GrandTotalPF = GrandTotalPF.add(pf);
-
                 //E.S.I.C =(EarnedBasic*1.75*)
-                BigDecimal esic = record.getESIC();
+                BigDecimal esic = BigDecimal.ZERO;
+                if (client.getEsic()) {
+                    esic = record.getESIC();
+                }
                 GrandTotalESIC = GrandTotalESIC.add(esic);
 
                 //TotalDedu=PF+ESIC
-                BigDecimal TotalDedu = record.getTotalDedu();
+                BigDecimal TotalDedu = ReportUtil.getTotalDedu(client, record);
                 GrandTotalTolDedu = GrandTotalTolDedu.add(TotalDedu);
 
                 //NetSalary= GrossWages-TotalDedu
-                BigDecimal NetSal = record.getNetSalary();
+                BigDecimal NetSal = ReportUtil.getNetSalary(client, record);
                 GrandTotalNatSal = GrandTotalNatSal.add(NetSal);
 
                 insertCell(table, String.valueOf(i++), Element.ALIGN_RIGHT, 1, bfBold12);
@@ -295,7 +300,7 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
 
 
         try {
-            String fileName = "billing_summary_sheet_" + client.getName() + "_" + month.toLowerCase() + "_" + year + ".pdf";
+            String fileName = ForceProperties.REPORT_PATH + "\\billing_summary_sheet_" + client.getName() + "_" + month.toLowerCase() + "_" + year + ".pdf";
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
             // create a paragraph
@@ -360,7 +365,6 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
                 insertCell(table, String.valueOf(PerDayCost), Element.ALIGN_RIGHT, 1, bfBold12);
                 insertCell(table, String.valueOf(GrandTotal), Element.ALIGN_RIGHT, 1, bfBold12);
             }
-
             //total or footer
 
             insertCell(table, "", Element.ALIGN_RIGHT, 1, bfBold12);
@@ -433,7 +437,7 @@ public class SalarySheetsServiceImpl implements SalarySheetsService {
             break;
         }
         try {
-            String fileName = "Invoice_summary_sheet_" + client.getName() + "_" + month.toLowerCase() + "_" + year + ".pdf";
+            String fileName = ForceProperties.REPORT_PATH + "\\Invoice_summary_sheet_" + client.getName() + "_" + month.toLowerCase() + "_" + year + ".pdf";
 
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();

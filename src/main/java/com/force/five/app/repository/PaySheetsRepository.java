@@ -20,8 +20,8 @@ public interface PaySheetsRepository extends JpaRepository<PaySheets, Long> {
             "  where c.id = ?1 " +
             "    and a.client_id = c.id " +
             "    and a.employee_id = e.id " +
-            "    and month(a.start_date) = ?2 " +
-            "    and year(a.start_date) = ?3 " +
+            "    and ps.month = ?2 " +
+            "    and ps.year = ?3 " +
             "    and ps.assignments_id = a.id; ")
-    List<PaySheets> fetchSalarySheets(Long clientId, Integer month, String year);
+    List<PaySheets> fetchSalarySheets(Long clientId, String month, String year);
 }

@@ -15,32 +15,26 @@ public class PaySheetsDTO implements Serializable {
 
     private String month;
 
-
     private String year;
 
+    private Integer regularDays = 0;
 
-    private Integer regularDays;
+    private Integer daysWorked = 0;
 
+    private Integer weeklyOff = 0;
 
-    private Integer daysWorked;
+    private Integer compOff = 0;
 
+    private Integer holidays = 0;
 
-    private Integer weeklyOff;
-
-
-    private Integer compOff;
-
-
-    private Integer holidays;
-
-
-    private Integer overtime;
+    private Integer overtime = 0;
 
     private String clientName;
 
     private String employeeName;
-    
+
     private Long assignmentsId;
+
     public Long getId() {
         return id;
     }
